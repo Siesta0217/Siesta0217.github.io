@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Siesta Site</title>
+    <link rel="icon" type="image/x-icon" href="indownloader.app_picture_0103687001725633505.jpg">
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
+    <script src="animation.js" defer></script>
+</head>
+<body>
+  <div class="loading-overlay">
+      <div class="loading-content">
+          <div class="loading-header">
+              <img src="indownloader.app_picture_0103687001725633505.jpg" alt="0png Icon" class="loading-icon">
+              <h2 class="loading-title">Siesta Site</h2>
+          </div>
+          <div class="loading-progress-container">
+              <div class="loading-progress-bar"></div>
+              <div class="loading-progress-percentage">0%</div>
+          </div>
+      </div>
+  </div>
+<header class="navbar" id="navbar">
+    <div class="icon"></div>
+    <div class="text">Siesta.lol</div>
+    <div class="nav-links">
+        <a href="#home" class="nav-link">Home</a>
+        <a href="#about" class="nav-link">About</a>
+        <a href="#contact" class="nav-link">Contact</a>
+        <a href="#goals" class="nav-link">Goals</a>
+    </div>
+</header>
+
+<section class="hero" id="home">
+    <div class="hero-content">
+        <h1>Siesta</h1>
+        <div class="typing-container">
+          <span id="animated-text"></span>
+        </div>
+    </div>
+    <div class="vertical-line"></div>
+    <div class="down-arrow" id="down-arrow">
+        <svg fill="#ffffff" height="30px" width="30px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 330 330" xml:space="preserve" stroke="#ffffff">
+            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+            <g id="SVGRepo_iconCarrier">
+                <path id="XMLID_225_" d="M325.607,79.393c-5.857-5.857-15.355-5.858-21.213,0.001l-139.39,139.393L25.607,79.393
+                    c-5.857-5.857-15.355-5.858-21.213,0.001c-5.858,5.858-5.858,15.355,0,21.213l150.004,150c2.813,2.813,6.628,4.393,10.606,4.393
+                    s7.794-1.581,10.606-4.394l149.996-150C331.465,94.749,331.465,85.251,325.607,79.393z">
+                </path>
+            </g>
+        </svg>
+    </div> <!-- 添加向下箭头 -->
+</section>
+<div class="background"></div>
+<section class="about" id="about"> <!-- 添加 id 属性 -->
+  <div class="additional-section">
+    <img src="indownloader.app_picture_0103687001725633505.jpg" alt="Big Icon" class="big-icon"> 
+    <h2>Hello, I am <span>Siesta</span></h2>
+    <p class="create">I am a <span class="typing"></span></p>
+    <p class="lorem-text">MDHS<br>K1D2<br>Siesta Client DEV。</p>
+    <button class="my-button" onclick="window.location.href='#contact'">Contact Me</button>
+  </div>
+</section>
+
+<!-- 新增的 Contact Me 页面 -->
+<section class="contact" id="contact">
+  <h2>Contact Me</h2>
+  <div class="contact-images">
+    <div class="contact-item">
+      <a href="https://discord.gg/6FR7P8Weu2" target="_blank">
+        <img src="discord.png" alt="Discord" class="discord">
+      </a>
+      <p>Discord</p>
+    </div>
+    <div class="contact-item">
+      <a href="https://mail.google.com" target="_blank">
+        <img src="gmail.png" alt="Gmail" class="gmail">
+      </a>
+      <p>Gmail</p>
+    </div>
+    <div class="contact-item">
+      <a href="https://github.com/Siesta0217" target="_blank">
+        <img src="github.png" alt="GitHub" class="github">
+      </a>
+      <p>GitHub</p>
+    </div>
+  </div>
+  <div class="floating-shapes">
+    <div class="shape" style="background: radial-gradient(circle, #ff6b6b, #feca57);"></div>
+    <div class="shape" style="background: radial-gradient(circle, #48dbfb, #ff9ff3);"></div>
+    <div class="shape" style="background: radial-gradient(circle, #54a0ff, #5f27cd);"></div>
+    <div class="shape" style="background: radial-gradient(circle, #ff9ff3, #feca57);"></div>
+    <div class="shape" style="background: radial-gradient(circle, #54a0ff, #ff6b6b);"></div>
+    <div class="shape" style="background: radial-gradient(circle, #5f27cd, #48dbfb);"></div>
+    <div class="shape" style="background: radial-gradient(circle, #feca57, #54a0ff);"></div>
+  </div>
+</section>
+
+<section class="goals" id="goals">
+  <div class="goals-content"></div>
+    <h2>My Goals</h2>
+    <div class="goal-item">
+        <div class="browser-buttons">
+            <span class="close"></span>
+            <span class="minimize"></span>
+            <span class="maximize"></span>
+        </div>
+        <img src="datapack.png" alt="Goal 1">
+        <p>This is my developing Minecraft 1v1 Bedfight Datapack.</p>
+        <a href="minecraft.html" class="goal-button">Learn More</a>
+    </div>
+    <div class="goal-item">
+        <div class="browser-buttons">
+            <span class="close"></span>
+            <span class="minimize"></span>
+            <span class="maximize"></span>
+        </div>
+        <img src="Discord_Bot.png" alt="Goal 2">
+        <p>This is my developing Discord Nuke Bot.</p>
+        <a href="#" class="goal-button">Learn More</a>
+  </div>
+</section>
+
+<div class="rgb-line"></div>
+<footer class="footer">
+  <p>&copy; 2024 Siesta. All rights reserved.</p>
+</footer>
+
+<script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
+<script>
+    var typed = new Typed(".typing",{
+      strings: ['YouTuber', 'Designer', 'Student'],
+      typeSpeed :70,
+      backSpeed :60,
+      loop : true 
+    })
+</script>
+</body>
+</html>
