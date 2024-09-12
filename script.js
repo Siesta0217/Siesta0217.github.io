@@ -1,3 +1,4 @@
+console.log('60523 i love you')
 const text = "Siesta on top";
 const typingDelay = 150;
 const erasingDelay = 100;
