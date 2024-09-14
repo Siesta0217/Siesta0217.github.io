@@ -1,4 +1,4 @@
-
+console.log('Linda i love you')
 const text = "Siesta on top";
 const typingDelay = 150;
 const erasingDelay = 100;
@@ -81,7 +81,6 @@ document.addEventListener('DOMContentLoaded', function() {
   githubImg.addEventListener('mouseout', function() {
     githubImg.style.transform = 'translateY(-20px) scale(1)';
     githubImg.style.boxShadow = 'none';
-    console.log('60523 i love you')
   });
 });
 
