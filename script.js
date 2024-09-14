@@ -3,7 +3,7 @@ const text = "Siesta on top";
 const typingDelay = 150;
 const erasingDelay = 100;
 const newTextDelay = 2000;
-console.log('Linda i love you')
+console.log("Linda i love you")
 let index = 0;
 let isTyping = true;
 
