@@ -1,126 +1,165 @@
-console.log("Linda i love you")
-const text = "Siesta on top";
-const typingDelay = 150;
-const erasingDelay = 100;
-const newTextDelay = 2000;
-let index = 0;
-let isTyping = true;
+console.log("System initialized. Welcome, Siesta.");
 
-function animateText() {
-  const animatedElement = document.getElementById('animated-text');
-  
-  function updateText() {
-    if (isTyping && index <= text.length) {
-      animatedElement.textContent = text.slice(0, index);
-      index++;
-      setTimeout(updateText, typingDelay);
-    } else if (!isTyping && index > 0) {
-      animatedElement.textContent = text.slice(0, index - 1);
-      index--;
-      setTimeout(updateText, erasingDelay);
-    } else {
-      isTyping = !isTyping;
-      setTimeout(updateText, newTextDelay);
+document.addEventListener("DOMContentLoaded", () => {
+    
+    // 1. 載入畫面
+    const loadingOverlay = document.getElementById("loading");
+    const progressBar = document.getElementById("progress-bar");
+    let progress = 0;
+
+    if (loadingOverlay && progressBar) {
+        const interval = setInterval(() => {
+            progress += Math.floor(Math.random() * 20) + 10; 
+            if (progress > 100) progress = 100;
+            progressBar.style.width = `${progress}%`;
+
+            if (progress === 100) {
+                clearInterval(interval);
+                setTimeout(() => {
+                    const loadingContent = document.querySelector('.loading-content');
+                    if(loadingContent) {
+                        loadingContent.style.transition = 'transform 0.5s ease, opacity 0.5s ease';
+                        loadingContent.style.transform = 'translateY(-100vh)';
+                        loadingContent.style.opacity = '0';
+                    }
+                    setTimeout(() => {
+                        loadingOverlay.style.transition = 'opacity 0.5s ease';
+                        loadingOverlay.style.opacity = "0";
+                        setTimeout(() => { loadingOverlay.style.display = "none"; }, 500); 
+                    }, 500);
+                }, 500);
+            }
+        }, 200);
     }
-  }
 
-  updateText();
-}
+    // 2. Typed.js
+    if (window.Typed) {
+        new Typed(".typing", {
+            strings: [
+                'CYBER_SECURITY_ENTHUSIAST',
+                'PYTHON_DEVELOPER',
+                'FRONTEND_DESIGNER',
+                'DIGITAL_CONTENT_CREATOR',
+                'MDHS_STUDENT'
+            ],
+            typeSpeed: 60, backSpeed: 40, backDelay: 1500, loop: true, cursorChar: '_'
+        });
+    }
 
-document.addEventListener('DOMContentLoaded', animateText);
+    // 3. 導覽列
+    let lastScrollTop = 0;
+    const navbar = document.getElementById("navbar");
+    if (navbar) {
+        window.addEventListener("scroll", () => {
+            let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            if (scrollTop > lastScrollTop && scrollTop > 100) {
+                navbar.classList.add("hidden");
+            } else {
+                navbar.classList.remove("hidden");
+            }
+            lastScrollTop = scrollTop;
+        });
+    }
 
-document.addEventListener('DOMContentLoaded', function() {
-  const images = document.querySelectorAll('.contact-images img');
+    // 4. Hero 視差與浮現
+    const heroImage = document.querySelector('.hero-content');
+    if (heroImage) {
+        heroImage.style.transition = 'transform 1s ease-out, opacity 1s ease-out';
+        heroImage.style.transform = 'translateY(-20px)';
+        heroImage.style.opacity = '0';
+        setTimeout(() => {
+            heroImage.style.transform = 'translateY(0)';
+            heroImage.style.opacity = '1';
+        }, 800);
+    }
+    const hero = document.getElementById('home');
+    if (hero) {
+        window.addEventListener('scroll', () => {
+            const scrollPosition = window.pageYOffset;
+            hero.style.backgroundPositionY = `${scrollPosition * 0.5}px`;
+        });
+    }
 
-  images.forEach(img => {
-    img.addEventListener('mouseover', function() {
-      img.style.transform = 'scale(1.1)';
-      img.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.2)';
-      img.style.transition = 'transform 0.3s ease, box-shadow 0.3s ease';
-    });
+    // 5. 滾動觸發動畫
+    function setupScrollAnimation(sectionSelector, itemSelector, thresholdVal = 0.3) {
+        const section = document.querySelector(sectionSelector);
+        const items = document.querySelectorAll(itemSelector);
+        if (!section || items.length === 0) return;
 
-    img.addEventListener('mouseout', function() {
-      img.style.transform = 'scale(1)';
-      img.style.boxShadow = 'none';
-    });
-  });
+        items.forEach(item => {
+            item.style.opacity = '0';
+            item.style.transform = 'translateY(30px)';
+            item.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+        });
 
-  const discordImg = document.querySelector('.contact-images img.discord');
-  const gmailImg = document.querySelector('.contact-images img.gmail');
-  const githubImg = document.querySelector('.contact-images img.github');
+        const observer = new IntersectionObserver((entries) => {
+            if (entries[0].isIntersecting) {
+                items.forEach((item, index) => {
+                    setTimeout(() => {
+                        item.style.opacity = '1';
+                        item.style.transform = 'translateY(0)';
+                    }, index * 200);
+                });
+                observer.unobserve(section);
+            }
+        }, { threshold: thresholdVal });
+        observer.observe(section);
+    }
+    setupScrollAnimation('#contact', '.contact-item', 0.5);
+    setupScrollAnimation('#goals', '.goal-card', 0.3);
 
-  discordImg.addEventListener('mouseover', function() {
-    discordImg.style.transform = 'translateY(-20px) scale(1.1)';
-    discordImg.style.boxShadow = '0 8px 16px rgba(0, 0, 0, 0.4)';
-    discordImg.style.transition = 'transform 0.3s ease, box-shadow 0.3s ease';
-  });
+    // 6. 點狀背景
+    function createHalftoneDots() {
+        const container = document.getElementById('goals');
+        if (!container) return;
+        const dotContainer = document.createElement('div');
+        dotContainer.className = 'halftone-container';
+        dotContainer.style.position = 'absolute'; dotContainer.style.top = '0'; dotContainer.style.left = '0';
+        dotContainer.style.width = '100%'; dotContainer.style.height = '100%';
+        dotContainer.style.pointerEvents = 'none'; dotContainer.style.overflow = 'hidden'; dotContainer.style.zIndex = '0';
+        container.style.position = 'relative'; container.appendChild(dotContainer);
 
-  discordImg.addEventListener('mouseout', function() {
-    discordImg.style.transform = 'translateY(-20px) scale(1)';
-    discordImg.style.boxShadow = 'none';
-  });
+        for (let i = 0; i < 30; i++) {
+            const dot = document.createElement('div');
+            dot.style.position = 'absolute'; dot.style.width = `20px`; dot.style.height = `20px`;
+            dot.style.background = 'rgba(255, 255, 255, 0.05)'; dot.style.borderRadius = '50%';
+            dot.style.left = `${Math.random() * 100}%`; dot.style.top = `${Math.random() * 100}%`;
+            dot.animate([{ transform: 'scale(0)', opacity: 1 }, { transform: 'scale(1)', opacity: 0 }], { duration: 4000, iterations: Infinity, delay: Math.random() * 4000 });
+            dotContainer.appendChild(dot);
+        }
+    }
+    createHalftoneDots();
 
-  gmailImg.addEventListener('mouseover', function() {
-    gmailImg.style.transform = 'translateY(0) scale(1.1)';
-    gmailImg.style.boxShadow = '0 8px 16px rgba(0, 0, 0, 0.4)';
-    gmailImg.style.transition = 'transform 0.3s ease, box-shadow 0.3s ease';
-  });
+    // 7. Canvas 背景
+    function createCanvasParticles() {
+        const contactSection = document.getElementById('contact');
+        if (!contactSection) return;
+        const canvas = document.createElement('canvas'); const ctx = canvas.getContext('2d');
+        canvas.style.position = 'absolute'; canvas.style.top = '0'; canvas.style.left = '0';
+        canvas.style.width = '100%'; canvas.style.height = '100%'; canvas.style.zIndex = '0'; canvas.style.pointerEvents = 'none';
+        contactSection.insertBefore(canvas, contactSection.firstChild);
 
-  gmailImg.addEventListener('mouseout', function() {
-    gmailImg.style.transform = 'translateY(0) scale(1)';
-    gmailImg.style.boxShadow = 'none';
-  });
+        let width, height; const particles = []; const particleCount = window.innerWidth < 768 ? 40 : 80;
+        function resize() { width = canvas.width = contactSection.offsetWidth; height = canvas.height = contactSection.offsetHeight; }
+        window.addEventListener('resize', resize); resize();
 
-  githubImg.addEventListener('mouseover', function() {
-    githubImg.style.transform = 'translateY(-20px) scale(1.1)';
-    githubImg.style.boxShadow = '0 8px 16px rgba(0, 0, 0, 0.4)';
-    githubImg.style.transition = 'transform 0.3s ease, box-shadow 0.3s ease';
-  });
+        for (let i = 0; i < particleCount; i++) {
+            particles.push({ x: Math.random() * width, y: Math.random() * height, radius: Math.random() * 2 + 1, vx: (Math.random() - 0.5) * 1, vy: (Math.random() - 0.5) * 1 });
+        }
 
-  githubImg.addEventListener('mouseout', function() {
-    githubImg.style.transform = 'translateY(-20px) scale(1)';
-    githubImg.style.boxShadow = 'none';
-  });
+        function draw() {
+            ctx.clearRect(0, 0, width, height); ctx.fillStyle = 'rgba(255, 255, 255, 0.3)';
+            for (let i = 0; i < particleCount; i++) {
+                const p = particles[i]; ctx.beginPath(); ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2); ctx.fill();
+                p.x += p.vx; p.y += p.vy;
+                if (p.x < 0 || p.x > width) p.vx *= -1; if (p.y < 0 || p.y > height) p.vy *= -1;
+            }
+            requestAnimationFrame(draw);
+        }
+        draw();
+    }
+    setTimeout(createCanvasParticles, 500);
 });
 
-document.addEventListener('DOMContentLoaded', function() {
-  const downArrow = document.getElementById('down-arrow');
-  const navbar = document.getElementById('navbar');
-  let lastScrollTop = 0;
-
-  downArrow.addEventListener('click', function() {
-    document.getElementById('about').scrollIntoView({ behavior: 'smooth' });
-  });
-
-  window.addEventListener('scroll', function() {
-    let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    if (scrollTop > lastScrollTop) {
-      // 向下滚动，隐藏导航栏
-      navbar.style.top = '-80px'; // 确保导航栏完全隐藏
-    } else {
-      // 向上滚动，显示导航栏
-      navbar.style.top = '20PX';
-    }
-    lastScrollTop = scrollTop;
-  });
-
-  // 为导航链接添加悬停动画
-  const navLinks = document.querySelectorAll('.nav-link');
-  navLinks.forEach(link => {
-    link.addEventListener('mouseenter', function() {
-      const underline = document.createElement('div');
-      underline.classList.add('underline');
-      this.appendChild(underline);
-      setTimeout(() => underline.style.width = '100%', 0);
-    });
-
-    link.addEventListener('mouseleave', function() {
-      const underline = this.querySelector('.underline');
-      if (underline) {
-        underline.style.width = '0';
-        underline.addEventListener('transitionend', () => underline.remove());
-      }
-    });
-  });
-});
-
+if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+window.scrollTo(0, 0);
