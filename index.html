@@ -120,6 +120,10 @@
       justify-content: space-between;
     }
     .nav-logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 5px 0;
       font-size: 15px;
       font-weight: 600;
       letter-spacing: 0;
@@ -128,7 +132,16 @@
       isolation: isolate;
       text-shadow: 0 0 14px color-mix(in oklch, var(--accent) 18%, transparent);
     }
-    .nav-logo::after {
+    .nav-logo-main {
+      position: relative;
+      color: transparent;
+      background: linear-gradient(100deg, var(--fg), var(--accent2), var(--fg), var(--accent));
+      background-size: 220% 100%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      animation: brand-flow 6s ease-in-out infinite;
+    }
+    .nav-logo-main::after {
       content: attr(data-text);
       position: absolute;
       inset: 0;
@@ -139,9 +152,39 @@
       pointer-events: none;
       transition: opacity 0.18s ease;
     }
-    .nav-logo:hover::after {
+    .nav-logo:hover .nav-logo-main::after {
       opacity: 0.7;
       animation: nav-split 0.42s steps(2, end);
+    }
+    .nav-logo-sub {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: color-mix(in oklch, var(--accent2) 78%, var(--muted));
+      opacity: 0.9;
+      text-shadow: 0 0 10px color-mix(in oklch, var(--accent2) 18%, transparent);
+    }
+    .nav-logo-sub::before {
+      content: '';
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 8px var(--glow-green);
+      animation: brand-dot 2.6s ease-in-out infinite;
+    }
+    @keyframes brand-flow {
+      0%, 20%, 100% { background-position: 0% 50%; }
+      55%, 70% { background-position: 100% 50%; }
+    }
+    @keyframes brand-dot {
+      0%, 100% { opacity: 0.45; transform: scale(0.82); }
+      50% { opacity: 1; transform: scale(1); }
     }
     @keyframes nav-split {
       0%, 100% { transform: translateX(1px); clip-path: inset(0 0 52% 0); }
@@ -754,6 +797,7 @@
     /* ── Responsive ── */
     @media (max-width: 600px) {
       .nav-links { display: none; }
+      .nav-logo-sub { display: none; }
       .hero { grid-template-columns: 1fr; padding: 88px 20px 0; gap: 24px; justify-items: center; text-align: center; }
       .hero h1 { margin-left: auto; margin-right: auto; }
       .hero-status { justify-content: center; }
@@ -788,6 +832,8 @@
       .hero h1,
       .hero h1::before,
       .hero h1::after,
+      .nav-logo-main,
+      .nav-logo-sub::before,
       .section-label::before,
       .project:hover .project-name {
         animation: none;
@@ -803,7 +849,10 @@
 
   <nav>
     <div class="nav-inner">
-      <a href="#" class="nav-logo" data-text="Siesta">Siesta</a>
+      <a href="#" class="nav-logo" aria-label="Siesta home">
+        <span class="nav-logo-main" data-text="Siesta">Siesta</span>
+        <span class="nav-logo-sub">dev.log</span>
+      </a>
       <ul class="nav-links">
         <li><a href="#about">About</a></li>
         <li><a href="#skills">Skills</a></li>
@@ -1081,7 +1130,7 @@
       }, 26);
     }
 
-    document.querySelectorAll('.nav-logo, .section-label, .cell-title, .project-name, .contact-platform').forEach(el => {
+    document.querySelectorAll('.nav-logo-main, .nav-logo-sub, .section-label, .cell-title, .project-name, .contact-platform').forEach(el => {
       el.dataset.fxOriginal = el.textContent;
       el.addEventListener('pointerenter', () => flickerText(el));
     });
