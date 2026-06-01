@@ -3,857 +3,150 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>T-Display-S3-Touch — Smart Clock · Siesta</title>
-  <link rel="preconnect" href="https://fonts.bunny.net">
-  <link href="https://fonts.bunny.net/css?family=inter:400,500,600,700&display=swap" rel="stylesheet">
-  <style>
-    /* ── Tokens (identical to index.html) ── */
-    :root {
-      --bg:       oklch(9%  0.012 250);
-      --surface:  oklch(13% 0.014 250);
-      --surface2: oklch(17% 0.014 250);
-      --fg:       oklch(93% 0.006 240);
-      --muted:    oklch(52% 0.014 250);
-      --border:   oklch(22% 0.012 250);
-      --accent:   oklch(62% 0.22 255);
-      --accent2:  oklch(72% 0.18 200);
-      --green:    oklch(68% 0.20 145);
-      --amber:    oklch(78% 0.16 75);
-
-      --font:      'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-      --font-mono: ui-monospace, 'JetBrains Mono', 'Cascadia Code', Menlo, monospace;
-
-      --r:   6px;
-      --rl:  12px;
-      --max: 960px;
-
-      --glow-accent:  color-mix(in oklch, var(--accent)  35%, transparent);
-      --glow-accent2: color-mix(in oklch, var(--accent2) 35%, transparent);
-      --glow-green:   color-mix(in oklch, var(--green)   35%, transparent);
-      --glow-amber:   color-mix(in oklch, var(--amber)   35%, transparent);
-    }
-
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: var(--font);
-      background: var(--bg);
-      color: var(--fg);
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-      font-feature-settings: "cv01","cv03","cv04";
-      overflow-x: hidden;
-    }
-    a { color: inherit; text-decoration: none; }
-
-    /* ── Scroll progress ── */
-    #progress-bar {
-      position: fixed; top: 0; left: 0;
-      height: 2px; width: 0%;
-      background: linear-gradient(90deg, var(--accent), var(--accent2));
-      z-index: 200; transition: width 0.1s linear;
-      box-shadow: 0 0 8px var(--glow-accent);
-    }
-
-    /* ── Particle canvas ── */
-    #particles { position: fixed; inset: 0; z-index: -2; pointer-events: none; }
-
-    /* ── Anime background ── */
-    body::before {
-      content: '';
-      position: fixed; inset: 0;
-      background: url('https://raw.githubusercontent.com/Siesta0217/Siesta0217.github.io/main/422887077_1128588268320846_8642390475498280822_n.jpg') center/cover no-repeat;
-      opacity: 0.14; pointer-events: none; z-index: -1;
-    }
-    body::after {
-      content: ''; position: fixed; inset: 0;
-      background: linear-gradient(160deg,
-        oklch(7% 0.02 260 / 0.55) 0%,
-        oklch(9% 0.01 245 / 0.35) 60%,
-        oklch(6% 0.02 270 / 0.60) 100%);
-      pointer-events: none; z-index: -1;
-    }
-
-    /* ── Cursor glow ── */
-    #cursor-glow {
-      position: fixed; width: 320px; height: 320px;
-      border-radius: 50%; pointer-events: none; z-index: 0;
-      transform: translate(-50%, -50%);
-      background: radial-gradient(circle, color-mix(in oklch, var(--accent) 8%, transparent) 0%, transparent 70%);
-      transition: opacity 0.3s; opacity: 0;
-    }
-
-    /* ── Nav ── */
-    nav {
-      position: fixed; inset: 0 0 auto 0; z-index: 100;
-      background: color-mix(in oklch, var(--bg) 80%, transparent);
-      backdrop-filter: blur(20px) saturate(180%);
-      -webkit-backdrop-filter: blur(20px) saturate(180%);
-      border-bottom: 1px solid var(--border);
-    }
-    .nav-inner {
-      max-width: var(--max); margin: 0 auto; padding: 0 24px;
-      height: 56px; display: flex; align-items: center; justify-content: space-between;
-    }
-    .nav-logo {
-      display: inline-flex; align-items: center; gap: 9px;
-      font-size: 15px; font-weight: 600; color: var(--fg);
-    }
-    .nav-logo-main {
-      color: transparent;
-      background: linear-gradient(100deg, var(--fg), var(--accent2), var(--fg), var(--accent));
-      background-size: 220% 100%;
-      -webkit-background-clip: text; background-clip: text;
-      animation: brand-flow 6s ease-in-out infinite;
-    }
-    .nav-logo-sub {
-      display: inline-flex; align-items: center; gap: 6px;
-      font-family: var(--font-mono); font-size: 10px; font-weight: 600;
-      letter-spacing: 0.08em; text-transform: uppercase;
-      color: color-mix(in oklch, var(--accent2) 78%, var(--muted)); opacity: 0.9;
-    }
-    .nav-logo-sub::before {
-      content: ''; width: 5px; height: 5px; border-radius: 50%;
-      background: var(--green); box-shadow: 0 0 8px var(--glow-green);
-      animation: dot-pulse 2.6s ease-in-out infinite;
-    }
-    @keyframes brand-flow {
-      0%, 20%, 100% { background-position: 0% 50%; }
-      55%, 70%      { background-position: 100% 50%; }
-    }
-    @keyframes dot-pulse {
-      0%, 100% { opacity: 0.45; transform: scale(0.82); }
-      50%      { opacity: 1;    transform: scale(1); }
-    }
-    .nav-back {
-      display: inline-flex; align-items: center; gap: 7px;
-      font-size: 13px; font-weight: 500;
-      color: var(--muted); transition: color 0.15s;
-    }
-    .nav-back:hover { color: var(--fg); }
-    .nav-back-arr { display: inline-block; transition: transform 0.18s ease; }
-    .nav-back:hover .nav-back-arr { transform: translateX(-4px); }
-
-    /* ── Hero ── */
-    .hero {
-      min-height: 100svh; max-width: var(--max); margin: 0 auto;
-      padding: 56px 24px 0;
-      display: grid; grid-template-columns: 1fr auto;
-      gap: 48px; align-items: center; position: relative;
-    }
-    .hero-content { display: flex; flex-direction: column; }
-
-    .hero-breadcrumb {
-      font-family: var(--font-mono); font-size: 12px;
-      color: var(--muted); margin-bottom: 20px;
-      display: flex; align-items: center; gap: 7px;
-    }
-    .hero-breadcrumb a { color: var(--accent); transition: color 0.15s; }
-    .hero-breadcrumb a:hover { color: var(--accent2); }
-    .hero-breadcrumb .sep { color: var(--border); }
-
-    .hero-status {
-      display: inline-flex; align-items: center; gap: 7px;
-      font-size: 13px; color: var(--muted); font-weight: 500;
-      letter-spacing: -0.01em; margin-bottom: 28px;
-    }
-    .status-dot {
-      width: 7px; height: 7px; border-radius: 50%;
-      background: var(--green); flex-shrink: 0;
-      animation: green-pulse 2.4s ease infinite;
-      box-shadow: 0 0 6px var(--glow-green);
-    }
-    @keyframes green-pulse {
-      0%, 100% { box-shadow: 0 0 4px var(--glow-green), 0 0 0 0   color-mix(in oklch, var(--green) 30%, transparent); }
-      50%      { box-shadow: 0 0 10px var(--glow-green), 0 0 0 6px color-mix(in oklch, var(--green)  0%, transparent); }
-    }
-
-    .hero h1 {
-      font-size: clamp(48px, 8.5vw, 92px);
-      font-weight: 700; letter-spacing: -0.02em; line-height: 1;
-      margin-bottom: 14px; color: transparent;
-      width: max-content; max-width: 100%;
-      background: linear-gradient(108deg,
-        oklch(96% 0.014 225) 0%,
-        var(--accent2) 24%,
-        var(--accent)  48%,
-        oklch(86% 0.045 220) 70%,
-        oklch(98% 0.01 230) 100%);
-      background-size: 260% 100%;
-      -webkit-background-clip: text; background-clip: text;
-      filter:
-        drop-shadow(0 0 10px color-mix(in oklch, var(--accent2) 24%, transparent))
-        drop-shadow(0 0 30px color-mix(in oklch, var(--accent)  18%, transparent));
-      animation: title-flow 5s ease-in-out infinite;
-      position: relative; isolation: isolate;
-    }
-    .hero h1::after {
-      content: '';
-      position: absolute;
-      left: 2px; right: 2px; bottom: -12px;
-      height: 3px; border-radius: 999px;
-      background: linear-gradient(90deg, transparent, var(--accent) 20%, var(--accent2) 50%, var(--accent) 80%, transparent);
-      background-size: 220% 100%;
-      box-shadow: 0 0 10px var(--glow-accent), 0 0 28px color-mix(in oklch, var(--accent2) 20%, transparent);
-      animation: line-energy 2.8s ease-in-out infinite;
-    }
-    @keyframes title-flow {
-      0%, 100% { background-position: 0% 50%; }
-      45%, 65% { background-position: 100% 50%; }
-    }
-    @keyframes line-energy {
-      0%, 100% { background-position: 0%   50%; opacity: 0.7; }
-      50%      { background-position: 100% 50%; opacity: 1; }
-    }
-
-    .hero-type {
-      font-family: var(--font-mono); font-size: 13px; font-weight: 600;
-      letter-spacing: 0.10em; text-transform: uppercase;
-      color: var(--accent2); margin-top: 24px; margin-bottom: 20px;
-      text-shadow: 0 0 14px var(--glow-accent2);
-    }
-    .hero-sub {
-      font-size: clamp(15px, 1.7vw, 18px); color: var(--muted);
-      max-width: 440px; line-height: 1.6; letter-spacing: 0;
-    }
-    .hero-actions {
-      margin-top: 36px; display: flex; gap: 10px; flex-wrap: wrap;
-    }
-
-    /* ── Buttons ── */
-    .btn {
-      display: inline-flex; align-items: center; gap: 5px;
-      padding: 10px 18px; border-radius: var(--r);
-      font-family: var(--font); font-size: 14px; font-weight: 500;
-      letter-spacing: -0.015em;
-      transition: background 0.15s, transform 0.15s, box-shadow 0.15s;
-      cursor: pointer; border: none; line-height: 1;
-      position: relative; overflow: hidden;
-    }
-    .btn::after {
-      content: ''; position: absolute; inset: 0;
-      background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.07) 50%, transparent 60%);
-      transform: translateX(-100%); transition: transform 0.4s ease;
-    }
-    .btn:hover::after { transform: translateX(100%); }
-
-    .btn-primary { background: var(--accent); color: #fff; }
-    .btn-primary:hover {
-      background: oklch(56% 0.24 255);
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px var(--glow-accent);
-    }
-    .btn-ghost {
-      background: transparent; color: var(--fg);
-      border: 1px solid var(--border);
-    }
-    .btn-ghost:hover {
-      background: var(--surface);
-      border-color: oklch(35% 0.015 250);
-      transform: translateY(-2px);
-    }
-
-    /* ── Device visual ── */
-    .hero-visual {
-      width: clamp(180px, 22vw, 280px); flex-shrink: 0;
-      align-self: center; position: relative;
-    }
-    .hero-visual::before {
-      content: ''; position: absolute; inset: -24px; border-radius: 50%;
-      background: radial-gradient(circle, color-mix(in oklch, var(--accent) 16%, transparent), transparent 70%);
-      animation: device-glow 3s ease-in-out infinite alternate;
-      pointer-events: none;
-    }
-    @keyframes device-glow {
-      from { opacity: 0.5; transform: scale(0.95); }
-      to   { opacity: 1;   transform: scale(1.05); }
-    }
-    .hero-visual img {
-      width: 100%; height: auto; display: block;
-      position: relative;
-      filter: drop-shadow(0 4px 24px color-mix(in oklch, var(--accent) 25%, transparent));
-    }
-
-    /* ── Rule ── */
-    .rule { max-width: var(--max); margin: 0 auto; padding: 0 24px; }
-    .rule hr {
-      border: none; border-top: 1px solid var(--border); position: relative;
-    }
-    .rule hr::after {
-      content: ''; position: absolute; top: -1px; left: 0;
-      width: 60px; height: 1px;
-      background: linear-gradient(90deg, var(--accent), transparent);
-      box-shadow: 0 0 8px var(--glow-accent);
-    }
-
-    /* ── Section ── */
-    .section { max-width: var(--max); margin: 0 auto; padding: 72px 24px; }
-    .section-label {
-      display: inline-flex; align-items: center;
-      font-size: 11.5px; font-weight: 600; letter-spacing: 0.09em; text-transform: uppercase;
-      color: var(--accent); margin-bottom: 32px;
-      text-shadow: 0 0 12px var(--glow-accent);
-      position: relative; overflow: hidden; padding-bottom: 5px;
-    }
-    .section-label::before {
-      content: ''; position: absolute; inset: 0;
-      background: linear-gradient(100deg, transparent 0%, rgba(255,255,255,0.55) 50%, transparent 100%);
-      transform: translateX(-120%);
-      animation: label-scan 5.6s ease-in-out infinite;
-      mix-blend-mode: screen;
-    }
-    .section-label::after {
-      content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 1px;
-      background: linear-gradient(90deg, var(--accent), var(--accent2), transparent);
-      box-shadow: 0 0 10px var(--glow-accent);
-      transform: scaleX(0.35); transform-origin: left; transition: transform 0.25s ease;
-    }
-    .section:hover .section-label::after { transform: scaleX(1); }
-    @keyframes label-scan {
-      0%, 72%, 100% { transform: translateX(-120%); opacity: 0; }
-      80%            { opacity: 0.7; }
-      88%            { transform: translateX(120%); opacity: 0; }
-    }
-
-    /* ── Overview ── */
-    .overview-box {
-      position: relative; padding: 32px 32px 32px 36px;
-      border-radius: 10px; background: var(--surface);
-      border: 1px solid transparent; background-clip: padding-box; overflow: hidden;
-    }
-    .overview-box::before {
-      content: ''; position: absolute; inset: 0; border-radius: 10px; padding: 1px;
-      background: linear-gradient(180deg, var(--accent), var(--green), var(--accent));
-      background-size: 100% 300%;
-      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-      -webkit-mask-composite: xor; mask-composite: exclude;
-      animation: border-flow 4s ease infinite; pointer-events: none;
-    }
-    @keyframes border-flow {
-      0%   { background-position: 0% 0%; }
-      50%  { background-position: 0% 100%; }
-      100% { background-position: 0% 0%; }
-    }
-    .overview-box::after {
-      content: ''; position: absolute; inset: 0; border-radius: 10px;
-      background: radial-gradient(ellipse 60% 80% at 8% 50%, color-mix(in oklch, var(--accent) 5%, transparent), transparent 72%);
-      pointer-events: none;
-      animation: overview-glow 5s ease-in-out infinite alternate;
-    }
-    @keyframes overview-glow { from { opacity: 0.5; } to { opacity: 1; } }
-
-    .overview-body {
-      font-size: clamp(17px, 2vw, 20px); line-height: 1.68;
-      letter-spacing: -0.015em; color: var(--fg);
-      max-width: 620px; position: relative; z-index: 1;
-    }
-    .overview-body em {
-      font-style: normal; color: var(--accent); font-weight: 600;
-      text-shadow: 0 0 14px var(--glow-accent);
-      display: inline-block; cursor: default;
-      transition: text-shadow 0.2s;
-    }
-    .overview-body em:hover { text-shadow: 0 0 22px var(--glow-accent), 0 0 40px var(--glow-accent); }
-    .overview-body strong { color: var(--accent2); font-weight: 600; }
-
-    .overview-stats {
-      display: flex; gap: 36px; margin-top: 28px; flex-wrap: wrap;
-      position: relative; z-index: 1;
-    }
-    .stat { display: flex; flex-direction: column; gap: 1px; }
-    .stat-num {
-      font-size: 30px; font-weight: 700; letter-spacing: -0.05em;
-      color: var(--fg); font-variant-numeric: tabular-nums; line-height: 1;
-    }
-    .stat-num .ac { color: var(--accent);  text-shadow: 0 0 12px var(--glow-accent); }
-    .stat-num .am { color: var(--amber);   text-shadow: 0 0 12px var(--glow-amber); }
-    .stat-label {
-      font-size: 11px; color: var(--muted); letter-spacing: 0.07em;
-      text-transform: uppercase; font-weight: 600; margin-top: 4px;
-    }
-
-    /* ── Spec grid ── */
-    .spec-grid {
-      display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 1px; background: var(--border);
-      border: 1px solid var(--border); border-radius: var(--rl); overflow: hidden;
-    }
-    .spec {
-      background: var(--surface); padding: 20px 22px;
-      transition: background 0.15s; position: relative; overflow: hidden;
-    }
-    .spec::before {
-      content: ''; position: absolute; inset: 0;
-      background: linear-gradient(105deg, transparent 30%, color-mix(in oklch, var(--accent) 6%, transparent) 50%, transparent 70%);
-      transform: translateX(-100%); transition: transform 0.5s ease;
-    }
-    .spec:hover { background: var(--surface2); }
-    .spec:hover::before { transform: translateX(100%); }
-    .spec-label {
-      font-family: var(--font-mono); font-size: 10.5px; font-weight: 700;
-      letter-spacing: 0.08em; text-transform: uppercase;
-      color: var(--muted); margin-bottom: 8px;
-    }
-    .spec-value {
-      font-size: 15px; font-weight: 600; color: var(--fg);
-      letter-spacing: -0.01em; line-height: 1.3;
-      transition: color 0.18s ease, text-shadow 0.18s ease;
-    }
-    .spec:hover .spec-value {
-      color: var(--accent2);
-      text-shadow: 0 0 14px color-mix(in oklch, var(--accent2) 30%, transparent);
-    }
-    .spec-meta { font-size: 12px; color: var(--muted); margin-top: 4px; }
-
-    /* ── Feature cells ── */
-    .cell-grid {
-      display: grid; grid-template-columns: repeat(auto-fill, minmax(196px, 1fr));
-      gap: 1px; background: var(--border);
-      border: 1px solid var(--border); border-radius: var(--rl); overflow: hidden;
-    }
-    .cell {
-      background: var(--surface); padding: 22px 24px;
-      transition: background 0.15s; position: relative; overflow: hidden;
-    }
-    .cell::before {
-      content: ''; position: absolute; inset: 0;
-      background: linear-gradient(105deg, transparent 30%, color-mix(in oklch, var(--accent) 6%, transparent) 50%, transparent 70%);
-      transform: translateX(-100%); transition: transform 0.5s ease;
-    }
-    .cell:hover { background: var(--surface2); }
-    .cell:hover::before { transform: translateX(100%); }
-    .cell-title {
-      font-size: 14px; font-weight: 600; margin-bottom: 3px; color: var(--fg);
-      transition: color 0.18s ease, text-shadow 0.18s ease;
-    }
-    .cell-sub { font-size: 12.5px; color: var(--muted); letter-spacing: -0.01em; }
-    .cell:hover .cell-title {
-      color: var(--accent2);
-      text-shadow: 0 0 14px color-mix(in oklch, var(--accent2) 30%, transparent);
-    }
-
-    /* ── Dev log ── */
-    .log-list {
-      display: flex; flex-direction: column; gap: 1px;
-      background: var(--border); border: 1px solid var(--border);
-      border-radius: var(--rl); overflow: hidden;
-    }
-    .log-entry {
-      background: var(--surface); padding: 18px 24px;
-      display: grid; grid-template-columns: 110px 1fr;
-      gap: 20px; align-items: baseline;
-      transition: background 0.15s;
-    }
-    .log-entry:hover { background: var(--surface2); }
-    .log-date {
-      font-family: var(--font-mono); font-size: 11.5px;
-      color: var(--muted); letter-spacing: 0.02em;
-    }
-    .log-msg { font-size: 13.5px; color: var(--fg); line-height: 1.5; }
-    .log-tag {
-      display: inline-block; font-family: var(--font-mono);
-      font-size: 10px; padding: 2px 7px; border-radius: 3px;
-      margin-right: 8px; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase;
-    }
-    .log-tag.green {
-      background: color-mix(in oklch, var(--green)  12%, transparent);
-      color: var(--green);
-      border: 1px solid color-mix(in oklch, var(--green) 22%, transparent);
-    }
-    .log-tag.blue {
-      background: color-mix(in oklch, var(--accent) 12%, transparent);
-      color: var(--accent);
-      border: 1px solid color-mix(in oklch, var(--accent) 22%, transparent);
-    }
-    .log-tag.amber {
-      background: color-mix(in oklch, var(--amber) 14%, transparent);
-      color: var(--amber);
-      border: 1px solid color-mix(in oklch, var(--amber) 26%, transparent);
-    }
-
-    /* ── Tags row ── */
-    .tags-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
-    .tag {
-      font-size: 11.5px; font-weight: 500; padding: 3px 9px; border-radius: 4px;
-      background: oklch(18% 0.015 255); border: 1px solid var(--border);
-      color: var(--accent); font-family: var(--font-mono);
-    }
-
-    /* ── Scroll fade ── */
-    .fade { opacity: 0; transform: translateY(20px); transition: opacity 0.55s ease, transform 0.55s ease; }
-    .fade.on { opacity: 1; transform: none; }
-
-    /* ── Footer ── */
-    footer {
-      max-width: var(--max); margin: 0 auto; padding: 28px 24px 52px;
-      border-top: 1px solid var(--border);
-      display: flex; justify-content: space-between; align-items: center;
-    }
-    .footer-text { font-size: 12.5px; color: var(--muted); letter-spacing: -0.01em; }
-
-    /* ── Responsive ── */
-    @media (max-width: 600px) {
-      .hero { grid-template-columns: 1fr; padding: 88px 20px 0; gap: 24px; justify-items: center; text-align: center; }
-      .hero h1 { margin: 0 auto; }
-      .hero-status, .hero-breadcrumb, .tags-row { justify-content: center; }
-      .hero-actions { justify-content: center; }
-      .hero-visual { order: -1; width: 150px; }
-      .section { padding: 56px 20px; }
-      .rule { padding: 0 20px; }
-      .log-entry { grid-template-columns: 1fr; gap: 5px; }
-      footer { flex-direction: column; gap: 6px; text-align: center; padding: 24px 20px 40px; }
-    }
-    @media (min-width: 601px) and (max-width: 820px) {
-      .cell-grid, .spec-grid { grid-template-columns: repeat(2, 1fr); }
-    }
-    @media (min-width: 1440px) { :root { --max: 1080px; } }
-    @media (prefers-reduced-motion: reduce) {
-      .hero h1, .hero h1::after, .nav-logo-main, .section-label::before { animation: none; }
-    }
-  </style>
+  <title>T-Display-S3 — Smart Clock · Siesta</title>
+  <meta name="description" content="Custom smart clock built on the LilyGO T-Display-S3-Touch. C++ firmware, UI rendered straight to the touch screen.">
+  <link rel="icon" type="image/png" href="d32ce04ad4746acd17398629a5fb081f-modified.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="theme.css">
 </head>
 <body>
 
-  <div id="progress-bar"></div>
-  <div id="cursor-glow"></div>
-  <canvas id="particles"></canvas>
+  <div id="progress"></div>
+  <canvas id="stars"></canvas>
+  <div class="fx-grid"></div>
+  <div class="fx-scan"></div>
 
-  <!-- ── Nav ── -->
-  <nav>
+  <!-- ── NAV ── -->
+  <nav class="hud-nav">
     <div class="nav-inner">
-      <a href="https://Siesta0217.github.io" class="nav-logo" aria-label="Back to portfolio">
-        <span class="nav-logo-main">Siesta</span>
-        <span class="nav-logo-sub">dev.log</span>
+      <a href="index.html" class="nav-logo" aria-label="Back to portfolio">
+        <span class="heart">♥</span><span class="name">SIESTA</span><span class="tag">.EXE</span>
       </a>
-      <a href="https://Siesta0217.github.io" class="nav-back">
-        <span class="nav-back-arr">←</span> Portfolio
-      </a>
+      <a href="index.html" class="nav-back"><span class="arr">◄</span> PORTFOLIO</a>
     </div>
   </nav>
 
-  <!-- ── Hero ── -->
-  <div class="hero">
-    <div class="hero-content">
-      <p class="hero-breadcrumb">
-        <a href="https://Siesta0217.github.io">~/projects</a>
-        <span class="sep">›</span>
-        <span>t-display-s3</span>
-      </p>
-      <p class="hero-status">
-        <span class="status-dot"></span>
-        ESP32-S3 &nbsp;·&nbsp; Active
-      </p>
-      <h1>T-Display-S3</h1>
-      <p class="hero-type">// Smart Clock · Embedded</p>
-      <p class="hero-sub">
-        A custom smart clock built on the LilyGO T-Display-S3-Touch board.
-        Programmed in C++ with a UI rendered directly to the capacitive
-        touch screen — built from the firmware up.
-      </p>
-      <div class="tags-row" style="margin-top:20px;">
-        <span class="tag">C++</span>
-        <span class="tag">ESP32</span>
-        <span class="tag">Embedded</span>
-        <span class="tag">Hardware</span>
+  <!-- ── HERO ── -->
+  <header class="proj-hero">
+    <div class="proj-content">
+      <p class="proj-breadcrumb"><a href="index.html">~/quests</a><span class="sep">›</span>t-display-s3</p>
+      <span class="chip"><span class="dot"></span> ESP32-S3 · ACTIVE</span>
+      <h1 class="proj-title px-title">T-DISPLAY-S3</h1>
+      <p class="proj-type">// SMART CLOCK · EMBEDDED</p>
+      <p class="proj-sub">A custom smart clock built on the LilyGO T-Display-S3-Touch board. C++ firmware with a UI rendered directly to the capacitive touch screen — built from the firmware up.</p>
+      <div class="tags">
+        <span class="tag">C++</span><span class="tag">ESP32</span><span class="tag">Embedded</span><span class="tag">Hardware</span>
       </div>
-      <div class="hero-actions">
-        <a href="#overview" class="btn btn-primary">Learn More ↓</a>
+      <div class="proj-actions">
+        <a href="#overview" class="btn btn-cyan">Learn More ▼</a>
         <a href="https://github.com/Siesta0217" class="btn btn-ghost" target="_blank" rel="noopener">GitHub ↗</a>
       </div>
     </div>
-
-    <div class="hero-visual">
-      <img
-        src="https://raw.githubusercontent.com/Siesta0217/Siesta0217.github.io/main/t-display-s3-touch-cutout.png"
-        alt="LilyGO T-Display-S3-Touch board"
-      >
+    <div class="proj-visual">
+      <div class="proj-frame">
+        <img src="t-display-s3-touch-cutout.png" alt="LilyGO T-Display-S3-Touch board">
+      </div>
     </div>
-  </div>
+  </header>
 
   <div class="rule"><hr></div>
 
-  <!-- ── Overview ── -->
-  <div class="section fade" id="overview">
-    <p class="section-label">Overview</p>
-    <div class="overview-box">
+  <!-- ── OVERVIEW ── -->
+  <section class="section fade" id="overview">
+    <p class="section-label">▘ OVERVIEW</p>
+    <div class="hud-box">
+      <span class="hud-tab">README</span>
       <p class="overview-body">
-        A self-built smart clock running on the
-        <strong>LilyGO T-Display-S3-Touch</strong> — an
-        <em>ESP32-S3</em> dev board with a built-in capacitive touchscreen.
-        Firmware is written in <em>C++</em>, with a custom UI rendered
-        directly to the display. Designed from scratch, no off-the-shelf
-        clock firmware involved.
+        A self-built smart clock running on the <strong>LilyGO T-Display-S3-Touch</strong> — an
+        <em>ESP32-S3</em> dev board with a built-in capacitive touchscreen. Firmware is written in
+        <em>C++</em>, with a custom UI rendered directly to the display. Designed from scratch, no
+        off-the-shelf clock firmware involved.
       </p>
-      <div class="overview-stats">
-        <div class="stat">
-          <div class="stat-num"><span class="ac">1.9</span>"</div>
-          <div class="stat-label">Touch Display</div>
-        </div>
-        <div class="stat">
-          <div class="stat-num"><span class="am">240</span>MHz</div>
-          <div class="stat-label">ESP32-S3</div>
-        </div>
-        <div class="stat">
-          <div class="stat-num">C<span class="ac">++</span></div>
-          <div class="stat-label">Firmware</div>
-        </div>
+      <div class="stat-row">
+        <div><div class="stat-num"><span class="ac">1.9</span>"</div><div class="stat-label">TOUCH DISPLAY</div></div>
+        <div><div class="stat-num"><span class="am">240</span>MHZ</div><div class="stat-label">ESP32-S3</div></div>
+        <div><div class="stat-num">C<span class="ac">++</span></div><div class="stat-label">FIRMWARE</div></div>
       </div>
     </div>
-  </div>
+  </section>
 
   <div class="rule"><hr></div>
 
-  <!-- ── Hardware ── -->
-  <div class="section fade" id="hardware">
-    <p class="section-label">Hardware</p>
+  <!-- ── HARDWARE ── -->
+  <section class="section fade" id="hardware">
+    <p class="section-label">▘ HARDWARE</p>
     <div class="spec-grid">
-      <div class="spec">
-        <p class="spec-label">MCU</p>
-        <p class="spec-value">ESP32-S3</p>
-        <p class="spec-meta">Dual-core · 240MHz</p>
-      </div>
-      <div class="spec">
-        <p class="spec-label">Display</p>
-        <p class="spec-value">1.9" ST7789</p>
-        <p class="spec-meta">170 × 320 IPS</p>
-      </div>
-      <div class="spec">
-        <p class="spec-label">Touch</p>
-        <p class="spec-value">CST816 Capacitive</p>
-        <p class="spec-meta">I²C interface</p>
-      </div>
-      <div class="spec">
-        <p class="spec-label">Memory</p>
-        <p class="spec-value">16MB Flash · 8MB PSRAM</p>
-        <p class="spec-meta">Plenty of room</p>
-      </div>
-      <div class="spec">
-        <p class="spec-label">Connectivity</p>
-        <p class="spec-value">Wi-Fi · Bluetooth 5</p>
-        <p class="spec-meta">Built into S3</p>
-      </div>
-      <div class="spec">
-        <p class="spec-label">Power</p>
-        <p class="spec-value">USB-C</p>
-        <p class="spec-meta">Battery-ready</p>
-      </div>
+      <div class="spec"><p class="spec-label">MCU</p><p class="spec-value">ESP32-S3</p><p class="spec-meta">Dual-core · 240MHz</p></div>
+      <div class="spec"><p class="spec-label">DISPLAY</p><p class="spec-value">1.9" ST7789</p><p class="spec-meta">170 × 320 IPS</p></div>
+      <div class="spec"><p class="spec-label">TOUCH</p><p class="spec-value">CST816 Capacitive</p><p class="spec-meta">I²C interface</p></div>
+      <div class="spec"><p class="spec-label">MEMORY</p><p class="spec-value">16MB Flash · 8MB PSRAM</p><p class="spec-meta">Plenty of room</p></div>
+      <div class="spec"><p class="spec-label">CONNECTIVITY</p><p class="spec-value">Wi-Fi · Bluetooth 5</p><p class="spec-meta">Built into S3</p></div>
+      <div class="spec"><p class="spec-label">POWER</p><p class="spec-value">USB-C</p><p class="spec-meta">Battery-ready</p></div>
     </div>
-  </div>
+  </section>
 
   <div class="rule"><hr></div>
 
-  <!-- ── Features ── -->
-  <div class="section fade" id="features">
-    <p class="section-label">Features</p>
+  <!-- ── FEATURES ── -->
+  <section class="section fade" id="features">
+    <p class="section-label">▘ FEATURES</p>
     <div class="cell-grid">
-      <div class="cell">
-        <p class="cell-title">Live Clock</p>
-        <p class="cell-sub">NTP-synced timekeeping</p>
-      </div>
-      <div class="cell">
-        <p class="cell-title">Touch UI</p>
-        <p class="cell-sub">Custom-rendered on display</p>
-      </div>
-      <div class="cell">
-        <p class="cell-title">Wi-Fi Sync</p>
-        <p class="cell-sub">Network-aware updates</p>
-      </div>
-      <div class="cell">
-        <p class="cell-title">Multiple Faces</p>
-        <p class="cell-sub">Swappable clock layouts</p>
-      </div>
-      <div class="cell">
-        <p class="cell-title">Low Power</p>
-        <p class="cell-sub">Optimized refresh loop</p>
-      </div>
-      <div class="cell">
-        <p class="cell-title">From Scratch</p>
-        <p class="cell-sub">Custom firmware, no presets</p>
-      </div>
+      <div class="cell"><p class="cell-title">Live Clock</p><p class="cell-sub">NTP-synced timekeeping</p></div>
+      <div class="cell"><p class="cell-title">Touch UI</p><p class="cell-sub">Custom-rendered on display</p></div>
+      <div class="cell"><p class="cell-title">Wi-Fi Sync</p><p class="cell-sub">Network-aware updates</p></div>
+      <div class="cell"><p class="cell-title">Clock Faces</p><p class="cell-sub">Swappable layouts</p></div>
+      <div class="cell"><p class="cell-title">Low Power</p><p class="cell-sub">Optimized refresh loop</p></div>
+      <div class="cell"><p class="cell-title">From Scratch</p><p class="cell-sub">Custom firmware, no presets</p></div>
     </div>
-  </div>
+  </section>
 
   <div class="rule"><hr></div>
 
-  <!-- ── Tech Stack ── -->
-  <div class="section fade" id="tech">
-    <p class="section-label">Tech Stack</p>
+  <!-- ── TECH STACK ── -->
+  <section class="section fade" id="tech">
+    <p class="section-label">▘ TECH STACK</p>
     <div class="cell-grid">
-      <div class="cell">
-        <p class="cell-title">C++</p>
-        <p class="cell-sub">Firmware language</p>
-      </div>
-      <div class="cell">
-        <p class="cell-title">Arduino / ESP-IDF</p>
-        <p class="cell-sub">Build environment</p>
-      </div>
-      <div class="cell">
-        <p class="cell-title">TFT_eSPI</p>
-        <p class="cell-sub">Display driver library</p>
-      </div>
-      <div class="cell">
-        <p class="cell-title">PlatformIO</p>
-        <p class="cell-sub">Toolchain &amp; uploads</p>
-      </div>
+      <div class="cell"><p class="cell-title">C++</p><p class="cell-sub">Firmware language</p></div>
+      <div class="cell"><p class="cell-title">Arduino / IDF</p><p class="cell-sub">Build environment</p></div>
+      <div class="cell"><p class="cell-title">TFT_eSPI</p><p class="cell-sub">Display driver library</p></div>
+      <div class="cell"><p class="cell-title">PlatformIO</p><p class="cell-sub">Toolchain &amp; uploads</p></div>
     </div>
-  </div>
+  </section>
 
   <div class="rule"><hr></div>
 
-  <!-- ── Dev Log ── -->
-  <div class="section fade" id="log">
-    <p class="section-label">Dev Log</p>
+  <!-- ── DEV LOG ── -->
+  <section class="section fade" id="log">
+    <p class="section-label">▘ DEV LOG</p>
     <div class="log-list">
       <div class="log-entry">
-        <span class="log-date">init</span>
-        <span class="log-msg">
-          <span class="log-tag green">INIT</span>
-          Board received. First sketch flashed, "Hello World" on display.
-        </span>
+        <span class="log-date">INIT</span>
+        <span class="log-msg"><span class="log-tag green">INIT</span>Board received. First sketch flashed, "Hello World" on display.</span>
       </div>
       <div class="log-entry">
-        <span class="log-date">phase 1</span>
-        <span class="log-msg">
-          <span class="log-tag blue">BUILD</span>
-          Driver setup, capacitive touch input working, UI rendering loop established.
-        </span>
+        <span class="log-date">PHASE 1</span>
+        <span class="log-msg"><span class="log-tag blue">BUILD</span>Driver setup, capacitive touch input working, UI render loop established.</span>
       </div>
       <div class="log-entry">
-        <span class="log-date">phase 2</span>
-        <span class="log-msg">
-          <span class="log-tag amber">FEATURE</span>
-          NTP time sync over Wi-Fi, multi-face layout system.
-        </span>
+        <span class="log-date">PHASE 2</span>
+        <span class="log-msg"><span class="log-tag amber">FEAT</span>NTP time sync over Wi-Fi, multi-face layout system.</span>
       </div>
       <div class="log-entry">
-        <span class="log-date">now</span>
-        <span class="log-msg">
-          <span class="log-tag green">LIVE</span>
-          Running on desk. Ongoing tweaks to UI &amp; power profile.
-        </span>
+        <span class="log-date">NOW</span>
+        <span class="log-msg"><span class="log-tag green">LIVE</span>Running on desk. Ongoing tweaks to UI &amp; power profile.</span>
       </div>
     </div>
-  </div>
+  </section>
 
   <div class="rule"><hr></div>
 
-  <footer>
-    <span class="footer-text">Siesta · T-Display-S3</span>
-    <span class="footer-text">Built from scratch</span>
+  <footer class="hud-foot">
+    <span class="foot-text">SIESTA · T-DISPLAY-S3</span>
+    <span class="foot-text">BUILT FROM SCRATCH</span>
   </footer>
 
-  <script>
-    /* ── Scroll progress ── */
-    const bar = document.getElementById('progress-bar');
-    window.addEventListener('scroll', () => {
-      const pct = window.scrollY / (document.body.scrollHeight - window.innerHeight) * 100;
-      bar.style.width = Math.min(pct, 100) + '%';
-    }, { passive: true });
-
-    /* ── Cursor glow ── */
-    const glow = document.getElementById('cursor-glow');
-    let cx = -999, cy = -999;
-    document.addEventListener('mousemove', e => {
-      cx = e.clientX; cy = e.clientY;
-      glow.style.left = cx + 'px';
-      glow.style.top  = cy + 'px';
-      glow.style.opacity = '1';
-    });
-    document.addEventListener('mouseleave', () => { glow.style.opacity = '0'; });
-
-    /* ── Particle system ── */
-    const canvas = document.getElementById('particles');
-    const pctx   = canvas.getContext('2d');
-    let W, H, dots;
-
-    function resize() {
-      W = canvas.width  = window.innerWidth;
-      H = canvas.height = window.innerHeight;
-    }
-    function makeDots(n) {
-      return Array.from({ length: n }, () => ({
-        x:  Math.random() * W,
-        y:  Math.random() * H,
-        r:  Math.random() * 1.2 + 0.3,
-        vx: (Math.random() - 0.5) * 0.18,
-        vy: (Math.random() - 0.5) * 0.18,
-        a:  Math.random() * 0.5 + 0.15,
-      }));
-    }
-    resize();
-    dots = makeDots(90);
-    window.addEventListener('resize', () => { resize(); dots = makeDots(90); });
-
-    function drawDots() {
-      pctx.clearRect(0, 0, W, H);
-      dots.forEach(d => {
-        const dx = cx - d.x, dy = cy - d.y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < 180) { d.vx += dx / dist * 0.008; d.vy += dy / dist * 0.008; }
-        d.vx *= 0.98; d.vy *= 0.98;
-        d.x += d.vx; d.y += d.vy;
-        if (d.x < 0) d.x = W; if (d.x > W) d.x = 0;
-        if (d.y < 0) d.y = H; if (d.y > H) d.y = 0;
-        pctx.beginPath();
-        pctx.arc(d.x, d.y, d.r, 0, Math.PI * 2);
-        pctx.fillStyle = `oklch(70% 0.15 250 / ${d.a})`;
-        pctx.fill();
-      });
-      for (let i = 0; i < dots.length; i++) {
-        for (let j = i + 1; j < dots.length; j++) {
-          const dx = dots[i].x - dots[j].x, dy = dots[i].y - dots[j].y;
-          const d  = Math.sqrt(dx * dx + dy * dy);
-          if (d < 90) {
-            pctx.beginPath();
-            pctx.moveTo(dots[i].x, dots[i].y);
-            pctx.lineTo(dots[j].x, dots[j].y);
-            pctx.strokeStyle = `oklch(62% 0.18 255 / ${(1 - d / 90) * 0.12})`;
-            pctx.lineWidth = 0.5;
-            pctx.stroke();
-          }
-        }
-      }
-      requestAnimationFrame(drawDots);
-    }
-    drawDots();
-
-    /* ── Scroll fade-in ── */
-    const io = new IntersectionObserver(
-      entries => entries.forEach(e => {
-        if (e.isIntersecting) { e.target.classList.add('on'); io.unobserve(e.target); }
-      }),
-      { threshold: 0.08 }
-    );
-    document.querySelectorAll('.fade').forEach(el => io.observe(el));
-
-    /* ── Scramble text on hover ── */
-    const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%&';
-    function flicker(el) {
-      if (el.dataset.fxRunning === 'true') return;
-      const orig = el.dataset.fxOriginal || el.textContent;
-      el.dataset.fxOriginal = orig;
-      el.dataset.fxRunning  = 'true';
-      let frame = 0;
-      const total = 9;
-      const iv = setInterval(() => {
-        el.textContent = orig.split('').map((ch, i) => {
-          if (ch === ' ') return ch;
-          return frame > total * (i / Math.max(orig.length, 1))
-            ? ch : CHARS[Math.floor(Math.random() * CHARS.length)];
-        }).join('');
-        frame++;
-        if (frame > total) {
-          clearInterval(iv);
-          el.textContent = orig;
-          el.dataset.fxRunning = 'false';
-        }
-      }, 26);
-    }
-    document.querySelectorAll('.nav-logo-main, .section-label, .cell-title, .spec-value, .log-date').forEach(el => {
-      el.dataset.fxOriginal = el.textContent;
-      el.addEventListener('pointerenter', () => flicker(el));
-    });
-  </script>
-
+  <script src="hud.js"></script>
 </body>
 </html>

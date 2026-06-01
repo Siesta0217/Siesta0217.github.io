@@ -4,641 +4,85 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Valencia Client — Fabric Mod · Siesta</title>
-  <link rel="preconnect" href="https://fonts.bunny.net">
-  <link href="https://fonts.bunny.net/css?family=inter:400,500,600,700&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --bg:       oklch(9%  0.012 250);
-      --surface:  oklch(13% 0.014 250);
-      --surface2: oklch(17% 0.014 250);
-      --fg:       oklch(93% 0.006 240);
-      --muted:    oklch(52% 0.014 250);
-      --border:   oklch(22% 0.012 250);
-      --accent:   oklch(62% 0.22 255);
-      --accent2:  oklch(72% 0.18 200);
-      --green:    oklch(68% 0.20 145);
-      --violet:   oklch(66% 0.22 295);
-      --red:      oklch(64% 0.22 25);
-
-      --font:      'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
-      --font-mono: ui-monospace, 'JetBrains Mono', 'Cascadia Code', Menlo, monospace;
-
-      --r:   6px;
-      --rl:  12px;
-      --max: 960px;
-
-      --glow-accent:  color-mix(in oklch, var(--accent) 35%, transparent);
-      --glow-green:   color-mix(in oklch, var(--green)  35%, transparent);
-      --glow-violet:  color-mix(in oklch, var(--violet) 35%, transparent);
-      --glow-red:     color-mix(in oklch, var(--red)    35%, transparent);
-    }
-
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: var(--font);
-      background: var(--bg);
-      color: var(--fg);
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-      overflow-x: hidden;
-    }
-    a { color: inherit; text-decoration: none; }
-
-    #progress-bar {
-      position: fixed; top: 0; left: 0;
-      height: 2px; width: 0%;
-      background: linear-gradient(90deg, var(--violet), var(--accent));
-      z-index: 200; transition: width 0.1s linear;
-      box-shadow: 0 0 8px var(--glow-violet);
-    }
-
-    #particles { position: fixed; inset: 0; z-index: -2; pointer-events: none; }
-
-    body::before {
-      content: ''; position: fixed; inset: 0;
-      background: url('https://raw.githubusercontent.com/Siesta0217/Siesta0217.github.io/main/422887077_1128588268320846_8642390475498280822_n.jpg') center/cover no-repeat;
-      opacity: 0.12; pointer-events: none; z-index: -1;
-    }
-    body::after {
-      content: ''; position: fixed; inset: 0;
-      background: linear-gradient(160deg,
-        oklch(7% 0.022 285 / 0.55) 0%,
-        oklch(9% 0.012 250 / 0.32) 60%,
-        oklch(6% 0.022 270 / 0.6) 100%);
-      pointer-events: none; z-index: -1;
-    }
-
-    #cursor-glow {
-      position: fixed; width: 320px; height: 320px;
-      border-radius: 50%; pointer-events: none; z-index: 0;
-      transform: translate(-50%, -50%);
-      background: radial-gradient(circle, color-mix(in oklch, var(--violet) 9%, transparent) 0%, transparent 70%);
-      transition: opacity 0.3s; opacity: 0;
-    }
-
-    nav {
-      position: fixed; inset: 0 0 auto 0; z-index: 100;
-      background: color-mix(in oklch, var(--bg) 80%, transparent);
-      backdrop-filter: blur(20px) saturate(180%);
-      -webkit-backdrop-filter: blur(20px) saturate(180%);
-      border-bottom: 1px solid var(--border);
-    }
-    .nav-inner {
-      max-width: var(--max); margin: 0 auto; padding: 0 24px;
-      height: 56px; display: flex; align-items: center; justify-content: space-between;
-    }
-    .nav-logo { display: inline-flex; align-items: center; gap: 9px; font-size: 15px; font-weight: 600; }
-    .nav-logo-main {
-      color: transparent;
-      background: linear-gradient(100deg, var(--fg), var(--accent2), var(--fg), var(--accent));
-      background-size: 220% 100%;
-      -webkit-background-clip: text; background-clip: text;
-      animation: brand-flow 6s ease-in-out infinite;
-    }
-    .nav-logo-sub {
-      display: inline-flex; align-items: center; gap: 6px;
-      font-family: var(--font-mono); font-size: 10px; font-weight: 600;
-      letter-spacing: 0.08em; text-transform: uppercase;
-      color: color-mix(in oklch, var(--accent2) 78%, var(--muted)); opacity: 0.9;
-    }
-    .nav-logo-sub::before {
-      content: ''; width: 5px; height: 5px; border-radius: 50%;
-      background: var(--violet); box-shadow: 0 0 8px var(--glow-violet);
-      animation: dot-pulse 2.6s ease-in-out infinite;
-    }
-    @keyframes brand-flow {
-      0%, 20%, 100% { background-position: 0% 50%; }
-      55%, 70% { background-position: 100% 50%; }
-    }
-    @keyframes dot-pulse {
-      0%, 100% { opacity: 0.45; transform: scale(0.82); }
-      50% { opacity: 1; transform: scale(1); }
-    }
-    .nav-back {
-      display: inline-flex; align-items: center; gap: 7px;
-      font-size: 13px; font-weight: 500; color: var(--muted); transition: color 0.15s;
-    }
-    .nav-back:hover { color: var(--fg); }
-    .nav-back-arr { transition: transform 0.18s ease; }
-    .nav-back:hover .nav-back-arr { transform: translateX(-4px); }
-
-    .hero {
-      min-height: 100svh; max-width: var(--max); margin: 0 auto;
-      padding: 56px 24px 0;
-      display: grid; grid-template-columns: 1fr auto;
-      gap: 48px; align-items: center; position: relative;
-    }
-    .hero-content { display: flex; flex-direction: column; }
-
-    .hero-breadcrumb {
-      font-family: var(--font-mono); font-size: 12px;
-      color: var(--muted); margin-bottom: 20px;
-      display: flex; align-items: center; gap: 7px;
-    }
-    .hero-breadcrumb a { color: var(--violet); transition: color 0.15s; }
-    .hero-breadcrumb a:hover { color: var(--accent2); }
-    .hero-breadcrumb .sep { color: var(--border); }
-
-    .hero-status {
-      display: inline-flex; align-items: center; gap: 7px;
-      font-size: 13px; color: var(--muted); font-weight: 500; margin-bottom: 28px;
-    }
-    .status-dot {
-      width: 7px; height: 7px; border-radius: 50%;
-      background: var(--violet); flex-shrink: 0;
-      animation: v-pulse 2.4s ease infinite;
-      box-shadow: 0 0 6px var(--glow-violet);
-    }
-    @keyframes v-pulse {
-      0%,100% { box-shadow: 0 0 4px var(--glow-violet), 0 0 0 0 color-mix(in oklch, var(--violet) 30%, transparent); }
-      50% { box-shadow: 0 0 10px var(--glow-violet), 0 0 0 6px color-mix(in oklch, var(--violet) 0%, transparent); }
-    }
-
-    .hero h1 {
-      font-size: clamp(52px, 9vw, 100px);
-      font-weight: 700; letter-spacing: -0.02em; line-height: 1;
-      margin-bottom: 14px; color: transparent;
-      width: max-content; max-width: 100%;
-      background: linear-gradient(108deg,
-        oklch(96% 0.010 280) 0%, var(--violet) 24%,
-        var(--accent2) 50%, var(--accent) 72%, oklch(98% 0.008 280) 100%);
-      background-size: 260% 100%;
-      -webkit-background-clip: text; background-clip: text;
-      filter:
-        drop-shadow(0 0 10px color-mix(in oklch, var(--violet) 26%, transparent))
-        drop-shadow(0 0 32px color-mix(in oklch, var(--accent2) 16%, transparent));
-      animation: title-flow 5s ease-in-out infinite;
-      position: relative; isolation: isolate;
-    }
-    .hero h1::after {
-      content: ''; position: absolute;
-      left: 2px; right: 2px; bottom: -12px;
-      height: 3px; border-radius: 999px;
-      background: linear-gradient(90deg, transparent, var(--violet) 22%, var(--accent2) 52%, var(--accent) 82%, transparent);
-      background-size: 220% 100%;
-      box-shadow: 0 0 10px var(--glow-violet), 0 0 28px color-mix(in oklch, var(--accent2) 20%, transparent);
-      animation: line-energy 2.8s ease-in-out infinite;
-    }
-    @keyframes title-flow {
-      0%,100% { background-position: 0% 50%; }
-      45%,65% { background-position: 100% 50%; }
-    }
-    @keyframes line-energy {
-      0%,100% { background-position: 0% 50%; opacity: 0.7; }
-      50% { background-position: 100% 50%; opacity: 1; }
-    }
-
-    .hero-type {
-      font-family: var(--font-mono); font-size: 13px; font-weight: 600;
-      letter-spacing: 0.10em; text-transform: uppercase;
-      color: var(--violet); margin-top: 24px; margin-bottom: 20px;
-      text-shadow: 0 0 14px var(--glow-violet);
-    }
-    .hero-sub {
-      font-size: clamp(15px, 1.7vw, 18px); color: var(--muted);
-      max-width: 440px; line-height: 1.6;
-    }
-    .hero-actions { margin-top: 36px; display: flex; gap: 10px; flex-wrap: wrap; }
-
-    .btn {
-      display: inline-flex; align-items: center; gap: 5px;
-      padding: 10px 18px; border-radius: var(--r);
-      font-size: 14px; font-weight: 500; letter-spacing: -0.015em;
-      transition: background 0.15s, transform 0.15s, box-shadow 0.15s;
-      cursor: pointer; border: none; line-height: 1;
-      position: relative; overflow: hidden;
-    }
-    .btn::after {
-      content: ''; position: absolute; inset: 0;
-      background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.07) 50%, transparent 60%);
-      transform: translateX(-100%); transition: transform 0.4s ease;
-    }
-    .btn:hover::after { transform: translateX(100%); }
-    .btn-violet {
-      background: color-mix(in oklch, var(--violet) 18%, transparent);
-      color: var(--violet);
-      border: 1px solid color-mix(in oklch, var(--violet) 30%, transparent);
-    }
-    .btn-violet:hover {
-      background: color-mix(in oklch, var(--violet) 26%, transparent);
-      transform: translateY(-2px); box-shadow: 0 6px 20px var(--glow-violet);
-    }
-    .btn-ghost {
-      background: transparent; color: var(--fg); border: 1px solid var(--border);
-    }
-    .btn-ghost:hover {
-      background: var(--surface);
-      border-color: oklch(35% 0.015 250); transform: translateY(-2px);
-    }
-
-    .hero-visual {
-      width: clamp(170px, 20vw, 260px); flex-shrink: 0;
-      align-self: center; position: relative;
-    }
-    .hero-visual::before {
-      content: ''; position: absolute; inset: -24px; border-radius: 28px;
-      background: radial-gradient(circle, color-mix(in oklch, var(--violet) 16%, transparent), transparent 70%);
-      animation: device-glow 3s ease-in-out infinite alternate;
-      pointer-events: none;
-    }
-    @keyframes device-glow {
-      from { opacity: 0.5; transform: scale(0.95); }
-      to { opacity: 1; transform: scale(1.05); }
-    }
-    /* Logo slot */
-    .logo-slot {
-      width: 100%; aspect-ratio: 1; border-radius: 12px;
-      border: 1px dashed color-mix(in oklch, var(--violet) 35%, transparent);
-      background:
-        repeating-linear-gradient(
-          45deg,
-          oklch(14% 0.018 290) 0px, oklch(14% 0.018 290) 8px,
-          oklch(11% 0.014 290) 8px, oklch(11% 0.014 290) 16px
-        );
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center; gap: 10px;
-      position: relative; overflow: hidden;
-      box-shadow: 0 0 28px color-mix(in oklch, var(--violet) 14%, transparent);
-    }
-    .logo-slot::before {
-      content: ''; position: absolute; inset: 0;
-      background: radial-gradient(ellipse at 50% 30%, color-mix(in oklch, var(--violet) 8%, transparent), transparent 68%);
-    }
-    .logo-slot-mark {
-      width: 36px; height: 36px;
-      background: color-mix(in oklch, var(--violet) 22%, transparent);
-      border: 1px solid color-mix(in oklch, var(--violet) 40%, transparent);
-      transform: rotate(45deg); z-index: 1;
-      box-shadow: 0 0 14px var(--glow-violet);
-    }
-    .logo-slot-label {
-      font-family: var(--font-mono); font-size: 10px; line-height: 1.7;
-      color: var(--muted); text-align: center; z-index: 1; letter-spacing: 0.04em;
-    }
-
-    .rule { max-width: var(--max); margin: 0 auto; padding: 0 24px; }
-    .rule hr { border: none; border-top: 1px solid var(--border); position: relative; }
-    .rule hr::after {
-      content: ''; position: absolute; top: -1px; left: 0;
-      width: 60px; height: 1px;
-      background: linear-gradient(90deg, var(--violet), transparent);
-      box-shadow: 0 0 8px var(--glow-violet);
-    }
-
-    .section { max-width: var(--max); margin: 0 auto; padding: 72px 24px; }
-    .section-label {
-      display: inline-flex; align-items: center;
-      font-size: 11.5px; font-weight: 600; letter-spacing: 0.09em; text-transform: uppercase;
-      color: var(--violet); margin-bottom: 32px;
-      text-shadow: 0 0 12px var(--glow-violet);
-      position: relative; overflow: hidden; padding-bottom: 5px;
-    }
-    .section-label::before {
-      content: ''; position: absolute; inset: 0;
-      background: linear-gradient(100deg, transparent 0%, rgba(255,255,255,0.55) 50%, transparent 100%);
-      transform: translateX(-120%);
-      animation: label-scan 5.6s ease-in-out infinite;
-      mix-blend-mode: screen;
-    }
-    .section-label::after {
-      content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 1px;
-      background: linear-gradient(90deg, var(--violet), var(--accent2), transparent);
-      box-shadow: 0 0 10px var(--glow-violet);
-      transform: scaleX(0.35); transform-origin: left; transition: transform 0.25s ease;
-    }
-    .section:hover .section-label::after { transform: scaleX(1); }
-    @keyframes label-scan {
-      0%,72%,100% { transform: translateX(-120%); opacity: 0; }
-      80% { opacity: 0.7; }
-      88% { transform: translateX(120%); opacity: 0; }
-    }
-
-    .overview-box {
-      position: relative; padding: 32px 32px 32px 36px;
-      border-radius: 10px; background: var(--surface);
-      border: 1px solid transparent; background-clip: padding-box; overflow: hidden;
-    }
-    .overview-box::before {
-      content: ''; position: absolute; inset: 0; border-radius: 10px; padding: 1px;
-      background: linear-gradient(180deg, var(--violet), var(--accent2), var(--violet));
-      background-size: 100% 300%;
-      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-      -webkit-mask-composite: xor; mask-composite: exclude;
-      animation: border-flow 4s ease infinite; pointer-events: none;
-    }
-    @keyframes border-flow {
-      0% { background-position: 0% 0%; }
-      50% { background-position: 0% 100%; }
-      100% { background-position: 0% 0%; }
-    }
-    .overview-body {
-      font-size: clamp(17px, 2vw, 20px); line-height: 1.68;
-      letter-spacing: -0.015em; color: var(--fg);
-      max-width: 620px; position: relative; z-index: 1;
-    }
-    .overview-body em {
-      font-style: normal; color: var(--violet); font-weight: 600;
-      text-shadow: 0 0 14px var(--glow-violet);
-    }
-    .overview-body code {
-      font-family: var(--font-mono); font-size: 0.88em;
-      padding: 2px 7px; border-radius: 4px;
-      background: oklch(18% 0.015 270);
-      border: 1px solid var(--border);
-      color: var(--accent2);
-    }
-    .overview-body strong { color: var(--accent2); font-weight: 600; }
-
-    .overview-stats { display: flex; gap: 36px; margin-top: 28px; flex-wrap: wrap; position: relative; z-index: 1; }
-    .stat { display: flex; flex-direction: column; gap: 1px; }
-    .stat-num {
-      font-size: 30px; font-weight: 700; letter-spacing: -0.05em;
-      color: var(--fg); font-variant-numeric: tabular-nums; line-height: 1;
-    }
-    .stat-num .v { color: var(--violet); text-shadow: 0 0 12px var(--glow-violet); }
-    .stat-label {
-      font-size: 11px; color: var(--muted); letter-spacing: 0.07em;
-      text-transform: uppercase; font-weight: 600; margin-top: 4px;
-    }
-
-    /* Modules list */
-    .mod-list {
-      display: flex; flex-direction: column; gap: 1px;
-      background: var(--border); border: 1px solid var(--border);
-      border-radius: var(--rl); overflow: hidden;
-    }
-    .mod {
-      background: var(--surface); padding: 16px 20px;
-      display: grid; grid-template-columns: 1fr 38px;
-      gap: 16px; align-items: center;
-      transition: background 0.15s;
-    }
-    .mod:hover { background: var(--surface2); }
-    .mod-head { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; margin-bottom: 4px; }
-    .mod-name {
-      font-size: 14.5px; font-weight: 600; color: var(--fg);
-      transition: color 0.18s ease, text-shadow 0.18s ease;
-    }
-    .mod:hover .mod-name {
-      color: var(--accent2);
-      text-shadow: 0 0 14px color-mix(in oklch, var(--accent2) 30%, transparent);
-    }
-    .mod-cat {
-      font-family: var(--font-mono); font-size: 10px;
-      padding: 2px 7px; border-radius: 3px; font-weight: 700;
-      letter-spacing: 0.07em; text-transform: uppercase;
-    }
-    .cat-combat {
-      background: color-mix(in oklch, var(--red) 14%, transparent);
-      color: var(--red);
-      border: 1px solid color-mix(in oklch, var(--red) 26%, transparent);
-    }
-    .cat-move {
-      background: color-mix(in oklch, var(--accent) 14%, transparent);
-      color: var(--accent);
-      border: 1px solid color-mix(in oklch, var(--accent) 26%, transparent);
-    }
-    .cat-render {
-      background: color-mix(in oklch, var(--violet) 14%, transparent);
-      color: var(--violet);
-      border: 1px solid color-mix(in oklch, var(--violet) 26%, transparent);
-    }
-    .cat-misc {
-      background: color-mix(in oklch, var(--green) 14%, transparent);
-      color: var(--green);
-      border: 1px solid color-mix(in oklch, var(--green) 26%, transparent);
-    }
-    .mod-desc { font-size: 12.5px; color: var(--muted); line-height: 1.5; }
-    .mod-key {
-      font-family: var(--font-mono); font-size: 13px; font-weight: 700;
-      padding: 6px 9px; border-radius: 5px;
-      background: oklch(18% 0.015 255);
-      border: 1px solid var(--border);
-      color: var(--violet); text-align: center;
-      transition: border-color 0.15s, box-shadow 0.15s;
-    }
-    .mod:hover .mod-key {
-      border-color: color-mix(in oklch, var(--violet) 40%, transparent);
-      box-shadow: 0 0 8px var(--glow-violet);
-    }
-
-    /* Spec grid */
-    .spec-grid {
-      display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 1px; background: var(--border);
-      border: 1px solid var(--border); border-radius: var(--rl); overflow: hidden;
-    }
-    .spec {
-      background: var(--surface); padding: 20px 22px;
-      transition: background 0.15s; position: relative; overflow: hidden;
-    }
-    .spec:hover { background: var(--surface2); }
-    .spec-label {
-      font-family: var(--font-mono); font-size: 10.5px; font-weight: 700;
-      letter-spacing: 0.08em; text-transform: uppercase;
-      color: var(--muted); margin-bottom: 8px;
-    }
-    .spec-value {
-      font-size: 15px; font-weight: 600; color: var(--fg);
-      letter-spacing: -0.01em; line-height: 1.3;
-      transition: color 0.18s ease, text-shadow 0.18s ease;
-    }
-    .spec:hover .spec-value {
-      color: var(--accent2);
-      text-shadow: 0 0 14px color-mix(in oklch, var(--accent2) 30%, transparent);
-    }
-    .spec-meta { font-size: 12px; color: var(--muted); margin-top: 4px; }
-
-    /* Code block */
-    .code-block {
-      background: oklch(11% 0.012 270);
-      border: 1px solid var(--border);
-      border-radius: var(--rl); padding: 18px 20px;
-      font-family: var(--font-mono); font-size: 13px;
-      color: var(--fg); line-height: 1.7;
-      overflow-x: auto; white-space: pre;
-    }
-    .code-block .c-comment { color: var(--muted); }
-    .code-block .c-key { color: var(--violet); }
-    .code-block .c-val { color: var(--accent2); }
-
-    /* Log */
-    .log-list {
-      display: flex; flex-direction: column; gap: 1px;
-      background: var(--border); border: 1px solid var(--border);
-      border-radius: var(--rl); overflow: hidden;
-    }
-    .log-entry {
-      background: var(--surface); padding: 18px 24px;
-      display: grid; grid-template-columns: 130px 1fr;
-      gap: 20px; align-items: baseline;
-      transition: background 0.15s;
-    }
-    .log-entry:hover { background: var(--surface2); }
-    .log-date {
-      font-family: var(--font-mono); font-size: 11.5px;
-      color: var(--muted); letter-spacing: 0.02em;
-    }
-    .log-msg { font-size: 13.5px; color: var(--fg); line-height: 1.55; }
-    .log-tag {
-      display: inline-block; font-family: var(--font-mono);
-      font-size: 10px; padding: 2px 7px; border-radius: 3px;
-      margin-right: 8px; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase;
-    }
-    .log-tag.violet {
-      background: color-mix(in oklch, var(--violet) 14%, transparent);
-      color: var(--violet);
-      border: 1px solid color-mix(in oklch, var(--violet) 26%, transparent);
-    }
-    .log-tag.green {
-      background: color-mix(in oklch, var(--green) 12%, transparent);
-      color: var(--green);
-      border: 1px solid color-mix(in oklch, var(--green) 22%, transparent);
-    }
-    .log-tag.blue {
-      background: color-mix(in oklch, var(--accent) 12%, transparent);
-      color: var(--accent);
-      border: 1px solid color-mix(in oklch, var(--accent) 22%, transparent);
-    }
-
-    .tags-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
-    .tag {
-      font-size: 11.5px; font-weight: 500; padding: 3px 9px; border-radius: 4px;
-      background: oklch(18% 0.015 255); border: 1px solid var(--border);
-      color: var(--violet); font-family: var(--font-mono);
-    }
-
-    .fade { opacity: 0; transform: translateY(20px); transition: opacity 0.55s ease, transform 0.55s ease; }
-    .fade.on { opacity: 1; transform: none; }
-
-    footer {
-      max-width: var(--max); margin: 0 auto; padding: 28px 24px 52px;
-      border-top: 1px solid var(--border);
-      display: flex; justify-content: space-between; align-items: center;
-    }
-    .footer-text { font-size: 12.5px; color: var(--muted); }
-
-    @media (max-width: 600px) {
-      .hero { grid-template-columns: 1fr; padding: 88px 20px 0; gap: 24px; justify-items: center; text-align: center; }
-      .hero h1 { margin: 0 auto; }
-      .hero-status, .hero-breadcrumb, .tags-row { justify-content: center; }
-      .hero-actions { justify-content: center; }
-      .hero-visual { order: -1; width: 140px; }
-      .section { padding: 56px 20px; }
-      .rule { padding: 0 20px; }
-      .log-entry { grid-template-columns: 1fr; gap: 5px; }
-      .mod { grid-template-columns: 1fr; }
-      .mod-key { justify-self: start; }
-      footer { flex-direction: column; gap: 6px; text-align: center; padding: 24px 20px 40px; }
-    }
-    @media (min-width: 601px) and (max-width: 820px) {
-      .spec-grid { grid-template-columns: repeat(2, 1fr); }
-    }
-    @media (min-width: 1440px) { :root { --max: 1080px; } }
-    @media (prefers-reduced-motion: reduce) {
-      .hero h1, .hero h1::after, .nav-logo-main, .section-label::before { animation: none; }
-    }
-  </style>
+  <meta name="description" content="Valencia — a custom Fabric client mod for Lunar 1.21 with a draggable ClickGUI. Java 21, built from scratch.">
+  <link rel="icon" type="image/png" href="d32ce04ad4746acd17398629a5fb081f-modified.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="theme.css">
 </head>
 <body>
 
-  <div id="progress-bar"></div>
-  <div id="cursor-glow"></div>
-  <canvas id="particles"></canvas>
+  <div id="progress"></div>
+  <canvas id="stars"></canvas>
+  <div class="fx-grid"></div>
+  <div class="fx-scan"></div>
 
-  <nav>
+  <!-- ── NAV ── -->
+  <nav class="hud-nav">
     <div class="nav-inner">
-      <a href="https://Siesta0217.github.io" class="nav-logo">
-        <span class="nav-logo-main">Siesta</span>
-        <span class="nav-logo-sub">dev.log</span>
+      <a href="index.html" class="nav-logo" aria-label="Back to portfolio">
+        <span class="heart">♥</span><span class="name">SIESTA</span><span class="tag">.EXE</span>
       </a>
-      <a href="https://Siesta0217.github.io" class="nav-back">
-        <span class="nav-back-arr">←</span> Portfolio
-      </a>
+      <a href="index.html" class="nav-back"><span class="arr">◄</span> PORTFOLIO</a>
     </div>
   </nav>
 
-  <div class="hero">
-    <div class="hero-content">
-      <p class="hero-breadcrumb">
-        <a href="https://Siesta0217.github.io">~/projects</a>
-        <span class="sep">›</span>
-        <span>valencia-mod</span>
-      </p>
-      <p class="hero-status">
-        <span class="status-dot"></span>
-        Fabric Mod · Lunar Client 1.21
-      </p>
-      <h1>Valencia Client</h1>
-      <p class="hero-type">// Minecraft Client Mod</p>
-      <p class="hero-sub">
-        A custom Fabric client mod for Lunar Client 1.21 — combat, movement
-        and utility modules, all driven by a draggable in-game ClickGUI.
-        Written from scratch in Java.
-      </p>
-      <div class="tags-row" style="margin-top:20px;">
-        <span class="tag">Java 21</span>
-        <span class="tag">Fabric</span>
-        <span class="tag">Lunar 1.21</span>
-        <span class="tag">Gradle</span>
+  <!-- ── HERO ── -->
+  <header class="proj-hero">
+    <div class="proj-content">
+      <p class="proj-breadcrumb"><a href="index.html">~/quests</a><span class="sep">›</span>valencia-mod</p>
+      <span class="chip"><span class="dot"></span> FABRIC MOD · LUNAR 1.21</span>
+      <h1 class="proj-title px-title">VALENCIA</h1>
+      <p class="proj-type">// MINECRAFT CLIENT MOD</p>
+      <p class="proj-sub">A custom Fabric client mod for Lunar Client 1.21 — combat, movement and utility modules, all driven by a draggable in-game ClickGUI. Written from scratch in Java.</p>
+      <div class="tags">
+        <span class="tag">Java 21</span><span class="tag">Fabric</span><span class="tag">Lunar 1.21</span><span class="tag">Gradle</span>
       </div>
-      <div class="hero-actions">
+      <div class="proj-actions">
         <a href="https://github.com/Siesta0217/valencia" class="btn btn-violet" target="_blank" rel="noopener">View on GitHub ↗</a>
-        <a href="#modules" class="btn btn-ghost">Modules ↓</a>
+        <a href="#modules" class="btn btn-ghost">Modules ▼</a>
       </div>
     </div>
-
-    <div class="hero-visual">
-      <div class="logo-slot" aria-label="Valencia Client logo placeholder">
-        <div class="logo-slot-mark"></div>
-        <div class="logo-slot-label">logo<br>placeholder</div>
+    <div class="proj-visual">
+      <div class="logo-slot" aria-label="Valencia Client">
+        <div class="mark"></div>
+        <div class="lbl">VALENCIA<br>CLIENT</div>
       </div>
     </div>
-  </div>
+  </header>
 
   <div class="rule"><hr></div>
 
-  <div class="section fade" id="overview">
-    <p class="section-label">Overview</p>
-    <div class="overview-box">
+  <!-- ── OVERVIEW ── -->
+  <section class="section fade" id="overview">
+    <p class="section-label">▘ OVERVIEW</p>
+    <div class="hud-box pink">
+      <span class="hud-tab">README</span>
       <p class="overview-body">
-        Valencia is a <em>Fabric client mod</em> for
-        <strong>Lunar Client 1.21</strong>, built from scratch with no
-        Fabric API dependency. Features a draggable
-        <em>ClickGUI</em>, persistent JSON config, in-game keybind rebinding,
-        and a growing set of modules across Combat, Movement and Render
-        categories. Uses pure <code>GuiGraphics</code> rendering — Sodium / Iris compatible.
+        Valencia is a <em>Fabric client mod</em> for <strong>Lunar Client 1.21</strong>, built from
+        scratch with no Fabric API dependency. Features a draggable <em>ClickGUI</em>, persistent JSON
+        config, in-game keybind rebinding, and a growing set of modules across Combat, Movement and
+        Render categories. Uses pure <code>GuiGraphics</code> rendering — Sodium / Iris compatible.
       </p>
-      <div class="overview-stats">
-        <div class="stat">
-          <div class="stat-num"><span class="v">12+</span></div>
-          <div class="stat-label">Modules</div>
-        </div>
-        <div class="stat">
-          <div class="stat-num"><span class="v">α</span>0.4</div>
-          <div class="stat-label">Current Build</div>
-        </div>
-        <div class="stat">
-          <div class="stat-num">MC <span class="v">1.21</span></div>
-          <div class="stat-label">Target</div>
-        </div>
+      <div class="stat-row">
+        <div><div class="stat-num"><span class="vi">12+</span></div><div class="stat-label">MODULES</div></div>
+        <div><div class="stat-num"><span class="vi">α</span>0.4</div><div class="stat-label">CURRENT BUILD</div></div>
+        <div><div class="stat-num">MC <span class="vi">1.21</span></div><div class="stat-label">TARGET</div></div>
       </div>
     </div>
-  </div>
+  </section>
 
   <div class="rule"><hr></div>
 
-  <div class="section fade" id="modules">
-    <p class="section-label">Modules</p>
+  <!-- ── MODULES ── -->
+  <section class="section fade" id="modules">
+    <p class="section-label">▘ MODULES</p>
     <div class="mod-list">
 
       <div class="mod">
         <div>
-          <div class="mod-head">
-            <span class="mod-name">MaceAura</span>
-            <span class="mod-cat cat-combat">Combat</span>
-          </div>
+          <div class="mod-head"><span class="mod-name">MaceAura</span><span class="mod-cat cat-combat">Combat</span></div>
           <p class="mod-desc">Mace-specific silent aim + auto attack. Detect 6f, attack 3.5f.</p>
         </div>
         <div class="mod-key">Z</div>
@@ -646,10 +90,7 @@
 
       <div class="mod">
         <div>
-          <div class="mod-head">
-            <span class="mod-name">KillAura</span>
-            <span class="mod-cat cat-combat">Combat</span>
-          </div>
+          <div class="mod-head"><span class="mod-name">KillAura</span><span class="mod-cat cat-combat">Combat</span></div>
           <p class="mod-desc">Any-weapon aura, switch/single mode, target filters, tunable range &amp; delay.</p>
         </div>
         <div class="mod-key">K</div>
@@ -657,10 +98,7 @@
 
       <div class="mod">
         <div>
-          <div class="mod-head">
-            <span class="mod-name">CritHit</span>
-            <span class="mod-cat cat-combat">Combat</span>
-          </div>
+          <div class="mod-head"><span class="mod-name">CritHit</span><span class="mod-cat cat-combat">Combat</span></div>
           <p class="mod-desc">Forces critical hits on every attack.</p>
         </div>
         <div class="mod-key">R</div>
@@ -668,21 +106,15 @@
 
       <div class="mod">
         <div>
-          <div class="mod-head">
-            <span class="mod-name">Velocity</span>
-            <span class="mod-cat cat-combat">Combat</span>
-          </div>
-          <p class="mod-desc">Cancels all knockback for local player.</p>
+          <div class="mod-head"><span class="mod-name">Velocity</span><span class="mod-cat cat-combat">Combat</span></div>
+          <p class="mod-desc">Cancels all knockback for the local player.</p>
         </div>
         <div class="mod-key">C</div>
       </div>
 
       <div class="mod">
         <div>
-          <div class="mod-head">
-            <span class="mod-name">NoFall</span>
-            <span class="mod-cat cat-move">Movement</span>
-          </div>
+          <div class="mod-head"><span class="mod-name">NoFall</span><span class="mod-cat cat-move">Movement</span></div>
           <p class="mod-desc">onGround spoofing, no fall damage. Default on.</p>
         </div>
         <div class="mod-key">N</div>
@@ -690,10 +122,7 @@
 
       <div class="mod">
         <div>
-          <div class="mod-head">
-            <span class="mod-name">BHop</span>
-            <span class="mod-cat cat-move">Movement</span>
-          </div>
+          <div class="mod-head"><span class="mod-name">BHop</span><span class="mod-cat cat-move">Movement</span></div>
           <p class="mod-desc">Auto-jump + air steering, full WASD + diagonals, 0.5×–2.5× speed.</p>
         </div>
         <div class="mod-key">B</div>
@@ -701,10 +130,7 @@
 
       <div class="mod">
         <div>
-          <div class="mod-head">
-            <span class="mod-name">NoSlow</span>
-            <span class="mod-cat cat-move">Movement</span>
-          </div>
+          <div class="mod-head"><span class="mod-name">NoSlow</span><span class="mod-cat cat-move">Movement</span></div>
           <p class="mod-desc">Removes slowdown while using items.</p>
         </div>
         <div class="mod-key">G</div>
@@ -712,10 +138,7 @@
 
       <div class="mod">
         <div>
-          <div class="mod-head">
-            <span class="mod-name">FastPlace</span>
-            <span class="mod-cat cat-move">Movement</span>
-          </div>
+          <div class="mod-head"><span class="mod-name">FastPlace</span><span class="mod-cat cat-move">Movement</span></div>
           <p class="mod-desc">Removes right-click delay — instant block/item use spam.</p>
         </div>
         <div class="mod-key">F</div>
@@ -723,10 +146,7 @@
 
       <div class="mod">
         <div>
-          <div class="mod-head">
-            <span class="mod-name">XRay</span>
-            <span class="mod-cat cat-render">Render</span>
-          </div>
+          <div class="mod-head"><span class="mod-name">XRay</span><span class="mod-cat cat-render">Render</span></div>
           <p class="mod-desc">Hides non-ore blocks, gamma 16.0. O(1) lookup cache for speed.</p>
         </div>
         <div class="mod-key">X</div>
@@ -734,60 +154,35 @@
 
       <div class="mod">
         <div>
-          <div class="mod-head">
-            <span class="mod-name">ClickGUI</span>
-            <span class="mod-cat cat-misc">UI</span>
-          </div>
+          <div class="mod-head"><span class="mod-name">ClickGUI</span><span class="mod-cat cat-misc">UI</span></div>
           <p class="mod-desc">Draggable panel, per-module sliders, toggles, inline keybind rebinding.</p>
         </div>
         <div class="mod-key">R-Ctrl</div>
       </div>
 
     </div>
-  </div>
+  </section>
 
   <div class="rule"><hr></div>
 
-  <div class="section fade" id="features">
-    <p class="section-label">Highlights</p>
+  <!-- ── HIGHLIGHTS ── -->
+  <section class="section fade" id="features">
+    <p class="section-label">▘ HIGHLIGHTS</p>
     <div class="spec-grid">
-      <div class="spec">
-        <p class="spec-label">ClickGUI</p>
-        <p class="spec-value">Draggable Panel</p>
-        <p class="spec-meta">Per-module settings expand inline</p>
-      </div>
-      <div class="spec">
-        <p class="spec-label">Config</p>
-        <p class="spec-value">Persistent JSON</p>
-        <p class="spec-meta">valencia.json across sessions</p>
-      </div>
-      <div class="spec">
-        <p class="spec-label">Rebinding</p>
-        <p class="spec-value">In-Game</p>
-        <p class="spec-meta">.nf bind &lt;mod&gt; &lt;key&gt;</p>
-      </div>
-      <div class="spec">
-        <p class="spec-label">Rendering</p>
-        <p class="spec-value">Pure GuiGraphics</p>
-        <p class="spec-meta">Sodium / Iris compatible</p>
-      </div>
-      <div class="spec">
-        <p class="spec-label">Waifu Image</p>
-        <p class="spec-value">PNG · JPG · GIF · BMP</p>
-        <p class="spec-meta">Custom skin for ClickGUI</p>
-      </div>
-      <div class="spec">
-        <p class="spec-label">Performance</p>
-        <p class="spec-value">XRay O(1) Cache</p>
-        <p class="spec-meta">Cached reflection, no per-frame lookup</p>
-      </div>
+      <div class="spec"><p class="spec-label">CLICKGUI</p><p class="spec-value">Draggable Panel</p><p class="spec-meta">Per-module settings expand inline</p></div>
+      <div class="spec"><p class="spec-label">CONFIG</p><p class="spec-value">Persistent JSON</p><p class="spec-meta">valencia.json across sessions</p></div>
+      <div class="spec"><p class="spec-label">REBINDING</p><p class="spec-value">In-Game</p><p class="spec-meta">.nf bind &lt;mod&gt; &lt;key&gt;</p></div>
+      <div class="spec"><p class="spec-label">RENDERING</p><p class="spec-value">Pure GuiGraphics</p><p class="spec-meta">Sodium / Iris compatible</p></div>
+      <div class="spec"><p class="spec-label">WAIFU IMAGE</p><p class="spec-value">PNG · JPG · GIF · BMP</p><p class="spec-meta">Custom skin for ClickGUI</p></div>
+      <div class="spec"><p class="spec-label">PERFORMANCE</p><p class="spec-value">XRay O(1) Cache</p><p class="spec-meta">Cached reflection, no per-frame lookup</p></div>
     </div>
-  </div>
+  </section>
 
   <div class="rule"><hr></div>
 
-  <div class="section fade" id="install">
-    <p class="section-label">Install</p>
+  <!-- ── INSTALL ── -->
+  <section class="section fade" id="install">
+    <p class="section-label">▘ INSTALL</p>
     <div class="code-block"><span class="c-comment"># 1. Install Fabric Loader 0.19.2+  (no Fabric API needed)</span>
 <span class="c-comment"># 2. Drop the JAR into mods/</span>
 
@@ -798,144 +193,40 @@
 <span class="c-key">Minecraft</span>     <span class="c-val">1.21.11</span>
 <span class="c-key">Fabric Loader</span> <span class="c-val">0.19.2+</span>
 <span class="c-key">Java</span>          <span class="c-val">21+</span></div>
-  </div>
+  </section>
 
   <div class="rule"><hr></div>
 
-  <div class="section fade" id="log">
-    <p class="section-label">Changelog</p>
+  <!-- ── CHANGELOG ── -->
+  <section class="section fade" id="log">
+    <p class="section-label">▘ CHANGELOG</p>
     <div class="log-list">
       <div class="log-entry">
-        <span class="log-date">alpha-0.1</span>
-        <span class="log-msg">
-          <span class="log-tag green">INIT</span>
-          Core modules: NoFall, XRay, MaceAura, KillAura, NoSlow, BHop. ClickGUI with sliders &amp; rebinding. Persistent JSON config.
-        </span>
+        <span class="log-date">α-0.1</span>
+        <span class="log-msg"><span class="log-tag green">INIT</span>Core modules: NoFall, XRay, MaceAura, KillAura, NoSlow, BHop. ClickGUI with sliders &amp; rebinding. Persistent JSON config.</span>
       </div>
       <div class="log-entry">
-        <span class="log-date">alpha-0.2</span>
-        <span class="log-msg">
-          <span class="log-tag blue">ADD</span>
-          New modules: AutoSprint, Velocity, FastPlace, CritHit. Waifu image support for ClickGUI.
-        </span>
+        <span class="log-date">α-0.2</span>
+        <span class="log-msg"><span class="log-tag blue">ADD</span>New modules: AutoSprint, Velocity, FastPlace, CritHit. Waifu image support for ClickGUI.</span>
       </div>
       <div class="log-entry">
-        <span class="log-date">alpha-0.3</span>
-        <span class="log-msg">
-          <span class="log-tag violet">PERF</span>
-          XRay block lookup now O(1) via ConcurrentHashMap cache. Reflection cached at load time. AutoSprint removed.
-        </span>
+        <span class="log-date">α-0.3</span>
+        <span class="log-msg"><span class="log-tag violet">PERF</span>XRay block lookup now O(1) via ConcurrentHashMap cache. Reflection cached at load time. AutoSprint removed.</span>
       </div>
       <div class="log-entry">
-        <span class="log-date">alpha-0.4</span>
-        <span class="log-msg">
-          <span class="log-tag violet">PERF</span>
-          Waifu image accepts PNG, JPG/JPEG, BMP, GIF — non-PNG decoded via ImageIO and re-encoded.
-        </span>
+        <span class="log-date">α-0.4</span>
+        <span class="log-msg"><span class="log-tag violet">PERF</span>Waifu image accepts PNG, JPG/JPEG, BMP, GIF — non-PNG decoded via ImageIO and re-encoded.</span>
       </div>
     </div>
-  </div>
+  </section>
 
   <div class="rule"><hr></div>
 
-  <footer>
-    <span class="footer-text">Siesta · Valencia Mod</span>
-    <span class="footer-text">Fabric · Lunar 1.21</span>
+  <footer class="hud-foot">
+    <span class="foot-text">SIESTA · VALENCIA MOD</span>
+    <span class="foot-text">FABRIC · LUNAR 1.21</span>
   </footer>
 
-  <script>
-    const bar = document.getElementById('progress-bar');
-    window.addEventListener('scroll', () => {
-      const pct = window.scrollY / (document.body.scrollHeight - window.innerHeight) * 100;
-      bar.style.width = Math.min(pct, 100) + '%';
-    }, { passive: true });
-
-    const glow = document.getElementById('cursor-glow');
-    let cx = -999, cy = -999;
-    document.addEventListener('mousemove', e => {
-      cx = e.clientX; cy = e.clientY;
-      glow.style.left = cx + 'px'; glow.style.top = cy + 'px';
-      glow.style.opacity = '1';
-    });
-    document.addEventListener('mouseleave', () => { glow.style.opacity = '0'; });
-
-    const canvas = document.getElementById('particles');
-    const pctx = canvas.getContext('2d');
-    let W, H, dots;
-    function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
-    function makeDots(n) {
-      return Array.from({ length: n }, () => ({
-        x: Math.random() * W, y: Math.random() * H,
-        r: Math.random() * 1.2 + 0.3,
-        vx: (Math.random() - 0.5) * 0.18, vy: (Math.random() - 0.5) * 0.18,
-        a: Math.random() * 0.5 + 0.15,
-      }));
-    }
-    resize(); dots = makeDots(90);
-    window.addEventListener('resize', () => { resize(); dots = makeDots(90); });
-
-    function drawDots() {
-      pctx.clearRect(0, 0, W, H);
-      dots.forEach(d => {
-        const dx = cx - d.x, dy = cy - d.y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < 180) { d.vx += dx / dist * 0.008; d.vy += dy / dist * 0.008; }
-        d.vx *= 0.98; d.vy *= 0.98;
-        d.x += d.vx; d.y += d.vy;
-        if (d.x < 0) d.x = W; if (d.x > W) d.x = 0;
-        if (d.y < 0) d.y = H; if (d.y > H) d.y = 0;
-        pctx.beginPath();
-        pctx.arc(d.x, d.y, d.r, 0, Math.PI * 2);
-        pctx.fillStyle = `oklch(66% 0.18 295 / ${d.a})`;
-        pctx.fill();
-      });
-      for (let i = 0; i < dots.length; i++) {
-        for (let j = i + 1; j < dots.length; j++) {
-          const dx = dots[i].x - dots[j].x, dy = dots[i].y - dots[j].y;
-          const d = Math.sqrt(dx * dx + dy * dy);
-          if (d < 90) {
-            pctx.beginPath();
-            pctx.moveTo(dots[i].x, dots[i].y);
-            pctx.lineTo(dots[j].x, dots[j].y);
-            pctx.strokeStyle = `oklch(66% 0.20 295 / ${(1 - d / 90) * 0.10})`;
-            pctx.lineWidth = 0.5;
-            pctx.stroke();
-          }
-        }
-      }
-      requestAnimationFrame(drawDots);
-    }
-    drawDots();
-
-    const io = new IntersectionObserver(
-      entries => entries.forEach(e => {
-        if (e.isIntersecting) { e.target.classList.add('on'); io.unobserve(e.target); }
-      }),
-      { threshold: 0.08 }
-    );
-    document.querySelectorAll('.fade').forEach(el => io.observe(el));
-
-    const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%&';
-    function flicker(el) {
-      if (el.dataset.fxRunning === 'true') return;
-      const orig = el.dataset.fxOriginal || el.textContent;
-      el.dataset.fxOriginal = orig; el.dataset.fxRunning = 'true';
-      let frame = 0; const total = 9;
-      const iv = setInterval(() => {
-        el.textContent = orig.split('').map((ch, i) => {
-          if (ch === ' ') return ch;
-          return frame > total * (i / Math.max(orig.length, 1))
-            ? ch : CHARS[Math.floor(Math.random() * CHARS.length)];
-        }).join('');
-        frame++;
-        if (frame > total) { clearInterval(iv); el.textContent = orig; el.dataset.fxRunning = 'false'; }
-      }, 26);
-    }
-    document.querySelectorAll('.nav-logo-main, .section-label, .mod-name, .spec-value, .log-date').forEach(el => {
-      el.dataset.fxOriginal = el.textContent;
-      el.addEventListener('pointerenter', () => flicker(el));
-    });
-  </script>
-
+  <script src="hud.js"></script>
 </body>
 </html>
