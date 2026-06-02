@@ -4,60 +4,51 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>T-Display-S3 — Smart Clock · Siesta</title>
-  <meta name="description" content="Custom smart clock built on the LilyGO T-Display-S3-Touch. C++ firmware, UI rendered straight to the touch screen.">
+  <meta name="description" content="A custom smart clock built on the LilyGO T-Display-S3-Touch. C++ firmware, UI rendered straight to the touch screen.">
   <link rel="icon" type="image/png" href="d32ce04ad4746acd17398629a5fb081f-modified.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="theme.css">
 </head>
 <body>
 
   <div id="progress"></div>
-  <canvas id="stars"></canvas>
-  <div class="fx-grid"></div>
-  <div class="fx-scan"></div>
+  <div class="orbs"><span class="orb a"></span><span class="orb b"></span><span class="orb c"></span></div>
+  <canvas id="sparkles"></canvas>
 
   <!-- ── NAV ── -->
-  <nav class="hud-nav">
+  <nav class="nav">
     <div class="nav-inner">
-      <a href="index.html" class="nav-logo" aria-label="Back to portfolio">
-        <span class="heart">♥</span><span class="name">SIESTA</span><span class="tag">.EXE</span>
-      </a>
-      <a href="index.html" class="nav-back"><span class="arr">◄</span> PORTFOLIO</a>
+      <a href="index.html" class="nav-logo"><span class="heart"></span> Siesta</a>
+      <a href="index.html" class="nav-back">← Back to portfolio</a>
     </div>
   </nav>
 
   <!-- ── HERO ── -->
   <header class="proj-hero">
     <div class="proj-content">
-      <p class="proj-breadcrumb"><a href="index.html">~/quests</a><span class="sep">›</span>t-display-s3</p>
-      <span class="chip"><span class="dot"></span> ESP32-S3 · ACTIVE</span>
-      <h1 class="proj-title px-title">T-DISPLAY-S3</h1>
-      <p class="proj-type">// SMART CLOCK · EMBEDDED</p>
+      <p class="breadcrumb"><a href="index.html">Work</a><span class="sep">/</span>T-Display-S3</p>
+      <span class="chip"><span class="dot"></span> ESP32-S3 · Active</span>
+      <h1 class="proj-title grad-text">T-Display-S3</h1>
+      <p class="proj-type">Smart Clock · Embedded</p>
       <p class="proj-sub">A custom smart clock built on the LilyGO T-Display-S3-Touch board. C++ firmware with a UI rendered directly to the capacitive touch screen — built from the firmware up.</p>
-      <div class="tags">
-        <span class="tag">C++</span><span class="tag">ESP32</span><span class="tag">Embedded</span><span class="tag">Hardware</span>
-      </div>
+      <div class="tags"><span class="tag">C++</span><span class="tag">ESP32</span><span class="tag">Embedded</span><span class="tag">Hardware</span></div>
       <div class="proj-actions">
-        <a href="#overview" class="btn btn-cyan">Learn More ▼</a>
+        <a href="#overview" class="btn btn-primary">Learn more ↓</a>
         <a href="https://github.com/Siesta0217" class="btn btn-ghost" target="_blank" rel="noopener">GitHub ↗</a>
       </div>
     </div>
     <div class="proj-visual">
-      <div class="proj-frame">
-        <img src="t-display-s3-touch-cutout.png" alt="LilyGO T-Display-S3-Touch board">
-      </div>
+      <div class="proj-frame"><img src="t-display-s3-touch-cutout.png" alt="LilyGO T-Display-S3-Touch board"></div>
     </div>
   </header>
 
-  <div class="rule"><hr></div>
-
   <!-- ── OVERVIEW ── -->
   <section class="section fade" id="overview">
-    <p class="section-label">▘ OVERVIEW</p>
-    <div class="hud-box">
-      <span class="hud-tab">README</span>
+    <p class="eyebrow">Overview</p>
+    <h2 class="section-title">What it is</h2>
+    <div class="glass" style="padding:34px 38px">
       <p class="overview-body">
         A self-built smart clock running on the <strong>LilyGO T-Display-S3-Touch</strong> — an
         <em>ESP32-S3</em> dev board with a built-in capacitive touchscreen. Firmware is written in
@@ -65,86 +56,68 @@
         off-the-shelf clock firmware involved.
       </p>
       <div class="stat-row">
-        <div><div class="stat-num"><span class="ac">1.9</span>"</div><div class="stat-label">TOUCH DISPLAY</div></div>
-        <div><div class="stat-num"><span class="am">240</span>MHZ</div><div class="stat-label">ESP32-S3</div></div>
-        <div><div class="stat-num">C<span class="ac">++</span></div><div class="stat-label">FIRMWARE</div></div>
+        <div><div class="stat-num">1.9<small>"</small></div><div class="stat-label">Touch display</div></div>
+        <div><div class="stat-num">240<small>MHz</small></div><div class="stat-label">ESP32-S3</div></div>
+        <div><div class="stat-num">C++</div><div class="stat-label">Firmware</div></div>
       </div>
     </div>
   </section>
-
-  <div class="rule"><hr></div>
 
   <!-- ── HARDWARE ── -->
   <section class="section fade" id="hardware">
-    <p class="section-label">▘ HARDWARE</p>
+    <p class="eyebrow">Hardware</p>
+    <h2 class="section-title">Under the hood</h2>
     <div class="spec-grid">
       <div class="spec"><p class="spec-label">MCU</p><p class="spec-value">ESP32-S3</p><p class="spec-meta">Dual-core · 240MHz</p></div>
-      <div class="spec"><p class="spec-label">DISPLAY</p><p class="spec-value">1.9" ST7789</p><p class="spec-meta">170 × 320 IPS</p></div>
-      <div class="spec"><p class="spec-label">TOUCH</p><p class="spec-value">CST816 Capacitive</p><p class="spec-meta">I²C interface</p></div>
-      <div class="spec"><p class="spec-label">MEMORY</p><p class="spec-value">16MB Flash · 8MB PSRAM</p><p class="spec-meta">Plenty of room</p></div>
-      <div class="spec"><p class="spec-label">CONNECTIVITY</p><p class="spec-value">Wi-Fi · Bluetooth 5</p><p class="spec-meta">Built into S3</p></div>
-      <div class="spec"><p class="spec-label">POWER</p><p class="spec-value">USB-C</p><p class="spec-meta">Battery-ready</p></div>
+      <div class="spec"><p class="spec-label">Display</p><p class="spec-value">1.9" ST7789</p><p class="spec-meta">170 × 320 IPS</p></div>
+      <div class="spec"><p class="spec-label">Touch</p><p class="spec-value">CST816 Capacitive</p><p class="spec-meta">I²C interface</p></div>
+      <div class="spec"><p class="spec-label">Memory</p><p class="spec-value">16MB Flash · 8MB PSRAM</p><p class="spec-meta">Plenty of room</p></div>
+      <div class="spec"><p class="spec-label">Connectivity</p><p class="spec-value">Wi-Fi · Bluetooth 5</p><p class="spec-meta">Built into S3</p></div>
+      <div class="spec"><p class="spec-label">Power</p><p class="spec-value">USB-C</p><p class="spec-meta">Battery-ready</p></div>
     </div>
   </section>
-
-  <div class="rule"><hr></div>
 
   <!-- ── FEATURES ── -->
   <section class="section fade" id="features">
-    <p class="section-label">▘ FEATURES</p>
-    <div class="cell-grid">
-      <div class="cell"><p class="cell-title">Live Clock</p><p class="cell-sub">NTP-synced timekeeping</p></div>
-      <div class="cell"><p class="cell-title">Touch UI</p><p class="cell-sub">Custom-rendered on display</p></div>
-      <div class="cell"><p class="cell-title">Wi-Fi Sync</p><p class="cell-sub">Network-aware updates</p></div>
-      <div class="cell"><p class="cell-title">Clock Faces</p><p class="cell-sub">Swappable layouts</p></div>
-      <div class="cell"><p class="cell-title">Low Power</p><p class="cell-sub">Optimized refresh loop</p></div>
-      <div class="cell"><p class="cell-title">From Scratch</p><p class="cell-sub">Custom firmware, no presets</p></div>
+    <p class="eyebrow">Features</p>
+    <h2 class="section-title">What it does</h2>
+    <div class="card-grid">
+      <div class="feature"><div class="ico"></div><h3>Live clock</h3><p>NTP-synced timekeeping.</p></div>
+      <div class="feature"><div class="ico i2"></div><h3>Touch UI</h3><p>Custom-rendered on the display.</p></div>
+      <div class="feature"><div class="ico i3"></div><h3>Wi-Fi sync</h3><p>Network-aware updates.</p></div>
+      <div class="feature"><div class="ico i4"></div><h3>Clock faces</h3><p>Swappable layouts.</p></div>
+      <div class="feature"><div class="ico i2"></div><h3>Low power</h3><p>Optimized refresh loop.</p></div>
+      <div class="feature"><div class="ico"></div><h3>From scratch</h3><p>Custom firmware, no presets.</p></div>
     </div>
   </section>
 
-  <div class="rule"><hr></div>
-
-  <!-- ── TECH STACK ── -->
+  <!-- ── TECH ── -->
   <section class="section fade" id="tech">
-    <p class="section-label">▘ TECH STACK</p>
-    <div class="cell-grid">
-      <div class="cell"><p class="cell-title">C++</p><p class="cell-sub">Firmware language</p></div>
-      <div class="cell"><p class="cell-title">Arduino / IDF</p><p class="cell-sub">Build environment</p></div>
-      <div class="cell"><p class="cell-title">TFT_eSPI</p><p class="cell-sub">Display driver library</p></div>
-      <div class="cell"><p class="cell-title">PlatformIO</p><p class="cell-sub">Toolchain &amp; uploads</p></div>
+    <p class="eyebrow">Tech stack</p>
+    <h2 class="section-title">Built with</h2>
+    <div class="card-grid">
+      <div class="feature"><div class="ico i3"></div><h3>C++</h3><p>Firmware language.</p></div>
+      <div class="feature"><div class="ico i4"></div><h3>Arduino / IDF</h3><p>Build environment.</p></div>
+      <div class="feature"><div class="ico"></div><h3>TFT_eSPI</h3><p>Display driver library.</p></div>
+      <div class="feature"><div class="ico i2"></div><h3>PlatformIO</h3><p>Toolchain &amp; uploads.</p></div>
     </div>
   </section>
-
-  <div class="rule"><hr></div>
 
   <!-- ── DEV LOG ── -->
   <section class="section fade" id="log">
-    <p class="section-label">▘ DEV LOG</p>
+    <p class="eyebrow">Dev log</p>
+    <h2 class="section-title">How it came together</h2>
     <div class="log-list">
-      <div class="log-entry">
-        <span class="log-date">INIT</span>
-        <span class="log-msg"><span class="log-tag green">INIT</span>Board received. First sketch flashed, "Hello World" on display.</span>
-      </div>
-      <div class="log-entry">
-        <span class="log-date">PHASE 1</span>
-        <span class="log-msg"><span class="log-tag blue">BUILD</span>Driver setup, capacitive touch input working, UI render loop established.</span>
-      </div>
-      <div class="log-entry">
-        <span class="log-date">PHASE 2</span>
-        <span class="log-msg"><span class="log-tag amber">FEAT</span>NTP time sync over Wi-Fi, multi-face layout system.</span>
-      </div>
-      <div class="log-entry">
-        <span class="log-date">NOW</span>
-        <span class="log-msg"><span class="log-tag green">LIVE</span>Running on desk. Ongoing tweaks to UI &amp; power profile.</span>
-      </div>
+      <div class="log-entry"><span class="log-date">Init</span><span class="log-msg"><span class="log-tag green">Init</span>Board received. First sketch flashed, "Hello World" on display.</span></div>
+      <div class="log-entry"><span class="log-date">Phase 1</span><span class="log-msg"><span class="log-tag blue">Build</span>Driver setup, capacitive touch input working, UI render loop established.</span></div>
+      <div class="log-entry"><span class="log-date">Phase 2</span><span class="log-msg"><span class="log-tag amber">Feature</span>NTP time sync over Wi-Fi, multi-face layout system.</span></div>
+      <div class="log-entry"><span class="log-date">Now</span><span class="log-msg"><span class="log-tag green">Live</span>Running on desk. Ongoing tweaks to UI &amp; power profile.</span></div>
     </div>
   </section>
 
-  <div class="rule"><hr></div>
-
-  <footer class="hud-foot">
-    <span class="foot-text">SIESTA · T-DISPLAY-S3</span>
-    <span class="foot-text">BUILT FROM SCRATCH</span>
+  <footer class="footer">
+    <span>Siesta · T-Display-S3</span>
+    <span>Built from scratch</span>
   </footer>
 
   <script src="hud.js"></script>

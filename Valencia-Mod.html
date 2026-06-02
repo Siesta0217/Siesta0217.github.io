@@ -8,57 +8,47 @@
   <link rel="icon" type="image/png" href="d32ce04ad4746acd17398629a5fb081f-modified.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="theme.css">
 </head>
 <body>
 
   <div id="progress"></div>
-  <canvas id="stars"></canvas>
-  <div class="fx-grid"></div>
-  <div class="fx-scan"></div>
+  <div class="orbs"><span class="orb a"></span><span class="orb b"></span><span class="orb c"></span></div>
+  <canvas id="sparkles"></canvas>
 
   <!-- ── NAV ── -->
-  <nav class="hud-nav">
+  <nav class="nav">
     <div class="nav-inner">
-      <a href="index.html" class="nav-logo" aria-label="Back to portfolio">
-        <span class="heart">♥</span><span class="name">SIESTA</span><span class="tag">.EXE</span>
-      </a>
-      <a href="index.html" class="nav-back"><span class="arr">◄</span> PORTFOLIO</a>
+      <a href="index.html" class="nav-logo"><span class="heart"></span> Siesta</a>
+      <a href="index.html" class="nav-back">← Back to portfolio</a>
     </div>
   </nav>
 
   <!-- ── HERO ── -->
   <header class="proj-hero">
     <div class="proj-content">
-      <p class="proj-breadcrumb"><a href="index.html">~/quests</a><span class="sep">›</span>valencia-mod</p>
-      <span class="chip"><span class="dot"></span> FABRIC MOD · LUNAR 1.21</span>
-      <h1 class="proj-title px-title">VALENCIA</h1>
-      <p class="proj-type">// MINECRAFT CLIENT MOD</p>
+      <p class="breadcrumb"><a href="index.html">Work</a><span class="sep">/</span>Valencia Client</p>
+      <span class="chip"><span class="dot"></span> Fabric Mod · Lunar 1.21</span>
+      <h1 class="proj-title grad-text">Valencia</h1>
+      <p class="proj-type">Minecraft Client Mod</p>
       <p class="proj-sub">A custom Fabric client mod for Lunar Client 1.21 — combat, movement and utility modules, all driven by a draggable in-game ClickGUI. Written from scratch in Java.</p>
-      <div class="tags">
-        <span class="tag">Java 21</span><span class="tag">Fabric</span><span class="tag">Lunar 1.21</span><span class="tag">Gradle</span>
-      </div>
+      <div class="tags"><span class="tag">Java 21</span><span class="tag">Fabric</span><span class="tag">Lunar 1.21</span><span class="tag">Gradle</span></div>
       <div class="proj-actions">
-        <a href="https://github.com/Siesta0217/valencia" class="btn btn-violet" target="_blank" rel="noopener">View on GitHub ↗</a>
-        <a href="#modules" class="btn btn-ghost">Modules ▼</a>
+        <a href="https://github.com/Siesta0217/valencia" class="btn btn-primary" target="_blank" rel="noopener">View on GitHub ↗</a>
+        <a href="#modules" class="btn btn-ghost">Modules ↓</a>
       </div>
     </div>
     <div class="proj-visual">
-      <div class="logo-slot" aria-label="Valencia Client">
-        <div class="mark"></div>
-        <div class="lbl">VALENCIA<br>CLIENT</div>
-      </div>
+      <div class="logo-slot" aria-label="Valencia Client"><span class="gem"></span><span class="lbl">Valencia<br>Client</span></div>
     </div>
   </header>
 
-  <div class="rule"><hr></div>
-
   <!-- ── OVERVIEW ── -->
   <section class="section fade" id="overview">
-    <p class="section-label">▘ OVERVIEW</p>
-    <div class="hud-box pink">
-      <span class="hud-tab">README</span>
+    <p class="eyebrow">Overview</p>
+    <h2 class="section-title">What it is</h2>
+    <div class="glass" style="padding:34px 38px">
       <p class="overview-body">
         Valencia is a <em>Fabric client mod</em> for <strong>Lunar Client 1.21</strong>, built from
         scratch with no Fabric API dependency. Features a draggable <em>ClickGUI</em>, persistent JSON
@@ -66,123 +56,81 @@
         Render categories. Uses pure <code>GuiGraphics</code> rendering — Sodium / Iris compatible.
       </p>
       <div class="stat-row">
-        <div><div class="stat-num"><span class="vi">12+</span></div><div class="stat-label">MODULES</div></div>
-        <div><div class="stat-num"><span class="vi">α</span>0.4</div><div class="stat-label">CURRENT BUILD</div></div>
-        <div><div class="stat-num">MC <span class="vi">1.21</span></div><div class="stat-label">TARGET</div></div>
+        <div><div class="stat-num">12<small>+</small></div><div class="stat-label">Modules</div></div>
+        <div><div class="stat-num"><small>α</small>0.4</div><div class="stat-label">Current build</div></div>
+        <div><div class="stat-num">1.21</div><div class="stat-label">MC target</div></div>
       </div>
     </div>
   </section>
 
-  <div class="rule"><hr></div>
-
   <!-- ── MODULES ── -->
   <section class="section fade" id="modules">
-    <p class="section-label">▘ MODULES</p>
+    <p class="eyebrow">Modules</p>
+    <h2 class="section-title">What's inside</h2>
     <div class="mod-list">
 
       <div class="mod">
-        <div>
-          <div class="mod-head"><span class="mod-name">MaceAura</span><span class="mod-cat cat-combat">Combat</span></div>
-          <p class="mod-desc">Mace-specific silent aim + auto attack. Detect 6f, attack 3.5f.</p>
-        </div>
+        <div><div class="mod-head"><span class="mod-name">MaceAura</span><span class="mod-cat cat-combat">Combat</span></div><p class="mod-desc">Mace-specific silent aim + auto attack. Detect 6f, attack 3.5f.</p></div>
         <div class="mod-key">Z</div>
       </div>
-
       <div class="mod">
-        <div>
-          <div class="mod-head"><span class="mod-name">KillAura</span><span class="mod-cat cat-combat">Combat</span></div>
-          <p class="mod-desc">Any-weapon aura, switch/single mode, target filters, tunable range &amp; delay.</p>
-        </div>
+        <div><div class="mod-head"><span class="mod-name">KillAura</span><span class="mod-cat cat-combat">Combat</span></div><p class="mod-desc">Any-weapon aura, switch/single mode, target filters, tunable range &amp; delay.</p></div>
         <div class="mod-key">K</div>
       </div>
-
       <div class="mod">
-        <div>
-          <div class="mod-head"><span class="mod-name">CritHit</span><span class="mod-cat cat-combat">Combat</span></div>
-          <p class="mod-desc">Forces critical hits on every attack.</p>
-        </div>
+        <div><div class="mod-head"><span class="mod-name">CritHit</span><span class="mod-cat cat-combat">Combat</span></div><p class="mod-desc">Forces critical hits on every attack.</p></div>
         <div class="mod-key">R</div>
       </div>
-
       <div class="mod">
-        <div>
-          <div class="mod-head"><span class="mod-name">Velocity</span><span class="mod-cat cat-combat">Combat</span></div>
-          <p class="mod-desc">Cancels all knockback for the local player.</p>
-        </div>
+        <div><div class="mod-head"><span class="mod-name">Velocity</span><span class="mod-cat cat-combat">Combat</span></div><p class="mod-desc">Cancels all knockback for the local player.</p></div>
         <div class="mod-key">C</div>
       </div>
-
       <div class="mod">
-        <div>
-          <div class="mod-head"><span class="mod-name">NoFall</span><span class="mod-cat cat-move">Movement</span></div>
-          <p class="mod-desc">onGround spoofing, no fall damage. Default on.</p>
-        </div>
+        <div><div class="mod-head"><span class="mod-name">NoFall</span><span class="mod-cat cat-move">Movement</span></div><p class="mod-desc">onGround spoofing, no fall damage. Default on.</p></div>
         <div class="mod-key">N</div>
       </div>
-
       <div class="mod">
-        <div>
-          <div class="mod-head"><span class="mod-name">BHop</span><span class="mod-cat cat-move">Movement</span></div>
-          <p class="mod-desc">Auto-jump + air steering, full WASD + diagonals, 0.5×–2.5× speed.</p>
-        </div>
+        <div><div class="mod-head"><span class="mod-name">BHop</span><span class="mod-cat cat-move">Movement</span></div><p class="mod-desc">Auto-jump + air steering, full WASD + diagonals, 0.5×–2.5× speed.</p></div>
         <div class="mod-key">B</div>
       </div>
-
       <div class="mod">
-        <div>
-          <div class="mod-head"><span class="mod-name">NoSlow</span><span class="mod-cat cat-move">Movement</span></div>
-          <p class="mod-desc">Removes slowdown while using items.</p>
-        </div>
+        <div><div class="mod-head"><span class="mod-name">NoSlow</span><span class="mod-cat cat-move">Movement</span></div><p class="mod-desc">Removes slowdown while using items.</p></div>
         <div class="mod-key">G</div>
       </div>
-
       <div class="mod">
-        <div>
-          <div class="mod-head"><span class="mod-name">FastPlace</span><span class="mod-cat cat-move">Movement</span></div>
-          <p class="mod-desc">Removes right-click delay — instant block/item use spam.</p>
-        </div>
+        <div><div class="mod-head"><span class="mod-name">FastPlace</span><span class="mod-cat cat-move">Movement</span></div><p class="mod-desc">Removes right-click delay — instant block/item use spam.</p></div>
         <div class="mod-key">F</div>
       </div>
-
       <div class="mod">
-        <div>
-          <div class="mod-head"><span class="mod-name">XRay</span><span class="mod-cat cat-render">Render</span></div>
-          <p class="mod-desc">Hides non-ore blocks, gamma 16.0. O(1) lookup cache for speed.</p>
-        </div>
+        <div><div class="mod-head"><span class="mod-name">XRay</span><span class="mod-cat cat-render">Render</span></div><p class="mod-desc">Hides non-ore blocks, gamma 16.0. O(1) lookup cache for speed.</p></div>
         <div class="mod-key">X</div>
       </div>
-
       <div class="mod">
-        <div>
-          <div class="mod-head"><span class="mod-name">ClickGUI</span><span class="mod-cat cat-misc">UI</span></div>
-          <p class="mod-desc">Draggable panel, per-module sliders, toggles, inline keybind rebinding.</p>
-        </div>
+        <div><div class="mod-head"><span class="mod-name">ClickGUI</span><span class="mod-cat cat-misc">UI</span></div><p class="mod-desc">Draggable panel, per-module sliders, toggles, inline keybind rebinding.</p></div>
         <div class="mod-key">R-Ctrl</div>
       </div>
 
     </div>
   </section>
 
-  <div class="rule"><hr></div>
-
   <!-- ── HIGHLIGHTS ── -->
   <section class="section fade" id="features">
-    <p class="section-label">▘ HIGHLIGHTS</p>
+    <p class="eyebrow">Highlights</p>
+    <h2 class="section-title">The good parts</h2>
     <div class="spec-grid">
-      <div class="spec"><p class="spec-label">CLICKGUI</p><p class="spec-value">Draggable Panel</p><p class="spec-meta">Per-module settings expand inline</p></div>
-      <div class="spec"><p class="spec-label">CONFIG</p><p class="spec-value">Persistent JSON</p><p class="spec-meta">valencia.json across sessions</p></div>
-      <div class="spec"><p class="spec-label">REBINDING</p><p class="spec-value">In-Game</p><p class="spec-meta">.nf bind &lt;mod&gt; &lt;key&gt;</p></div>
-      <div class="spec"><p class="spec-label">RENDERING</p><p class="spec-value">Pure GuiGraphics</p><p class="spec-meta">Sodium / Iris compatible</p></div>
-      <div class="spec"><p class="spec-label">WAIFU IMAGE</p><p class="spec-value">PNG · JPG · GIF · BMP</p><p class="spec-meta">Custom skin for ClickGUI</p></div>
-      <div class="spec"><p class="spec-label">PERFORMANCE</p><p class="spec-value">XRay O(1) Cache</p><p class="spec-meta">Cached reflection, no per-frame lookup</p></div>
+      <div class="spec"><p class="spec-label">ClickGUI</p><p class="spec-value">Draggable Panel</p><p class="spec-meta">Per-module settings expand inline</p></div>
+      <div class="spec"><p class="spec-label">Config</p><p class="spec-value">Persistent JSON</p><p class="spec-meta">valencia.json across sessions</p></div>
+      <div class="spec"><p class="spec-label">Rebinding</p><p class="spec-value">In-Game</p><p class="spec-meta">.nf bind &lt;mod&gt; &lt;key&gt;</p></div>
+      <div class="spec"><p class="spec-label">Rendering</p><p class="spec-value">Pure GuiGraphics</p><p class="spec-meta">Sodium / Iris compatible</p></div>
+      <div class="spec"><p class="spec-label">Waifu Image</p><p class="spec-value">PNG · JPG · GIF · BMP</p><p class="spec-meta">Custom skin for ClickGUI</p></div>
+      <div class="spec"><p class="spec-label">Performance</p><p class="spec-value">XRay O(1) Cache</p><p class="spec-meta">Cached reflection, no per-frame lookup</p></div>
     </div>
   </section>
 
-  <div class="rule"><hr></div>
-
   <!-- ── INSTALL ── -->
   <section class="section fade" id="install">
-    <p class="section-label">▘ INSTALL</p>
+    <p class="eyebrow">Install</p>
+    <h2 class="section-title">Get it running</h2>
     <div class="code-block"><span class="c-comment"># 1. Install Fabric Loader 0.19.2+  (no Fabric API needed)</span>
 <span class="c-comment"># 2. Drop the JAR into mods/</span>
 
@@ -195,36 +143,21 @@
 <span class="c-key">Java</span>          <span class="c-val">21+</span></div>
   </section>
 
-  <div class="rule"><hr></div>
-
   <!-- ── CHANGELOG ── -->
   <section class="section fade" id="log">
-    <p class="section-label">▘ CHANGELOG</p>
+    <p class="eyebrow">Changelog</p>
+    <h2 class="section-title">Version history</h2>
     <div class="log-list">
-      <div class="log-entry">
-        <span class="log-date">α-0.1</span>
-        <span class="log-msg"><span class="log-tag green">INIT</span>Core modules: NoFall, XRay, MaceAura, KillAura, NoSlow, BHop. ClickGUI with sliders &amp; rebinding. Persistent JSON config.</span>
-      </div>
-      <div class="log-entry">
-        <span class="log-date">α-0.2</span>
-        <span class="log-msg"><span class="log-tag blue">ADD</span>New modules: AutoSprint, Velocity, FastPlace, CritHit. Waifu image support for ClickGUI.</span>
-      </div>
-      <div class="log-entry">
-        <span class="log-date">α-0.3</span>
-        <span class="log-msg"><span class="log-tag violet">PERF</span>XRay block lookup now O(1) via ConcurrentHashMap cache. Reflection cached at load time. AutoSprint removed.</span>
-      </div>
-      <div class="log-entry">
-        <span class="log-date">α-0.4</span>
-        <span class="log-msg"><span class="log-tag violet">PERF</span>Waifu image accepts PNG, JPG/JPEG, BMP, GIF — non-PNG decoded via ImageIO and re-encoded.</span>
-      </div>
+      <div class="log-entry"><span class="log-date">α-0.1</span><span class="log-msg"><span class="log-tag green">Init</span>Core modules: NoFall, XRay, MaceAura, KillAura, NoSlow, BHop. ClickGUI with sliders &amp; rebinding. Persistent JSON config.</span></div>
+      <div class="log-entry"><span class="log-date">α-0.2</span><span class="log-msg"><span class="log-tag blue">Add</span>New modules: AutoSprint, Velocity, FastPlace, CritHit. Waifu image support for ClickGUI.</span></div>
+      <div class="log-entry"><span class="log-date">α-0.3</span><span class="log-msg"><span class="log-tag violet">Perf</span>XRay block lookup now O(1) via ConcurrentHashMap cache. Reflection cached at load time. AutoSprint removed.</span></div>
+      <div class="log-entry"><span class="log-date">α-0.4</span><span class="log-msg"><span class="log-tag violet">Perf</span>Waifu image accepts PNG, JPG/JPEG, BMP, GIF — non-PNG decoded via ImageIO and re-encoded.</span></div>
     </div>
   </section>
 
-  <div class="rule"><hr></div>
-
-  <footer class="hud-foot">
-    <span class="foot-text">SIESTA · VALENCIA MOD</span>
-    <span class="foot-text">FABRIC · LUNAR 1.21</span>
+  <footer class="footer">
+    <span>Siesta · Valencia Mod</span>
+    <span>Fabric · Lunar 1.21</span>
   </footer>
 
   <script src="hud.js"></script>

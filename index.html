@@ -3,522 +3,232 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SIESTA.EXE — Player Select</title>
-  <meta name="description" content="Siesta — 17 y/o self-taught developer. Embedded systems, automation & security. Press start.">
+  <title>Siesta — Developer</title>
+  <meta name="description" content="Siesta — 17 y/o self-taught developer. Embedded systems, automation & security, with a love for hardware.">
   <link rel="icon" type="image/png" href="d32ce04ad4746acd17398629a5fb081f-modified.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="theme.css">
   <style>
-    /* ── Hero · player select ── */
+    /* ── Hero ── */
     .hero {
-      max-width: var(--max); margin: 0 auto;
-      padding: 96px 22px 40px;
-      min-height: 100svh;
-      display: grid; grid-template-columns: 1fr clamp(220px, 28vw, 300px);
-      gap: 44px; align-items: center; position: relative; z-index: 1;
+      max-width: 860px; margin: 0 auto; min-height: 100svh;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center; gap: 22px; padding: 130px 24px 70px; position: relative; z-index: 1;
     }
-    .hero-content { display: flex; flex-direction: column; gap: 22px; }
-    .hero-title {
-      font-size: clamp(40px, 8.5vw, 86px);
-      margin: 4px 0 2px;
+    .hero-avatar { position: relative; animation: floaty 5s ease-in-out infinite; }
+    @keyframes floaty { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)} }
+    .hero-avatar .ring {
+      position: absolute; inset: -12px; border-radius: 50%; z-index: -1;
+      background: conic-gradient(from 0deg, var(--pink), var(--lav), var(--sky), var(--mint), var(--pink));
+      filter: blur(10px); opacity: .85; animation: spinring 7s linear infinite;
     }
-    .hero-type {
-      font-family: var(--px); font-size: clamp(9px, 1.5vw, 12px);
-      color: var(--cyan); letter-spacing: .03em;
-      text-shadow: 0 0 12px var(--cyan-g);
+    @keyframes spinring { to { transform: rotate(360deg); } }
+    .hero-avatar img {
+      width: clamp(150px, 22vw, 190px); height: clamp(150px, 22vw, 190px);
+      object-fit: cover; object-position: center top; border-radius: 50%;
+      border: 5px solid rgba(255,255,255,.85); box-shadow: var(--shadow-lg);
     }
-    .hero-sub {
-      font-size: clamp(19px, 2.3vw, 23px); color: var(--dim);
-      max-width: 480px; min-height: 2.8em; line-height: 1.45;
+    .hero-name {
+      font-family: var(--display); font-weight: 700; line-height: 1;
+      font-size: clamp(52px, 11vw, 96px); letter-spacing: -.03em; margin: 2px 0;
     }
-    .blk {
-      display: inline-block; width: .55em; height: 1.05em;
-      background: var(--pink); vertical-align: -2px; margin-left: 2px;
-      box-shadow: 0 0 8px var(--pink-g);
-      animation: blink 1s steps(2) infinite;
-    }
-    .hero-bars {
-      max-width: 380px; display: flex; flex-direction: column; gap: 11px;
-      padding: 16px 18px; border: 2px solid var(--line);
-      background: rgba(12,9,24,.6); box-shadow: 4px 4px 0 rgba(0,0,0,.4);
-      position: relative;
-    }
-    .hero-bars .lv {
-      position: absolute; top: -13px; right: 14px;
-      font-family: var(--px); font-size: 9px; color: var(--bg);
-      background: var(--gold); padding: 5px 8px; box-shadow: 3px 3px 0 rgba(0,0,0,.5);
-    }
-    .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 4px; }
-
-    /* ── Avatar · character card ── */
-    .avatar-card {
-      position: relative; align-self: center;
-      animation: bob 4s ease-in-out infinite;
-    }
-    @keyframes bob { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
-    .avatar-frame {
-      position: relative; border: 2px solid var(--pink);
-      background: linear-gradient(180deg, rgba(31,22,64,.6), rgba(10,8,20,.9));
-      box-shadow:
-        inset 0 0 0 2px var(--bg),
-        inset 0 0 0 4px rgba(255,46,136,.3),
-        0 0 0 2px var(--bg),
-        0 0 30px var(--pink-g),
-        7px 7px 0 rgba(0,0,0,.5);
-      padding: 8px;
-    }
-    .avatar-plate {
-      font-family: var(--px); font-size: 7px; color: var(--cyan);
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 5px 4px 8px; letter-spacing: .04em;
-    }
-    .avatar-plate .ready { color: var(--green); animation: blink 1.4s steps(2) infinite; }
-    .avatar-img {
-      position: relative; aspect-ratio: 1/1.12; overflow: hidden;
-      border: 2px solid var(--line); background: #07050f;
-    }
-    .avatar-img img {
-      width: 100%; height: 100%; object-fit: cover; object-position: center top;
-      display: block; filter: saturate(1.12) contrast(1.04);
-    }
-    .avatar-img::after {                       /* scanlines on portrait */
-      content: ''; position: absolute; inset: 0; pointer-events: none;
-      background: repeating-linear-gradient(0deg, rgba(0,0,0,0) 0 2px, rgba(0,0,0,.18) 3px 4px);
-    }
-    .avatar-name {
-      margin-top: 8px; padding: 9px 8px 4px; text-align: center;
-      border-top: 2px solid var(--line);
-    }
-    .avatar-name .nm { font-family: var(--px); font-size: 12px; color: var(--ink); text-shadow: 2px 2px 0 var(--pink); }
-    .avatar-name .cl { font-family: var(--px); font-size: 7px; color: var(--gold); margin-top: 7px; letter-spacing: .05em; }
+    .hero-sub { font-size: clamp(17px, 2.4vw, 22px); color: var(--ink-soft); max-width: 540px; font-weight: 600; }
+    .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; margin-top: 6px; }
+    .scroll-cue { margin-top: 26px; font-family: var(--display); font-weight: 600; font-size: 13px; color: var(--ink-faint); letter-spacing: .08em; }
+    .scroll-cue span { display: block; font-size: 18px; margin-top: 4px; animation: nudge 1.8s ease-in-out infinite; }
+    @keyframes nudge { 0%,100%{transform:translateY(0);opacity:.5} 50%{transform:translateY(5px);opacity:1} }
 
     /* ── About ── */
-    .about-body { font-size: clamp(20px, 2.4vw, 25px); line-height: 1.5; color: var(--ink); max-width: 640px; }
-    .about-body b { color: var(--pink); font-weight: 400; text-shadow: 0 0 12px var(--pink-g); }
-    .about-body i { font-style: normal; color: var(--cyan); text-shadow: 0 0 12px var(--cyan-g); }
+    .about-card { padding: 36px 38px; }
+    .about-body { font-size: clamp(19px, 2.4vw, 24px); line-height: 1.6; color: var(--ink); max-width: 660px; font-weight: 600; }
+    .about-body b { font-weight: 700; color: var(--pink-d); }
+    .about-body i { font-style: normal; font-weight: 700; color: var(--lav-d); }
 
     /* ── Skills ── */
-    .skill-box .bar { grid-template-columns: 150px 1fr 92px; }
-    @media (max-width:760px){ .skill-box .bar { grid-template-columns: 110px 1fr 64px; } }
+    .skills-card { padding: 34px 38px; }
 
-    /* ── Quest log ── */
-    .quest-list { display: flex; flex-direction: column; gap: 14px; }
-    .quest {
-      display: grid; grid-template-columns: 8px 132px 1fr 80px; gap: 18px;
-      background: rgba(23,16,41,.62); border: 2px solid var(--line);
-      box-shadow: 5px 5px 0 rgba(0,0,0,.45); padding: 0; overflow: hidden;
-      transition: transform .14s, box-shadow .14s, border-color .14s;
+    /* ── Work ── */
+    .work-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+    .work {
+      display: flex; flex-direction: column; overflow: hidden; border-radius: 26px;
+      background: var(--card); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+      border: 1px solid var(--card-line); box-shadow: var(--shadow-sm);
+      transition: transform .28s cubic-bezier(.2,.8,.2,1), box-shadow .28s;
     }
-    .quest:hover { transform: translate(-3px,-3px); }
-    .quest .spine { background: var(--line); }
-    .quest.r-rare:hover      { border-color: var(--cyan);   box-shadow: 7px 7px 0 rgba(0,0,0,.45), 0 0 22px var(--cyan-g); }
-    .quest.r-epic:hover      { border-color: var(--violet); box-shadow: 7px 7px 0 rgba(0,0,0,.45), 0 0 22px var(--violet-g); }
-    .quest.r-legendary:hover { border-color: var(--gold);   box-shadow: 7px 7px 0 rgba(0,0,0,.45), 0 0 22px var(--gold-g); }
-    .quest.r-rare .spine      { background: var(--cyan);   box-shadow: 0 0 12px var(--cyan-g); }
-    .quest.r-epic .spine      { background: var(--violet); box-shadow: 0 0 12px var(--violet-g); }
-    .quest.r-legendary .spine { background: var(--gold);   box-shadow: 0 0 12px var(--gold-g); }
-    .quest-thumb { overflow: hidden; border-right: 2px solid var(--line); background: #07050f; }
-    .quest-thumb img { width: 100%; height: 100%; min-height: 118px; object-fit: cover; display: block; transition: transform .3s; }
-    .quest:hover .quest-thumb img { transform: scale(1.08); }
-    .quest-body { padding: 18px 4px 18px 0; display: flex; flex-direction: column; gap: 9px; }
-    .rarity { font-family: var(--px); font-size: 7px; letter-spacing: .06em; width: max-content; padding: 4px 7px; }
-    .r-rare .rarity      { color: var(--cyan);   background: rgba(39,231,255,.12);  border: 1px solid rgba(39,231,255,.4); }
-    .r-epic .rarity      { color: var(--violet); background: rgba(157,107,255,.14); border: 1px solid rgba(157,107,255,.45); }
-    .r-legendary .rarity { color: var(--gold);   background: rgba(255,210,63,.14);  border: 1px solid rgba(255,210,63,.45); }
-    .quest-name { font-family: var(--px); font-size: 12px; color: var(--ink); line-height: 1.4; }
-    .quest:hover .quest-name { color: var(--cyan); text-shadow: 0 0 10px var(--cyan-g); }
-    .quest-desc { font-size: 17px; color: var(--dim); line-height: 1.35; max-width: 460px; }
-    .quest-go {
-      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
-      font-family: var(--px); font-size: 8px; color: var(--faint);
-      border-left: 2px dashed var(--line);
-    }
-    .quest-go .ar { font-size: 18px; color: var(--pink); transition: transform .14s; }
-    .quest:hover .quest-go { color: var(--ink); }
-    .quest:hover .quest-go .ar { transform: translateX(4px); color: var(--cyan); }
+    .work:hover { transform: translateY(-8px); box-shadow: var(--shadow-lg); }
+    .work-thumb { aspect-ratio: 16/10; overflow: hidden; position: relative; }
+    .work-thumb img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s; }
+    .work:hover .work-thumb img { transform: scale(1.06); }
+    .work-thumb::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 55%, rgba(80,50,110,.28)); }
+    .work-body { padding: 22px 24px 24px; display: flex; flex-direction: column; gap: 12px; flex: 1; }
+    .work-name { font-family: var(--display); font-weight: 700; font-size: 21px; color: var(--ink-strong); display: flex; align-items: center; gap: 8px; }
+    .work-name .arr { color: var(--pink-d); transition: transform .25s; }
+    .work:hover .work-name .arr { transform: translate(4px,-4px); }
+    .work-desc { font-size: 15px; color: var(--ink-soft); line-height: 1.55; flex: 1; }
 
-    /* ── Links ── */
-    .link-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px,1fr)); gap: 12px; }
-    .link-tile {
-      position: relative; padding: 18px; display: flex; flex-direction: column; gap: 8px;
-      background: rgba(23,16,41,.62); border: 2px solid var(--line);
-      box-shadow: 4px 4px 0 rgba(0,0,0,.45); transition: .14s; overflow: hidden;
+    /* ── Contact ── */
+    .link-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 16px; }
+    .link {
+      display: flex; align-items: center; gap: 16px; padding: 18px 22px; border-radius: 20px;
+      background: var(--card); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--card-line); box-shadow: var(--shadow-sm);
+      transition: transform .25s, box-shadow .25s;
     }
-    .link-tile .lp { font-family: var(--px); font-size: 8px; letter-spacing: .05em; }
-    .link-tile .lv { font-size: 19px; color: var(--ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-    .link-tile .go { position: absolute; right: 14px; top: 16px; font-family: var(--px); font-size: 9px; opacity: 0; transition: .14s; }
-    .link-tile:hover { transform: translate(-2px,-2px); }
-    .link-tile:hover .go { opacity: 1; }
-    .l-discord .lp { color: var(--violet); } .l-discord:hover { border-color: var(--violet); box-shadow: 6px 6px 0 rgba(0,0,0,.45),0 0 18px var(--violet-g); } .l-discord .go{ color: var(--violet);}
-    .l-youtube .lp { color: var(--red);    } .l-youtube:hover { border-color: var(--red);    box-shadow: 6px 6px 0 rgba(0,0,0,.45),0 0 18px rgba(255,84,112,.5); } .l-youtube .go{ color: var(--red);}
-    .l-github  .lp { color: var(--cyan);   } .l-github:hover  { border-color: var(--cyan);   box-shadow: 6px 6px 0 rgba(0,0,0,.45),0 0 18px var(--cyan-g); } .l-github .go{ color: var(--cyan);}
-    .l-email   .lp { color: var(--gold);   } .l-email:hover   { border-color: var(--gold);   box-shadow: 6px 6px 0 rgba(0,0,0,.45),0 0 18px var(--gold-g); } .l-email .go{ color: var(--gold);}
+    .link:hover { transform: translateY(-5px); box-shadow: var(--shadow); }
+    .link .dot { width: 40px; height: 40px; border-radius: 14px; flex-shrink: 0; box-shadow: 0 8px 16px -6px var(--glow-pink); }
+    .link.d1 .dot { background: linear-gradient(120deg, var(--lav), var(--lav-d)); }
+    .link.d2 .dot { background: linear-gradient(120deg, var(--pink-d), var(--peach)); }
+    .link.d3 .dot { background: linear-gradient(120deg, var(--sky), var(--lav)); }
+    .link.d4 .dot { background: linear-gradient(120deg, var(--mint), var(--sky)); }
+    .link .lbl { font-family: var(--display); font-weight: 700; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); }
+    .link .val { font-family: var(--display); font-weight: 700; font-size: 16px; color: var(--ink-strong); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
-    /* ── God-mode toast ── */
-    #toast {
-      position: fixed; left: 50%; top: 50%; transform: translate(-50%,-50%) scale(.6);
-      font-family: var(--px); font-size: clamp(16px,4vw,30px); color: var(--gold);
-      text-shadow: 4px 4px 0 var(--pink), -3px -3px 0 var(--cyan), 0 0 30px var(--gold-g);
-      z-index: 400; opacity: 0; pointer-events: none; transition: opacity .2s; letter-spacing: .04em;
-    }
-    #toast.show { opacity: 1; transform: translate(-50%,-50%) scale(1); animation: glitch .3s steps(2) 4; }
-    body.shake { animation: shake .4s steps(2) 3; }
-    @keyframes shake { 0%,100%{transform:translate(0)} 25%{transform:translate(-6px,3px)} 50%{transform:translate(5px,-4px)} 75%{transform:translate(-4px,-3px)} }
-
-    @media (max-width: 760px) {
-      .hero { grid-template-columns: 1fr; padding: 84px 18px 24px; gap: 26px; justify-items: center; text-align: center; }
-      .hero-content { align-items: center; }
-      .hero-bars, .hero-sub { width: 100%; max-width: 420px; }
-      .avatar-card { width: 200px; order: -1; }
-      .quest { grid-template-columns: 6px 1fr; }
-      .quest-thumb { grid-column: 1/-1; border-right: none; border-bottom: 2px solid var(--line); }
-      .quest-thumb img { min-height: 150px; }
-      .quest-body { padding: 16px; }
-      .quest-go { display: none; }
+    @media (max-width: 600px) {
+      .about-card, .skills-card { padding: 26px 22px; }
+      .link .val { font-size: 14px; }
     }
   </style>
 </head>
 <body>
 
   <div id="progress"></div>
-  <canvas id="stars"></canvas>
-  <div class="fx-grid"></div>
-  <div class="fx-scan"></div>
-  <div id="toast">★ GOD MODE ★</div>
+  <div class="orbs"><span class="orb a"></span><span class="orb b"></span><span class="orb c"></span></div>
+  <canvas id="sparkles"></canvas>
 
   <!-- ── NAV ── -->
-  <nav class="hud-nav">
+  <nav class="nav">
     <div class="nav-inner">
-      <a href="#" class="nav-logo" aria-label="Siesta home">
-        <span class="heart">♥</span>
-        <span class="name">SIESTA</span>
-        <span class="tag">.EXE</span>
-      </a>
+      <a href="#" class="nav-logo"><span class="heart"></span> Siesta</a>
       <ul class="nav-links">
         <li><a href="#about">About</a></li>
         <li><a href="#skills">Skills</a></li>
-        <li><a href="#quests">Quests</a></li>
-        <li><a href="#contact">Contact</a></li>
+        <li><a href="#work">Work</a></li>
       </ul>
+      <a href="#contact" class="nav-cta">Say hi ✦</a>
     </div>
   </nav>
 
-  <!-- ── HERO · PLAYER SELECT ── -->
+  <!-- ── HERO ── -->
   <header class="hero">
-    <div class="hero-content">
-      <span class="chip"><span class="dot"></span> ONLINE · READY PLAYER ONE</span>
-      <h1 class="hero-title px-title" id="title">SIESTA</h1>
-      <p class="hero-type">// 17 Y/O · SELF-TAUGHT DEV</p>
-      <p class="hero-sub" id="typed"></p>
-
-      <div class="hero-bars">
-        <span class="lv" id="lvl">LV.17</span>
-        <div class="bar">
-          <span class="bar__name">HP</span>
-          <span class="bar__track"><span class="bar__fill hp" data-w="100"></span></span>
-          <span class="bar__val">17 / 17</span>
-        </div>
-        <div class="bar">
-          <span class="bar__name">MP</span>
-          <span class="bar__track"><span class="bar__fill mp" data-w="100"></span></span>
-          <span class="bar__val">MAX</span>
-        </div>
-        <div class="bar">
-          <span class="bar__name">EXP</span>
-          <span class="bar__track"><span class="bar__fill xp" data-w="72"></span></span>
-          <span class="bar__val">NEXT LV</span>
-        </div>
-      </div>
-
-      <div class="hero-actions">
-        <a href="#quests" class="btn btn-start">▶ Press Start</a>
-        <a href="https://github.com/Siesta0217" class="btn btn-ghost" target="_blank" rel="noopener">GitHub ↗</a>
-      </div>
+    <div class="hero-avatar">
+      <span class="ring"></span>
+      <img src="d32ce04ad4746acd17398629a5fb081f-modified.png" alt="Siesta">
     </div>
-
-    <div class="avatar-card">
-      <div class="avatar-frame">
-        <div class="avatar-plate"><span>PLAYER 01</span><span class="ready">● READY</span></div>
-        <div class="avatar-img">
-          <img src="d32ce04ad4746acd17398629a5fb081f-modified.png" alt="Siesta character avatar">
-        </div>
-        <div class="avatar-name">
-          <div class="nm">SIESTA</div>
-          <div class="cl">CLASS · DEVELOPER</div>
-        </div>
-      </div>
+    <span class="chip"><span class="dot"></span> Available · self-taught dev</span>
+    <h1 class="hero-name grad-text">Siesta</h1>
+    <p class="hero-sub">A 17-year-old developer building embedded systems, automation &amp; security tools — with a soft spot for hardware.</p>
+    <div class="hero-actions">
+      <a href="#work" class="btn btn-primary">View my work</a>
+      <a href="https://github.com/Siesta0217" class="btn btn-ghost" target="_blank" rel="noopener">GitHub ↗</a>
     </div>
+    <p class="scroll-cue">scroll<span>↓</span></p>
   </header>
-
-  <div class="rule"><hr></div>
 
   <!-- ── ABOUT ── -->
   <section class="section fade" id="about">
-    <p class="section-label">▘ ABOUT</p>
-    <div class="hud-box pink">
-      <span class="hud-tab">PROFILE</span>
+    <p class="eyebrow">About</p>
+    <h2 class="section-title">A little about me</h2>
+    <div class="glass about-card">
       <p class="about-body">
-        A 17-year-old self-taught developer grinding the dev tree solo.
-        Currently maining <b>Python</b>, <b>C++</b>, <b>JavaScript</b> and
-        <i>cybersecurity</i> — with a soft spot for hardware and embedded systems.
+        I'm a 17-year-old self-taught developer who loves making things from scratch.
+        These days I'm focused on <b>Python</b>, <b>C++</b>, <b>JavaScript</b> and
+        <i>cybersecurity</i> — and I'm happiest when there's <i>hardware</i> involved.
       </p>
       <div class="stat-row">
-        <div><div class="stat-num"><span class="count" data-target="17">0</span></div><div class="stat-label">YEARS OLD</div></div>
-        <div><div class="stat-num"><span class="count" data-target="4">0</span></div><div class="stat-label">LANGUAGES</div></div>
-        <div><div class="stat-num"><span class="count" data-target="3">0</span> <span class="ac">LIVE</span></div><div class="stat-label">QUESTS</div></div>
+        <div><div class="stat-num"><span class="count" data-target="17">0</span></div><div class="stat-label">Years old</div></div>
+        <div><div class="stat-num"><span class="count" data-target="4">0</span></div><div class="stat-label">Languages</div></div>
+        <div><div class="stat-num"><span class="count" data-target="3">0</span> <small>live</small></div><div class="stat-label">Projects</div></div>
       </div>
     </div>
   </section>
-
-  <div class="rule"><hr></div>
 
   <!-- ── SKILLS ── -->
   <section class="section fade" id="skills">
-    <p class="section-label">▘ EQUIPPED SKILLS</p>
-    <div class="hud-box skill-box">
-      <span class="hud-tab">LOADOUT</span>
+    <p class="eyebrow">Skills</p>
+    <h2 class="section-title">What I'm working with</h2>
+    <div class="glass skills-card">
       <div class="bar">
-        <span class="bar__name">PYTHON</span>
-        <span class="bar__track"><span class="bar__fill hp" data-w="92"></span></span>
-        <span class="bar__val">RANK S</span>
+        <div class="bar__top"><span class="bar__name">Python</span><span class="bar__tag">Automation &amp; scripting</span></div>
+        <span class="bar__track"><span class="bar__fill" data-w="92"></span></span>
       </div>
       <div class="bar">
-        <span class="bar__name">JS / NODE</span>
-        <span class="bar__track"><span class="bar__fill xp" data-w="82"></span></span>
-        <span class="bar__val">RANK A</span>
+        <div class="bar__top"><span class="bar__name">JavaScript / Node</span><span class="bar__tag">Web &amp; bots</span></div>
+        <span class="bar__track"><span class="bar__fill b2" data-w="82"></span></span>
       </div>
       <div class="bar">
-        <span class="bar__name">C / C++</span>
-        <span class="bar__track"><span class="bar__fill mp" data-w="72"></span></span>
-        <span class="bar__val">RANK B+</span>
+        <div class="bar__top"><span class="bar__name">C / C++</span><span class="bar__tag">Embedded systems</span></div>
+        <span class="bar__track"><span class="bar__fill b3" data-w="72"></span></span>
       </div>
       <div class="bar">
-        <span class="bar__name">SECURITY</span>
-        <span class="bar__track"><span class="bar__fill gr" data-w="55"></span></span>
-        <span class="bar__val">TRAINING</span>
+        <div class="bar__top"><span class="bar__name">Cybersecurity</span><span class="bar__tag">Fundamentals · learning</span></div>
+        <span class="bar__track"><span class="bar__fill b4" data-w="55"></span></span>
       </div>
     </div>
   </section>
 
-  <div class="rule"><hr></div>
+  <!-- ── WORK ── -->
+  <section class="section fade" id="work">
+    <p class="eyebrow">Work</p>
+    <h2 class="section-title">Things I've built</h2>
+    <div class="work-grid">
 
-  <!-- ── QUESTS ── -->
-  <section class="section fade" id="quests">
-    <p class="section-label">▘ QUEST LOG</p>
-    <div class="quest-list">
-
-      <a href="T-Display-S3.html" class="quest r-rare">
-        <div class="spine"></div>
-        <div class="quest-thumb"><img src="t-display-s3-touch-cutout.png" alt="T-Display S3 Touch"></div>
-        <div class="quest-body">
-          <span class="rarity">◆ RARE · HARDWARE</span>
-          <span class="quest-name">T-Display-S3 Smart Clock</span>
-          <span class="quest-desc">Custom smart clock on the LilyGO T-Display-S3-Touch. C++ firmware with a UI rendered straight to the capacitive screen.</span>
-          <span class="tags">
-            <span class="tag">C++</span><span class="tag">ESP32</span><span class="tag">Embedded</span>
-          </span>
+      <a href="T-Display-S3.html" class="work">
+        <div class="work-thumb"><img src="t-display-s3-touch-cutout.png" alt="T-Display S3 Touch"></div>
+        <div class="work-body">
+          <span class="work-name">T-Display-S3 Clock <span class="arr">↗</span></span>
+          <span class="work-desc">A custom smart clock on the LilyGO T-Display-S3-Touch — C++ firmware with a UI rendered straight to the capacitive screen.</span>
+          <span class="tags"><span class="tag">C++</span><span class="tag">ESP32</span><span class="tag">Embedded</span></span>
         </div>
-        <div class="quest-go"><span class="ar">▸</span>ENTER</div>
       </a>
 
-      <a href="Valencia.html" class="quest r-legendary">
-        <div class="spine"></div>
-        <div class="quest-thumb"><img src="d32ce04ad4746acd17398629a5fb081f-modified.png" alt="Valencia AI Maid"></div>
-        <div class="quest-body">
-          <span class="rarity">★ LEGENDARY · AI</span>
-          <span class="quest-name">Valencia — AI Maid</span>
-          <span class="quest-desc">A custom AI maid companion built on OpenClaw AI — personality, memory and a distinct character that makes every chat feel alive.</span>
-          <span class="tags">
-            <span class="tag">OpenClaw</span><span class="tag">Python</span><span class="tag">NLP</span>
-          </span>
+      <a href="Valencia.html" class="work">
+        <div class="work-thumb"><img src="d32ce04ad4746acd17398629a5fb081f-modified.png" alt="Valencia AI Maid"></div>
+        <div class="work-body">
+          <span class="work-name">Valencia — AI Maid <span class="arr">↗</span></span>
+          <span class="work-desc">A custom AI maid companion built on OpenClaw AI — personality, memory and a distinct character that makes every chat feel alive.</span>
+          <span class="tags"><span class="tag">OpenClaw</span><span class="tag">Python</span><span class="tag">NLP</span></span>
         </div>
-        <div class="quest-go"><span class="ar">▸</span>ENTER</div>
       </a>
 
-      <a href="Valencia-Mod.html" class="quest r-epic">
-        <div class="spine"></div>
-        <div class="quest-thumb"><img src="datapack.png" alt="Valencia Fabric Mod"></div>
-        <div class="quest-body">
-          <span class="rarity">◈ EPIC · MODDING</span>
-          <span class="quest-name">Valencia Client</span>
-          <span class="quest-desc">Fabric client mod for Lunar 1.21. Combat, movement & render modules driven by a draggable in-game ClickGUI. Java 21, from scratch.</span>
-          <span class="tags">
-            <span class="tag">Java</span><span class="tag">Fabric</span><span class="tag">Minecraft</span>
-          </span>
+      <a href="Valencia-Mod.html" class="work">
+        <div class="work-thumb"><img src="datapack.png" alt="Valencia Fabric Mod"></div>
+        <div class="work-body">
+          <span class="work-name">Valencia Client <span class="arr">↗</span></span>
+          <span class="work-desc">A Fabric client mod for Lunar 1.21 — combat, movement &amp; render modules driven by a draggable in-game ClickGUI. Java 21, from scratch.</span>
+          <span class="tags"><span class="tag">Java</span><span class="tag">Fabric</span><span class="tag">Minecraft</span></span>
         </div>
-        <div class="quest-go"><span class="ar">▸</span>ENTER</div>
       </a>
 
     </div>
   </section>
-
-  <div class="rule"><hr></div>
 
   <!-- ── CONTACT ── -->
   <section class="section fade" id="contact">
-    <p class="section-label">▘ PARTY LINKS</p>
+    <p class="eyebrow">Contact</p>
+    <h2 class="section-title">Let's talk ✦</h2>
     <div class="link-grid">
-      <a class="link-tile l-discord" href="https://discord.com/users/siesta0217" target="_blank" rel="noopener">
-        <span class="lp">DISCORD</span><span class="lv">siesta0217</span><span class="go">▸</span>
+      <a class="link d1" href="https://discord.com/users/siesta0217" target="_blank" rel="noopener">
+        <span class="dot"></span><span><span class="lbl">Discord</span><br><span class="val">siesta0217</span></span>
       </a>
-      <a class="link-tile l-youtube" href="https://youtube.com/@Siesta0217" target="_blank" rel="noopener">
-        <span class="lp">YOUTUBE</span><span class="lv">@Siesta0217</span><span class="go">▸</span>
+      <a class="link d2" href="https://youtube.com/@Siesta0217" target="_blank" rel="noopener">
+        <span class="dot"></span><span><span class="lbl">YouTube</span><br><span class="val">@Siesta0217</span></span>
       </a>
-      <a class="link-tile l-github" href="https://github.com/Siesta0217" target="_blank" rel="noopener">
-        <span class="lp">GITHUB</span><span class="lv">Siesta0217</span><span class="go">▸</span>
+      <a class="link d3" href="https://github.com/Siesta0217" target="_blank" rel="noopener">
+        <span class="dot"></span><span><span class="lbl">GitHub</span><br><span class="val">Siesta0217</span></span>
       </a>
-      <a class="link-tile l-email" href="mailto:siesta0217@63064845.xyz">
-        <span class="lp">EMAIL</span><span class="lv">siesta0217@63064845.xyz</span><span class="go">▸</span>
+      <a class="link d4" href="mailto:siesta0217@63064845.xyz">
+        <span class="dot"></span><span><span class="lbl">Email</span><br><span class="val">siesta0217@63064845.xyz</span></span>
       </a>
     </div>
   </section>
 
-  <footer class="hud-foot">
-    <span class="foot-text">SIESTA · 2025</span>
-    <span class="foot-text">BUILT FROM SCRATCH</span>
+  <footer class="footer">
+    <span>Siesta · 2025</span>
+    <span>Made with ♥ from scratch</span>
   </footer>
 
-  <script>
-    /* ── Scroll progress ── */
-    const prog = document.getElementById('progress');
-    addEventListener('scroll', () => {
-      const p = scrollY / (document.body.scrollHeight - innerHeight) * 100;
-      prog.style.width = Math.min(p, 100) + '%';
-    }, { passive: true });
-
-    /* ── Pixel starfield ── */
-    const cv = document.getElementById('stars');
-    const c  = cv.getContext('2d');
-    const PALETTE = ['#ff2e88', '#27e7ff', '#ffd23f', '#9d6bff', '#ece9ff'];
-    let W, H, stars, mx = -999, my = -999;
-    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    function size() { W = cv.width = innerWidth; H = cv.height = innerHeight; }
-    function build() {
-      const n = innerWidth < 700 ? 70 : 120;
-      stars = Array.from({ length: n }, () => ({
-        x: Math.random() * W, y: Math.random() * H,
-        s: Math.random() < .85 ? 2 : 3,
-        col: PALETTE[Math.random() * PALETTE.length | 0],
-        vy: Math.random() * .18 + .04,
-        ph: Math.random() * Math.PI * 2,
-        sp: Math.random() * .04 + .01,
-      }));
-    }
-    size(); build();
-    addEventListener('resize', () => { size(); build(); });
-    addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
-
-    function draw() {
-      c.clearRect(0, 0, W, H);
-      for (const st of stars) {
-        st.ph += st.sp; st.y -= st.vy;
-        if (st.y < -4) { st.y = H + 4; st.x = Math.random() * W; }
-        const dx = mx - st.x, dy = my - st.y, d = Math.hypot(dx, dy);
-        let px = st.x, py = st.y;
-        if (d < 140) { px -= dx / d * (140 - d) * .04; py -= dy / d * (140 - d) * .04; }
-        const a = .35 + Math.sin(st.ph) * .35;
-        c.globalAlpha = Math.max(.06, a);
-        c.fillStyle = st.col;
-        c.fillRect(px | 0, py | 0, st.s, st.s);
-      }
-      c.globalAlpha = 1;
-      requestAnimationFrame(draw);
-    }
-    if (!reduce) draw(); else { /* one static frame */ size(); build(); draw(); cancelAnimationFrame; }
-
-    /* ── Typewriter ── */
-    const TXT = 'Building embedded systems, automation & security tools — from the firmware up.';
-    const typed = document.getElementById('typed');
-    const blk = document.createElement('span'); blk.className = 'blk';
-    typed.appendChild(blk);
-    if (reduce) { typed.insertBefore(document.createTextNode(TXT), blk); }
-    else {
-      let i = 0;
-      const tick = () => {
-        if (i < TXT.length) { typed.insertBefore(document.createTextNode(TXT[i++]), blk); setTimeout(tick, 26 + Math.random() * 26); }
-      };
-      setTimeout(tick, 650);
-    }
-
-    /* ── Fill a stat bar ── */
-    function fill(scope) {
-      scope.querySelectorAll('.bar__fill[data-w]').forEach((el, i) => {
-        setTimeout(() => { el.style.width = el.dataset.w + '%'; }, 120 + i * 110);
-      });
-    }
-
-    /* ── Count up ── */
-    function countUp(el) {
-      const t = +el.dataset.target; let v = 0;
-      const step = Math.max(28, 900 / t);
-      const iv = setInterval(() => { v = Math.min(v + 1, t); el.textContent = v; if (v >= t) clearInterval(iv); }, step);
-    }
-
-    /* ── Reveal + trigger bars/counters ── */
-    const io = new IntersectionObserver(es => es.forEach(e => {
-      if (!e.isIntersecting) return;
-      e.target.classList.add('on');
-      fill(e.target);
-      e.target.querySelectorAll('.count[data-target]').forEach((el, i) => setTimeout(() => countUp(el), 250 + i * 160));
-      io.unobserve(e.target);
-    }), { threshold: .12 });
-    document.querySelectorAll('.fade').forEach(el => io.observe(el));
-
-    /* hero bars fill on load */
-    addEventListener('load', () => setTimeout(() => fill(document.querySelector('.hero-bars')), 400));
-
-    /* ── Glitch / scramble ── */
-    const title = document.getElementById('title');
-    function glitch() { title.classList.add('glitch'); setTimeout(() => title.classList.remove('glitch'), 600); }
-    title.addEventListener('pointerenter', glitch);
-    if (!reduce) setInterval(glitch, 7000);
-
-    const CH = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#@$%&*<>/';
-    function scramble(el) {
-      if (el.dataset.run === '1') return;
-      const o = el.dataset.txt || el.textContent;
-      el.dataset.txt = o; el.dataset.run = '1';
-      let f = 0; const total = 10;
-      const iv = setInterval(() => {
-        el.textContent = o.split('').map((ch, i) =>
-          (ch === ' ' || f > total * (i / o.length)) ? ch : CH[Math.random() * CH.length | 0]
-        ).join('');
-        if (++f > total) { clearInterval(iv); el.textContent = o; el.dataset.run = '0'; }
-      }, 28);
-    }
-    document.querySelectorAll('.section-label, .quest-name, .cell-title, .spec-value, .bar__name').forEach(el => {
-      el.dataset.txt = el.textContent;
-      el.addEventListener('pointerenter', () => scramble(el));
-    });
-
-    /* ── Konami → GOD MODE ── */
-    const SEQ = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];
-    let pos = 0; const toast = document.getElementById('toast');
-    addEventListener('keydown', e => {
-      const k = e.key.length === 1 ? e.key.toLowerCase() : e.key;
-      pos = (k === SEQ[pos]) ? pos + 1 : (k === SEQ[0] ? 1 : 0);
-      if (pos === SEQ.length) {
-        pos = 0;
-        document.body.classList.add('shake');
-        toast.classList.add('show');
-        const burst = Array.from({ length: 30 }, () => ({
-          x: innerWidth / 2, y: innerHeight / 2,
-          vx: (Math.random() - .5) * 14, vy: (Math.random() - .5) * 14 - 3, life: 60,
-        }));
-        const heart = () => {
-          c.save();
-          burst.forEach(p => { p.x += p.vx; p.y += p.vy; p.vy += .25; p.life--; c.globalAlpha = Math.max(0, p.life / 60); c.fillStyle = '#ff2e88'; c.font = '20px serif'; c.fillText('♥', p.x, p.y); });
-          c.restore();
-          if (burst[0].life > 0) requestAnimationFrame(heart);
-        };
-        heart();
-        setTimeout(() => { document.body.classList.remove('shake'); toast.classList.remove('show'); }, 2200);
-      }
-    });
-  </script>
-
+  <script src="hud.js"></script>
 </body>
 </html>
