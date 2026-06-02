@@ -1,4 +1,4 @@
-/* SIESTA · SOFT DREAMY — shared script (petals · sparkles · cursor stardust) */
+/* SIESTA · SOFT DREAMY — shared script (falling petals · soft sparkles) */
 (() => {
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -9,29 +9,19 @@
     prog.style.width = Math.min(p, 100) + '%';
   }, { passive: true });
 
-  /* ── Canvas FX: petals + sparkles (behind) · cursor stardust (on top) ── */
+  /* ── Canvas: gently falling sakura petals + soft drifting sparkles ── */
   const cv = document.getElementById('sparkles');
   if (cv && !reduce) {
     const c = cv.getContext('2d');
-
-    /* dedicated top-layer canvas so the cursor trail sits ABOVE all content */
-    const top = document.createElement('canvas');
-    top.style.cssText = 'position:fixed;inset:0;z-index:9998;pointer-events:none';
-    document.body.appendChild(top);
-    const tc = top.getContext('2d');
-
-    let W, H, petals, sparks, trail = [], mx = -999, my = -999, lastX = null, lastY = null;
+    let W, H, petals, sparks;
 
     const PETAL = ['255,178,212', '255,150,196', '232,210,255', '255,232,243'];
-    const SPARK = ['255,150,205', '170,150,255', '130,200,255', '255,255,255'];
+    const SPARK = ['255,176,214', '186,158,255', '150,206,255', '255,255,255'];
 
-    const size = () => {
-      W = cv.width = top.width = innerWidth;
-      H = cv.height = top.height = innerHeight;
-    };
+    const size = () => { W = cv.width = innerWidth; H = cv.height = innerHeight; };
     const build = () => {
       const np = innerWidth < 700 ? 12 : 22;
-      const ns = innerWidth < 700 ? 22 : 40;
+      const ns = innerWidth < 700 ? 20 : 36;
       petals = Array.from({ length: np }, () => ({
         x: Math.random() * W, y: Math.random() * H,
         s: Math.random() * 5 + 6, col: PETAL[Math.random() * PETAL.length | 0],
@@ -49,25 +39,6 @@
     size(); build();
     addEventListener('resize', () => { size(); build(); });
 
-    /* emit stardust as the cursor moves */
-    addEventListener('mousemove', e => {
-      mx = e.clientX; my = e.clientY;
-      if (lastX !== null) {
-        const d = Math.hypot(mx - lastX, my - lastY);
-        if (d > 3) {
-          const n = Math.min(3, 1 + (d / 22 | 0));
-          for (let k = 0; k < n; k++) trail.push({
-            x: mx + (Math.random() - .5) * 12, y: my + (Math.random() - .5) * 12,
-            r: Math.random() * 2.4 + 2.2, col: SPARK[Math.random() * SPARK.length | 0],
-            vx: (Math.random() - .5) * .7, vy: (Math.random() - .5) * .7 - .25, life: 1,
-          });
-          if (trail.length > 90) trail.splice(0, trail.length - 90);
-        }
-      }
-      lastX = mx; lastY = my;
-    }, { passive: true });
-    addEventListener('mouseleave', () => { lastX = lastY = null; });
-
     const drawPetal = p => {
       const s = p.s;
       c.save(); c.translate(p.x, p.y); c.rotate(p.rot); c.globalAlpha = p.a;
@@ -81,7 +52,6 @@
     };
 
     const draw = () => {
-      /* back layer: sparks + petals */
       c.clearRect(0, 0, W, H);
       for (const s of sparks) {
         s.ph += s.sp; s.y -= s.vy; s.x += s.vx;
@@ -98,23 +68,6 @@
         drawPetal(p);
       }
       c.globalAlpha = 1;
-
-      /* top layer: cursor stardust (additive glow, white core) */
-      tc.clearRect(0, 0, W, H);
-      tc.globalCompositeOperation = 'lighter';
-      for (let i = trail.length - 1; i >= 0; i--) {
-        const t = trail[i];
-        t.life -= .018; t.x += t.vx; t.y += t.vy; t.vy += .004;
-        if (t.life <= 0) { trail.splice(i, 1); continue; }
-        const R = t.r * 6 * (.55 + t.life * .45);
-        const g = tc.createRadialGradient(t.x, t.y, 0, t.x, t.y, R);
-        g.addColorStop(0, `rgba(255,255,255,${t.life})`);
-        g.addColorStop(.3, `rgba(${t.col},${t.life * .85})`);
-        g.addColorStop(1, `rgba(${t.col},0)`);
-        tc.fillStyle = g; tc.beginPath(); tc.arc(t.x, t.y, R, 0, 6.2832); tc.fill();
-      }
-      tc.globalCompositeOperation = 'source-over';
-
       requestAnimationFrame(draw);
     };
     draw();
