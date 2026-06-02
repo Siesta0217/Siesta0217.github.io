@@ -91,4 +91,45 @@
     io.unobserve(e.target);
   }), { threshold: .15 });
   document.querySelectorAll('.fade').forEach(el => io.observe(el));
+
+  /* ── Premium pointer interactions (fine pointers only) ── */
+  const fine = matchMedia('(pointer: fine)').matches;
+  if (!reduce && fine) {
+
+    /* cursor spotlight + subtle 3D tilt on cards */
+    document.querySelectorAll('.work, .feature, .spec, .link, .mod').forEach(card => {
+      let raf = 0;
+      card.addEventListener('pointermove', e => {
+        const r = card.getBoundingClientRect();
+        const px = (e.clientX - r.left) / r.width;
+        const py = (e.clientY - r.top) / r.height;
+        if (raf) return;
+        raf = requestAnimationFrame(() => {
+          raf = 0;
+          card.style.setProperty('--mx', (px * 100).toFixed(1) + '%');
+          card.style.setProperty('--my', (py * 100).toFixed(1) + '%');
+          const rx = (0.5 - py) * 5.5, ry = (px - 0.5) * 6.5;
+          card.style.transform = `perspective(900px) rotateX(${rx.toFixed(2)}deg) rotateY(${ry.toFixed(2)}deg) translateY(-6px)`;
+        });
+      });
+      card.addEventListener('pointerleave', () => { card.style.transform = ''; });
+    });
+
+    /* magnetic buttons */
+    document.querySelectorAll('.btn, .nav-cta').forEach(btn => {
+      btn.addEventListener('pointermove', e => {
+        const r = btn.getBoundingClientRect();
+        const x = (e.clientX - r.left - r.width / 2) / (r.width / 2);
+        const y = (e.clientY - r.top - r.height / 2) / (r.height / 2);
+        btn.style.transform = `translate(${(x * 6).toFixed(1)}px, ${(y * 6).toFixed(1)}px)`;
+      });
+      btn.addEventListener('pointerleave', () => { btn.style.transform = ''; });
+    });
+
+    /* gentle scroll parallax on the orb field */
+    const orbs = document.querySelector('.orbs');
+    if (orbs) addEventListener('scroll', () => {
+      orbs.style.transform = `translate3d(0, ${(scrollY * 0.06).toFixed(1)}px, 0)`;
+    }, { passive: true });
+  }
 })();

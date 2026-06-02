@@ -454,6 +454,20 @@ body::after {
 .fade.on :is(.card-grid,.work-grid,.spec-grid,.mod-list,.log-list,.link-grid) > *:nth-child(n+10) { transition-delay: .62s; }
 
 /* ============================================================
+   INTERACTIVE  ·  cursor spotlight + 3D tilt (driven by hud.js)
+   ============================================================ */
+.work, .feature, .spec, .link, .mod { position: relative; will-change: transform; transform-style: preserve-3d; }
+:is(.work,.feature,.spec,.link,.mod)::after {
+  content: ''; position: absolute; inset: 0; border-radius: inherit; z-index: 2; pointer-events: none;
+  background: radial-gradient(240px circle at var(--mx,50%) var(--my,50%),
+              rgba(255,255,255,.5), rgba(255,255,255,.12) 35%, transparent 58%);
+  opacity: 0; transition: opacity .4s ease; mix-blend-mode: soft-light;
+}
+:is(.work,.feature,.spec,.link,.mod):hover::after { opacity: 1; }
+/* keep card text/content above the spotlight sheen */
+.work-body, .feature > *, .spec > *, .link > *, .mod > * { position: relative; z-index: 3; }
+
+/* ============================================================
    RESPONSIVE
    ============================================================ */
 @media (min-width: 1440px) { :root { --max: 1140px; } }
