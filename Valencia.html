@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Valencia — AI Maid · Siesta</title>
+  <meta name="description" content="Valencia — a custom AI maid companion built on OpenClaw AI. Personality, long-term memory and a distinct character.">
+  <link rel="icon" type="image/png" href="d32ce04ad4746acd17398629a5fb081f-modified.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="theme.css">
+
+  <!-- ============================================================
+       ⚠ PLACEHOLDER CONTENT — EDIT BEFORE TREATING AS FINAL
+       The page structure + styling are final and match the site.
+       The COPY below is tasteful placeholder, written from general
+       knowledge of the project (OpenClaw AI · Discord · maid persona).
+       Replace / confirm the items marked  <!-- TODO -->  in the body:
+         • GitHub link in the hero (currently a guess)
+         • All OVERVIEW stat-row numbers
+         • TRAITS spec cards (values + meta)
+         • ABILITIES / STACK cell cards
+         • DEV LOG entries (phases + dates are illustrative)
+       ============================================================ -->
+
+  <style>
+    /* ── Legendary / gold accent · scoped to the Valencia AI Maid page ──
+       Mirrors the r-legendary (gold) rarity of its quest card on index.html.
+       Same construction as theme.css .hud-box.pink / .btn-* / .logo-slot,
+       just swapped to the --gold ramp. */
+
+    /* Pixel title — gold + violet drop-shadow instead of pink/cyan */
+    .px-title.gold {
+      text-shadow:
+        4px 4px 0 var(--gold),
+       -3px -3px 0 var(--violet),
+        0 0 30px rgba(255, 210, 63, .35);
+    }
+
+    /* Rarity chip */
+    .chip.gold {
+      color: var(--gold);
+      border-color: rgba(255, 210, 63, .45);
+      background: rgba(255, 210, 63, .07);
+      box-shadow: 0 0 14px var(--gold-g);
+    }
+    .chip.gold .dot { background: var(--gold); box-shadow: 0 0 8px var(--gold-g); }
+
+    /* HUD dialogue box — gold frame variant */
+    .hud-box.gold {
+      border-color: var(--gold);
+      box-shadow:
+        inset 0 0 0 2px var(--bg),
+        inset 0 0 0 4px rgba(255, 210, 63, .28),
+        0 0 0 2px var(--bg),
+        0 0 26px rgba(255, 210, 63, .15),
+        6px 6px 0 rgba(0, 0, 0, .45);
+    }
+    .hud-box.gold .hud-tab { background: var(--gold); }
+    .hud-box.gold::before,
+    .hud-box.gold::after { background: var(--gold); box-shadow: 0 0 6px var(--gold-g); }
+
+    /* Gold button */
+    .btn-gold { background: var(--gold); color: #1a1304; border-color: #fff0b0; }
+    .btn-gold:hover { box-shadow: 4px 4px 0 rgba(0, 0, 0, .6), 0 0 22px var(--gold-g); }
+
+    /* Legendary logo slot */
+    .logo-slot.gold {
+      border-color: var(--gold);
+      background:
+        repeating-linear-gradient(45deg, rgba(255, 210, 63, .05) 0 8px, transparent 8px 16px),
+        linear-gradient(180deg, rgba(31, 22, 64, .6), rgba(10, 8, 20, .9));
+      box-shadow: inset 0 0 0 2px var(--bg), 0 0 26px var(--gold-g), 7px 7px 0 rgba(0, 0, 0, .5);
+    }
+    .logo-slot.gold .mark {
+      background: var(--gold);
+      box-shadow: 0 0 18px var(--gold-g), -14px 0 0 -4px var(--pink), 14px 0 0 -4px var(--cyan);
+    }
+    .logo-slot.gold .lbl { color: var(--gold); }
+  </style>
+</head>
+<body>
+
+  <div id="progress"></div>
+  <canvas id="stars"></canvas>
+  <div class="fx-grid"></div>
+  <div class="fx-scan"></div>
+
+  <!-- ── NAV ── -->
+  <nav class="hud-nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo" aria-label="Back to portfolio">
+        <span class="heart">♥</span><span class="name">SIESTA</span><span class="tag">.EXE</span>
+      </a>
+      <a href="index.html" class="nav-back"><span class="arr">◄</span> PORTFOLIO</a>
+    </div>
+  </nav>
+
+  <!-- ── HERO ── -->
+  <header class="proj-hero">
+    <div class="proj-content">
+      <p class="proj-breadcrumb"><a href="index.html">~/quests</a><span class="sep">›</span>valencia-ai</p>
+      <span class="chip gold"><span class="dot"></span> ★ LEGENDARY · AI COMPANION</span>
+      <h1 class="proj-title px-title gold">VALENCIA</h1>
+      <p class="proj-type">// AI MAID COMPANION</p>
+      <p class="proj-sub">A custom AI maid companion built on OpenClaw AI — with her own personality, long-term memory and a distinct character that makes every conversation feel alive.</p>
+      <div class="tags">
+        <span class="tag">OpenClaw</span><span class="tag">Python</span><span class="tag">NLP</span><span class="tag">Discord</span>
+      </div>
+      <div class="proj-actions">
+        <!-- TODO: confirm real repo URL -->
+        <a href="https://github.com/Siesta0217" class="btn btn-gold" target="_blank" rel="noopener">View on GitHub ↗</a>
+        <a href="#traits" class="btn btn-ghost">Traits ▼</a>
+      </div>
+    </div>
+    <div class="proj-visual">
+      <div class="logo-slot gold" aria-label="Valencia AI Maid">
+        <div class="mark"></div>
+        <div class="lbl">VALENCIA<br>AI MAID</div>
+      </div>
+    </div>
+  </header>
+
+  <div class="rule"><hr></div>
+
+  <!-- ── OVERVIEW ── -->
+  <section class="section fade" id="overview">
+    <p class="section-label">▘ OVERVIEW</p>
+    <div class="hud-box gold">
+      <span class="hud-tab">README</span>
+      <p class="overview-body">
+        Valencia is a custom <em>AI maid companion</em> built on <strong>OpenClaw AI</strong>. She lives
+        in <em>Discord</em>, holds a consistent maid persona, and keeps <strong>long-term memory</strong> of
+        past conversations so she actually remembers you. The goal isn't a generic assistant — it's a
+        character with her own voice, quirks and warmth, running on a local-first <code>OpenClaw</code> engine.
+      </p>
+      <div class="stat-row">
+        <!-- TODO: confirm these stats -->
+        <div><div class="stat-num"><span class="am">OpenClaw</span></div><div class="stat-label">AI ENGINE</div></div>
+        <div><div class="stat-num"><span class="am">∞</span> MEM</div><div class="stat-label">LONG-TERM MEMORY</div></div>
+        <div><div class="stat-num"><span class="am">24/7</span></div><div class="stat-label">ALWAYS ONLINE</div></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="rule"><hr></div>
+
+  <!-- ── TRAITS ── -->
+  <section class="section fade" id="traits">
+    <p class="section-label">▘ TRAITS</p>
+    <!-- TODO: confirm each trait value + meta -->
+    <div class="spec-grid">
+      <div class="spec"><p class="spec-label">PERSONALITY</p><p class="spec-value">Maid Persona</p><p class="spec-meta">Warm, playful &amp; loyal</p></div>
+      <div class="spec"><p class="spec-label">MEMORY</p><p class="spec-value">Long-Term Recall</p><p class="spec-meta">Remembers past chats</p></div>
+      <div class="spec"><p class="spec-label">ENGINE</p><p class="spec-value">OpenClaw AI</p><p class="spec-meta">Local-first reasoning</p></div>
+      <div class="spec"><p class="spec-label">PLATFORM</p><p class="spec-value">Discord</p><p class="spec-meta">Chats where you already are</p></div>
+      <div class="spec"><p class="spec-label">VOICE</p><p class="spec-value">Distinct Character</p><p class="spec-meta">Her own quirks &amp; tone</p></div>
+      <div class="spec"><p class="spec-label">AWARENESS</p><p class="spec-value">Tool Progress</p><p class="spec-meta">Surfaces what she's doing</p></div>
+    </div>
+  </section>
+
+  <div class="rule"><hr></div>
+
+  <!-- ── ABILITIES ── -->
+  <section class="section fade" id="abilities">
+    <p class="section-label">▘ ABILITIES</p>
+    <!-- TODO: confirm ability list -->
+    <div class="cell-grid">
+      <div class="cell"><p class="cell-title">Natural Chat</p><p class="cell-sub">Conversational, in-character replies</p></div>
+      <div class="cell"><p class="cell-title">Remembers You</p><p class="cell-sub">Persistent memory across sessions</p></div>
+      <div class="cell"><p class="cell-title">Maid Roleplay</p><p class="cell-sub">Stays true to her persona</p></div>
+      <div class="cell"><p class="cell-title">Daily Companion</p><p class="cell-sub">Always around to talk</p></div>
+      <div class="cell"><p class="cell-title">Custom Persona</p><p class="cell-sub">Tunable personality &amp; tone</p></div>
+      <div class="cell"><p class="cell-title">Tool Aware</p><p class="cell-sub">Shows progress as she works</p></div>
+    </div>
+  </section>
+
+  <div class="rule"><hr></div>
+
+  <!-- ── STACK ── -->
+  <section class="section fade" id="stack">
+    <p class="section-label">▘ STACK</p>
+    <!-- TODO: confirm stack -->
+    <div class="cell-grid">
+      <div class="cell"><p class="cell-title">OpenClaw AI</p><p class="cell-sub">Reasoning engine</p></div>
+      <div class="cell"><p class="cell-title">Python</p><p class="cell-sub">Glue &amp; logic</p></div>
+      <div class="cell"><p class="cell-title">Discord API</p><p class="cell-sub">Chat interface</p></div>
+      <div class="cell"><p class="cell-title">WSL</p><p class="cell-sub">Runtime host</p></div>
+    </div>
+  </section>
+
+  <div class="rule"><hr></div>
+
+  <!-- ── DEV LOG ── -->
+  <section class="section fade" id="log">
+    <p class="section-label">▘ DEV LOG</p>
+    <!-- TODO: replace with real milestones / dates -->
+    <div class="log-list">
+      <div class="log-entry">
+        <span class="log-date">INIT</span>
+        <span class="log-msg"><span class="log-tag green">INIT</span>Persona spun up on OpenClaw AI. First replies in Discord.</span>
+      </div>
+      <div class="log-entry">
+        <span class="log-date">PHASE 1</span>
+        <span class="log-msg"><span class="log-tag blue">CHAR</span>Maid personality, voice and quirks dialed in. Consistent character.</span>
+      </div>
+      <div class="log-entry">
+        <span class="log-date">PHASE 2</span>
+        <span class="log-msg"><span class="log-tag amber">FEAT</span>Long-term memory added — Valencia remembers past conversations.</span>
+      </div>
+      <div class="log-entry">
+        <span class="log-date">NOW</span>
+        <span class="log-msg"><span class="log-tag violet">LIVE</span>Running as a daily companion. Ongoing personality &amp; memory tuning.</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="rule"><hr></div>
+
+  <footer class="hud-foot">
+    <span class="foot-text">SIESTA · VALENCIA AI</span>
+    <span class="foot-text">BUILT ON OPENCLAW</span>
+  </footer>
+
+  <script src="hud.js"></script>
+</body>
+</html>
