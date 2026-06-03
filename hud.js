@@ -15,13 +15,13 @@
     const c = cv.getContext('2d');
     /* cool motes for the dreamy base, pale-pink petals for a soft warm touch */
     const MOTE  = ['124,131,255', '154,124,255', '55,189,255', '255,255,255'];
-    const PETAL = ['255,184,214', '255,200,226', '232,210,255', '255,234,244'];
+    const PETAL = ['255,158,198', '255,138,186', '255,178,212', '246,200,255', '255,224,238'];
     let W, H, motes, petals, mx = -999, my = -999;
 
     const size = () => { W = cv.width = innerWidth; H = cv.height = innerHeight; };
     const build = () => {
-      const nm = innerWidth < 700 ? 20 : 34;
-      const np = innerWidth < 700 ? 9 : 15;
+      const nm = innerWidth < 700 ? 14 : 24;
+      const np = innerWidth < 700 ? 14 : 26;
       motes = Array.from({ length: nm }, () => ({
         x: Math.random() * W, y: Math.random() * H, r: Math.random() * 2.4 + 1.2,
         col: MOTE[Math.random() * MOTE.length | 0],
