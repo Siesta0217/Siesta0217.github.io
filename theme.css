@@ -6,38 +6,39 @@
    ============================================================ */
 
 :root {
-  /* ── Pastel surface ── */
-  --bg-1: #ffe3f1;
-  --bg-2: #ece2ff;
-  --bg-3: #e2f1ff;
+  /* ── Cool surface ── */
+  --bg-1: #d8e4ff;
+  --bg-2: #e2dcff;
+  --bg-3: #d8f1f4;
 
-  /* ── Ink ── */
-  --ink:        #4f3d63;   /* body text — soft plum */
-  --ink-strong: #38284f;   /* headings */
-  --ink-soft:   #8a7ba3;   /* muted */
-  --ink-faint:  #b4a8c8;
+  /* ── Ink (cool slate-indigo) ── */
+  --ink:        #3a4368;   /* body text */
+  --ink-strong: #222a4a;   /* headings */
+  --ink-soft:   #6a7299;   /* muted */
+  --ink-faint:  #a3a9c8;
 
-  /* ── Pastel accents ── */
-  --pink:   #ff7ec0;
-  --pink-d: #ff539f;
-  --lav:    #a98bff;
-  --lav-d:  #8d68ff;
-  --sky:    #74c6ff;
-  --mint:   #6fe3c0;
-  --peach:  #ffb38a;
+  /* ── Accents (cool: indigo · violet · azure · teal) ──
+     names kept for compatibility; "pink" is now the indigo primary */
+  --pink:   #7c83ff;   /* primary — periwinkle indigo */
+  --pink-d: #5a62ef;   /* deep indigo */
+  --lav:    #9a7cff;   /* violet */
+  --lav-d:  #7651f2;   /* deep violet */
+  --sky:    #37bdff;   /* azure */
+  --mint:   #3fdcc4;   /* teal */
+  --peach:  #54cfe0;   /* aqua */
 
   /* ── Glass ── */
-  --card:        rgba(255, 255, 255, .55);
-  --card-strong: rgba(255, 255, 255, .74);
+  --card:        rgba(255, 255, 255, .52);
+  --card-strong: rgba(255, 255, 255, .72);
   --card-line:   rgba(255, 255, 255, .85);
-  --card-line-2: rgba(170, 140, 220, .18);
+  --card-line-2: rgba(110, 125, 210, .2);
 
-  /* ── Glow / shadow ── */
-  --glow-pink: rgba(255, 126, 192, .45);
-  --glow-lav:  rgba(169, 139, 255, .45);
-  --shadow-sm: 0 10px 26px -14px rgba(150, 110, 190, .5);
-  --shadow:    0 22px 50px -22px rgba(150, 110, 190, .55);
-  --shadow-lg: 0 34px 70px -24px rgba(150, 110, 190, .6);
+  /* ── Glow / shadow (cool) ── */
+  --glow-pink: rgba(124, 131, 255, .5);   /* indigo glow */
+  --glow-lav:  rgba(154, 124, 255, .5);   /* violet glow */
+  --shadow-sm: 0 10px 26px -14px rgba(60, 80, 170, .5);
+  --shadow:    0 22px 50px -22px rgba(60, 80, 170, .55);
+  --shadow-lg: 0 34px 70px -24px rgba(55, 70, 160, .6);
 
   --grad: linear-gradient(120deg, var(--pink), var(--lav) 55%, var(--sky));
 
@@ -58,10 +59,10 @@ body {
   line-height: 1.65;
   color: var(--ink);
   background:
-    radial-gradient(58% 48% at 14% 6%,  #ffdbe7 0%, transparent 60%),
-    radial-gradient(52% 44% at 88% 10%, #f0e3ff 0%, transparent 60%),
-    radial-gradient(64% 56% at 50% 102%, #ffeede 0%, transparent 62%),
-    linear-gradient(168deg, #fff6f1 0%, #fdeef4 46%, #f7f0ff 100%);
+    radial-gradient(58% 48% at 14% 6%,  #cadcff 0%, transparent 60%),
+    radial-gradient(52% 44% at 88% 10%, #ded2ff 0%, transparent 60%),
+    radial-gradient(64% 56% at 50% 102%, #c8eef2 0%, transparent 62%),
+    linear-gradient(168deg, #eef3fc 0%, #e8ebff 46%, #e6f6f8 100%);
   background-attachment: fixed;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
@@ -84,9 +85,9 @@ img { display: block; max-width: 100%; }
 #sparkles { position: fixed; inset: 0; z-index: -1; pointer-events: none; }
 .orbs { position: fixed; inset: 0; z-index: -2; pointer-events: none; overflow: hidden; }
 .orb { position: absolute; border-radius: 50%; filter: blur(70px); opacity: .5; animation: drift 22s ease-in-out infinite alternate; }
-.orb.a { width: 46vw; height: 46vw; background: #ffb3da; top: -12%; left: -8%; }
-.orb.b { width: 42vw; height: 42vw; background: #c4acff; bottom: -14%; right: -6%; animation-delay: -7s; }
-.orb.c { width: 34vw; height: 34vw; background: #a9dcff; top: 38%; left: 46%; animation-delay: -13s; opacity: .4; }
+.orb.a { width: 46vw; height: 46vw; background: #9fb8ff; top: -12%; left: -8%; }
+.orb.b { width: 42vw; height: 42vw; background: #b3a0ff; bottom: -14%; right: -6%; animation-delay: -7s; }
+.orb.c { width: 34vw; height: 34vw; background: #8fe0e8; top: 38%; left: 46%; animation-delay: -13s; opacity: .4; }
 @keyframes drift {
   0%   { transform: translate(0,0) scale(1); }
   50%  { transform: translate(3vw, 4vh) scale(1.08); }

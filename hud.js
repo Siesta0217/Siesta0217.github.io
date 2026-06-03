@@ -1,4 +1,4 @@
-/* SIESTA · SOFT DREAMY — shared script (falling petals · soft sparkles) */
+/* SIESTA · DREAMY — shared script (drifting light motes · pointer FX) */
 (() => {
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -9,65 +9,45 @@
     prog.style.width = Math.min(p, 100) + '%';
   }, { passive: true });
 
-  /* ── Canvas: gently falling sakura petals + soft drifting sparkles ── */
+  /* ── Drifting cool light motes (soft, neutral, dreamy) ── */
   const cv = document.getElementById('sparkles');
   if (cv && !reduce) {
     const c = cv.getContext('2d');
-    let W, H, petals, sparks;
-
-    const PETAL = ['255,178,212', '255,150,196', '232,210,255', '255,232,243'];
-    const SPARK = ['255,176,214', '186,158,255', '150,206,255', '255,255,255'];
+    const COLORS = ['124,131,255', '154,124,255', '55,189,255', '63,220,196', '255,255,255'];
+    let W, H, motes, mx = -999, my = -999;
 
     const size = () => { W = cv.width = innerWidth; H = cv.height = innerHeight; };
     const build = () => {
-      const np = innerWidth < 700 ? 12 : 22;
-      const ns = innerWidth < 700 ? 20 : 36;
-      petals = Array.from({ length: np }, () => ({
+      const n = innerWidth < 700 ? 34 : 58;
+      motes = Array.from({ length: n }, () => ({
         x: Math.random() * W, y: Math.random() * H,
-        s: Math.random() * 5 + 6, col: PETAL[Math.random() * PETAL.length | 0],
-        vy: Math.random() * .5 + .35, rot: Math.random() * 6.28, vr: (Math.random() - .5) * .04,
-        sway: Math.random() * 1.1 + .4, ph: Math.random() * 6.28, sp: Math.random() * .02 + .01,
-        a: Math.random() * .35 + .45,
-      }));
-      sparks = Array.from({ length: ns }, () => ({
-        x: Math.random() * W, y: Math.random() * H, r: Math.random() * 2.2 + 1,
-        col: SPARK[Math.random() * SPARK.length | 0],
-        vy: Math.random() * .25 + .05, vx: (Math.random() - .5) * .1,
-        ph: Math.random() * 6.28, sp: Math.random() * .03 + .008,
+        r: Math.random() * 2.6 + 1.2,
+        col: COLORS[Math.random() * COLORS.length | 0],
+        vy: Math.random() * .3 + .07, vx: (Math.random() - .5) * .14,
+        ph: Math.random() * 6.28, sp: Math.random() * .025 + .006,
+        sway: Math.random() * .5 + .1,
       }));
     };
     size(); build();
     addEventListener('resize', () => { size(); build(); });
-
-    const drawPetal = p => {
-      const s = p.s;
-      c.save(); c.translate(p.x, p.y); c.rotate(p.rot); c.globalAlpha = p.a;
-      const g = c.createLinearGradient(0, 0, 0, -s * 1.6);
-      g.addColorStop(0, `rgba(${p.col},.95)`); g.addColorStop(1, `rgba(${p.col},.35)`);
-      c.fillStyle = g;
-      c.beginPath(); c.moveTo(0, 0);
-      c.bezierCurveTo(s * .55, -s * .35, s * .5, -s * 1.2, 0, -s * 1.6);
-      c.bezierCurveTo(-s * .5, -s * 1.2, -s * .55, -s * .35, 0, 0);
-      c.fill(); c.restore();
-    };
+    addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
 
     const draw = () => {
       c.clearRect(0, 0, W, H);
-      for (const s of sparks) {
-        s.ph += s.sp; s.y -= s.vy; s.x += s.vx;
-        if (s.y < -6) { s.y = H + 6; s.x = Math.random() * W; }
-        const a = .3 + Math.sin(s.ph) * .3;
-        const g = c.createRadialGradient(s.x, s.y, 0, s.x, s.y, s.r * 3.5);
-        g.addColorStop(0, `rgba(${s.col},${Math.max(0, a)})`); g.addColorStop(1, `rgba(${s.col},0)`);
-        c.fillStyle = g; c.beginPath(); c.arc(s.x, s.y, s.r * 3.5, 0, 6.2832); c.fill();
+      for (const m of motes) {
+        m.ph += m.sp; m.y -= m.vy; m.x += m.vx + Math.sin(m.ph) * m.sway * .12;
+        if (m.y < -8) { m.y = H + 8; m.x = Math.random() * W; }
+        if (m.x < -8) m.x = W + 8; if (m.x > W + 8) m.x = -8;
+        const dx = mx - m.x, dy = my - m.y, d = Math.hypot(dx, dy);
+        let px = m.x, py = m.y;
+        if (d < 130) { px -= dx / d * (130 - d) * .04; py -= dy / d * (130 - d) * .04; }
+        const a = .25 + Math.sin(m.ph) * .3;
+        const R = m.r * 3.6;
+        const g = c.createRadialGradient(px, py, 0, px, py, R);
+        g.addColorStop(0, `rgba(${m.col},${Math.max(0, a)})`);
+        g.addColorStop(1, `rgba(${m.col},0)`);
+        c.fillStyle = g; c.beginPath(); c.arc(px, py, R, 0, 6.2832); c.fill();
       }
-      for (const p of petals) {
-        p.ph += p.sp; p.y += p.vy; p.x += Math.sin(p.ph) * p.sway; p.rot += p.vr;
-        if (p.y > H + 24) { p.y = -24; p.x = Math.random() * W; }
-        if (p.x < -24) p.x = W + 24; if (p.x > W + 24) p.x = -24;
-        drawPetal(p);
-      }
-      c.globalAlpha = 1;
       requestAnimationFrame(draw);
     };
     draw();
