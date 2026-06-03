@@ -26,6 +26,8 @@
   --sky:    #37bdff;   /* azure */
   --mint:   #3fdcc4;   /* teal */
   --peach:  #54cfe0;   /* aqua */
+  --rose:   #ffb3d4;   /* soft pink — gentle warm accent */
+  --rose-d: #ff8cc0;
 
   /* ── Glass ── */
   --card:        rgba(255, 255, 255, .52);
@@ -36,6 +38,7 @@
   /* ── Glow / shadow (cool) ── */
   --glow-pink: rgba(124, 131, 255, .5);   /* indigo glow */
   --glow-lav:  rgba(154, 124, 255, .5);   /* violet glow */
+  --glow-rose: rgba(255, 140, 192, .45);  /* soft pink glow */
   --shadow-sm: 0 10px 26px -14px rgba(60, 80, 170, .5);
   --shadow:    0 22px 50px -22px rgba(60, 80, 170, .55);
   --shadow-lg: 0 34px 70px -24px rgba(55, 70, 160, .6);
@@ -61,6 +64,7 @@ body {
   background:
     radial-gradient(58% 48% at 14% 6%,  #cadcff 0%, transparent 60%),
     radial-gradient(52% 44% at 88% 10%, #ded2ff 0%, transparent 60%),
+    radial-gradient(40% 38% at 82% 64%, #ffd7e8 0%, transparent 60%),   /* whisper of pink */
     radial-gradient(64% 56% at 50% 102%, #c8eef2 0%, transparent 62%),
     linear-gradient(168deg, #eef3fc 0%, #e8ebff 46%, #e6f6f8 100%);
   background-attachment: fixed;
@@ -87,7 +91,7 @@ img { display: block; max-width: 100%; }
 .orb { position: absolute; border-radius: 50%; filter: blur(70px); opacity: .5; animation: drift 22s ease-in-out infinite alternate; }
 .orb.a { width: 46vw; height: 46vw; background: #9fb8ff; top: -12%; left: -8%; }
 .orb.b { width: 42vw; height: 42vw; background: #b3a0ff; bottom: -14%; right: -6%; animation-delay: -7s; }
-.orb.c { width: 34vw; height: 34vw; background: #8fe0e8; top: 38%; left: 46%; animation-delay: -13s; opacity: .4; }
+.orb.c { width: 34vw; height: 34vw; background: #ffbcd8; top: 38%; left: 46%; animation-delay: -13s; opacity: .38; }
 @keyframes drift {
   0%   { transform: translate(0,0) scale(1); }
   50%  { transform: translate(3vw, 4vh) scale(1.08); }
@@ -252,7 +256,7 @@ body::after {
 }
 .bar__fill.b2 { background: linear-gradient(90deg, var(--lav), var(--sky)); box-shadow: 0 0 14px var(--glow-lav); }
 .bar__fill.b3 { background: linear-gradient(90deg, var(--sky), var(--mint)); box-shadow: 0 0 14px rgba(116,198,255,.45); }
-.bar__fill.b4 { background: linear-gradient(90deg, var(--peach), var(--pink)); box-shadow: 0 0 14px rgba(255,179,138,.45); }
+.bar__fill.b4 { background: linear-gradient(90deg, var(--rose), var(--rose-d)); box-shadow: 0 0 14px var(--glow-rose); }
 
 /* ============================================================
    FEATURE / CELL CARDS
@@ -270,7 +274,7 @@ body::after {
 }
 .feature .ico.i2 { background: linear-gradient(120deg, var(--lav), var(--sky)); }
 .feature .ico.i3 { background: linear-gradient(120deg, var(--sky), var(--mint)); }
-.feature .ico.i4 { background: linear-gradient(120deg, var(--peach), var(--pink)); }
+.feature .ico.i4 { background: linear-gradient(120deg, var(--rose), var(--lav)); }
 .feature h3 { font-family: var(--head); font-weight: 600; font-size: 21px; color: var(--ink-strong); margin-bottom: 5px; letter-spacing: -.01em; }
 .feature p { font-size: 15px; color: var(--ink-soft); line-height: 1.5; }
 
@@ -505,7 +509,7 @@ body::after {
 /* hand-drawn underline (SVG) that draws itself in */
 .underline-doodle { display: block; width: 100%; height: 18px; margin-top: -2px; overflow: visible; }
 .underline-doodle path {
-  fill: none; stroke: var(--pink); stroke-width: 5; stroke-linecap: round;
+  fill: none; stroke: var(--rose-d); stroke-width: 5; stroke-linecap: round;
   stroke-dasharray: 620; stroke-dashoffset: 620;
 }
 .fade.on .underline-doodle path, .drawn .underline-doodle path { animation: draw 1s ease .35s forwards; }
