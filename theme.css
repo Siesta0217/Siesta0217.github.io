@@ -41,7 +41,9 @@
 
   --grad: linear-gradient(120deg, var(--pink), var(--lav) 55%, var(--sky));
 
-  --display: 'Quicksand', system-ui, sans-serif;
+  --display: 'Quicksand', system-ui, sans-serif;   /* UI / labels */
+  --head:    'Fraunces', 'Quicksand', Georgia, serif; /* editorial headings */
+  --hand:    'Caveat', 'Quicksand', cursive;          /* handwritten accents */
   --body:    'Nunito', system-ui, sans-serif;
 
   --max: 1040px;
@@ -56,10 +58,10 @@ body {
   line-height: 1.65;
   color: var(--ink);
   background:
-    radial-gradient(60% 50% at 12% 8%,  #ffd7ec 0%, transparent 60%),
-    radial-gradient(55% 45% at 88% 6%,  #e3d6ff 0%, transparent 60%),
-    radial-gradient(60% 55% at 50% 100%, #d4eeff 0%, transparent 60%),
-    linear-gradient(165deg, #fff2f9 0%, #f2ecff 48%, #e9f5ff 100%);
+    radial-gradient(58% 48% at 14% 6%,  #ffdbe7 0%, transparent 60%),
+    radial-gradient(52% 44% at 88% 10%, #f0e3ff 0%, transparent 60%),
+    radial-gradient(64% 56% at 50% 102%, #ffeede 0%, transparent 62%),
+    linear-gradient(168deg, #fff6f1 0%, #fdeef4 46%, #f7f0ff 100%);
   background-attachment: fixed;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
@@ -119,7 +121,7 @@ body::after {
   box-shadow: var(--shadow-sm), inset 0 1px 0 rgba(255,255,255,.7);
 }
 .nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 11px 14px 11px 22px; }
-.nav-logo { display: inline-flex; align-items: center; gap: 9px; font-family: var(--display); font-weight: 700; font-size: 19px; color: var(--ink-strong); }
+.nav-logo { display: inline-flex; align-items: center; gap: 9px; font-family: var(--head); font-weight: 600; font-size: 22px; color: var(--ink-strong); letter-spacing: -.01em; }
 .nav-logo .heart {
   width: 14px; height: 14px; border-radius: 50%; background: var(--grad);
   box-shadow: 0 0 12px var(--glow-pink); animation: beat 2s ease-in-out infinite;
@@ -157,11 +159,11 @@ body::after {
 .eyebrow::before { content: ''; width: 22px; height: 2px; border-radius: 999px; background: var(--grad); }
 .eyebrow::after { content: '✦'; font-size: 11px; color: var(--lav-d); -webkit-text-fill-color: var(--lav-d); }
 .section-title {
-  font-family: var(--display); font-weight: 700; font-size: clamp(28px, 4.4vw, 44px);
-  line-height: 1.12; margin-bottom: 30px; letter-spacing: -.02em;
-  background: linear-gradient(100deg, var(--ink-strong) 30%, var(--lav-d) 75%, var(--pink-d));
-  -webkit-background-clip: text; background-clip: text; color: transparent;
+  font-family: var(--head); font-optical-sizing: auto;
+  font-weight: 600; font-size: clamp(30px, 4.8vw, 50px);
+  line-height: 1.06; margin-bottom: 30px; letter-spacing: -.015em; color: var(--ink-strong);
 }
+.section-title em { font-style: italic; font-weight: 500; color: var(--pink-d); }
 
 .rule { max-width: var(--max); margin: 0 auto; padding: 0 24px; }
 .rule hr {
@@ -218,19 +220,17 @@ body::after {
 /* ============================================================
    GRADIENT TEXT
    ============================================================ */
+/* tonal, not rainbow — kept subtle & static */
 .grad-text {
-  background: linear-gradient(115deg, var(--pink-d), var(--lav-d) 45%, var(--sky) 90%);
-  background-size: 200% 100%;
+  background: linear-gradient(120deg, var(--ink-strong) 38%, var(--pink-d) 105%);
   -webkit-background-clip: text; background-clip: text; color: transparent;
-  animation: hue 8s ease-in-out infinite;
 }
-@keyframes hue { 0%,100%{background-position:0% 50%} 50%{background-position:100% 50%} }
 
 /* ============================================================
    STAT ROW
    ============================================================ */
 .stat-row { display: flex; gap: 40px; flex-wrap: wrap; margin-top: 26px; }
-.stat-num { font-family: var(--display); font-weight: 700; font-size: 34px; color: var(--ink-strong); line-height: 1; }
+.stat-num { font-family: var(--head); font-optical-sizing: auto; font-weight: 600; font-size: 40px; color: var(--ink-strong); line-height: 1; }
 .stat-num small { font-size: 18px; color: var(--lav-d); font-weight: 700; }
 .stat-label { font-size: 13px; color: var(--ink-soft); font-weight: 600; margin-top: 7px; letter-spacing: .03em; }
 
@@ -270,7 +270,7 @@ body::after {
 .feature .ico.i2 { background: linear-gradient(120deg, var(--lav), var(--sky)); }
 .feature .ico.i3 { background: linear-gradient(120deg, var(--sky), var(--mint)); }
 .feature .ico.i4 { background: linear-gradient(120deg, var(--peach), var(--pink)); }
-.feature h3 { font-family: var(--display); font-weight: 700; font-size: 18px; color: var(--ink-strong); margin-bottom: 5px; }
+.feature h3 { font-family: var(--head); font-weight: 600; font-size: 21px; color: var(--ink-strong); margin-bottom: 5px; letter-spacing: -.01em; }
 .feature p { font-size: 15px; color: var(--ink-soft); line-height: 1.5; }
 
 /* ============================================================
@@ -284,7 +284,7 @@ body::after {
 }
 .spec:hover { transform: translateY(-5px); box-shadow: var(--shadow), 0 0 30px -8px var(--glow-pink); }
 .spec-label { font-family: var(--display); font-weight: 700; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--pink-d); margin-bottom: 9px; }
-.spec-value { font-family: var(--display); font-weight: 700; font-size: 21px; color: var(--ink-strong); line-height: 1.2; }
+.spec-value { font-family: var(--head); font-weight: 600; font-size: 23px; color: var(--ink-strong); line-height: 1.18; letter-spacing: -.01em; }
 .spec-meta { font-size: 14px; color: var(--ink-soft); margin-top: 4px; }
 
 /* ============================================================
@@ -365,7 +365,7 @@ body::after {
 .breadcrumb a { color: var(--lav-d); }
 .breadcrumb a:hover { color: var(--pink-d); }
 .breadcrumb .sep { margin: 0 8px; color: var(--ink-faint); }
-.proj-title { font-family: var(--display); font-weight: 700; font-size: clamp(36px, 6.5vw, 64px); line-height: 1.05; letter-spacing: -.02em; }
+.proj-title { font-family: var(--head); font-optical-sizing: auto; font-weight: 600; font-size: clamp(40px, 7vw, 72px); line-height: 1; letter-spacing: -.02em; }
 .proj-type { font-family: var(--display); font-weight: 700; font-size: clamp(15px,2vw,18px); color: var(--lav-d); }
 .proj-sub { font-size: clamp(16px,2vw,19px); color: var(--ink); max-width: 520px; line-height: 1.6; }
 .proj-actions { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 6px; }
@@ -415,7 +415,7 @@ body::after {
 }
 .mod:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
 .mod-head { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 6px; }
-.mod-name { font-family: var(--display); font-weight: 700; font-size: 19px; color: var(--ink-strong); }
+.mod-name { font-family: var(--head); font-weight: 600; font-size: 21px; color: var(--ink-strong); letter-spacing: -.01em; }
 .mod-cat { font-family: var(--display); font-weight: 700; font-size: 11px; letter-spacing: .05em; text-transform: uppercase; padding: 4px 11px; border-radius: 999px; }
 .cat-combat { color: var(--pink-d); background: rgba(255,126,192,.16); }
 .cat-move   { color: #2b86c9;       background: rgba(116,198,255,.18); }
@@ -468,6 +468,50 @@ body::after {
 .work-body, .feature > *, .spec > *, .link > *, .mod > * { position: relative; z-index: 3; }
 
 /* ============================================================
+   CHARACTER  ·  marquee · handwriting · stickers · underline
+   ============================================================ */
+/* scrolling keyword ticker */
+.marquee {
+  overflow: hidden; white-space: nowrap; position: relative; z-index: 1;
+  padding: 16px 0; border-top: 1.5px solid var(--ink-strong); border-bottom: 1.5px solid var(--ink-strong);
+  background: rgba(255,255,255,.35);
+  -webkit-mask: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+          mask: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+}
+.marquee__track { display: inline-flex; align-items: center; animation: marquee 24s linear infinite; }
+.marquee:hover .marquee__track { animation-play-state: paused; }
+.marquee__track span {
+  font-family: var(--head); font-style: italic; font-weight: 500;
+  font-size: clamp(22px, 3.2vw, 34px); color: var(--ink-strong); padding: 0 6px;
+}
+.marquee__track b { color: var(--pink-d); font-weight: 400; padding: 0 26px; font-style: normal; }
+@keyframes marquee { to { transform: translateX(-50%); } }
+
+/* handwritten accent */
+.hand { font-family: var(--hand); font-weight: 700; color: var(--pink-d); line-height: 1; }
+
+/* rotated sticker stamp */
+.sticker {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: var(--hand); font-weight: 700; font-size: 18px; color: var(--lav-d);
+  padding: 6px 14px; background: #fff; border-radius: 999px;
+  border: 1.5px dashed var(--lav); box-shadow: var(--shadow-sm);
+  transform: rotate(-5deg); transition: transform .25s ease;
+}
+.sticker:hover { transform: rotate(2deg) scale(1.05); }
+.sticker.s2 { color: var(--pink-d); border-color: var(--pink); transform: rotate(4deg); }
+
+/* hand-drawn underline (SVG) that draws itself in */
+.underline-doodle { display: block; width: 100%; height: 18px; margin-top: -2px; overflow: visible; }
+.underline-doodle path {
+  fill: none; stroke: var(--pink); stroke-width: 5; stroke-linecap: round;
+  stroke-dasharray: 620; stroke-dashoffset: 620;
+}
+.fade.on .underline-doodle path, .drawn .underline-doodle path { animation: draw 1s ease .35s forwards; }
+.underline-doodle.now path { animation: draw 1.1s ease .5s forwards; }
+@keyframes draw { to { stroke-dashoffset: 0; } }
+
+/* ============================================================
    RESPONSIVE
    ============================================================ */
 @media (min-width: 1440px) { :root { --max: 1140px; } }
@@ -491,4 +535,5 @@ body::after {
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; }
   .bar__fill { transition: width .01s !important; }
+  .underline-doodle path { stroke-dashoffset: 0 !important; }  /* show without drawing */
 }

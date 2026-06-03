@@ -8,7 +8,7 @@
   <link rel="icon" type="image/png" href="d32ce04ad4746acd17398629a5fb081f-modified.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Quicksand:wght@500;600;700&family=Nunito:wght@400;600;700;800&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="theme.css">
   <style>
     /* ── Hero ── */
@@ -40,11 +40,17 @@
       object-fit: cover; object-position: center top; border-radius: 50%;
       border: 5px solid rgba(255,255,255,.85); box-shadow: var(--shadow-lg);
     }
+    .hero-name-wrap { display: inline-block; position: relative; }
     .hero-name {
-      font-family: var(--display); font-weight: 700; line-height: 1;
-      font-size: clamp(52px, 11vw, 96px); letter-spacing: -.03em; margin: 2px 0;
+      font-family: var(--head); font-optical-sizing: auto; font-weight: 600; line-height: 1;
+      font-size: clamp(58px, 12vw, 104px); letter-spacing: -.025em; margin: 2px 0;
       position: relative; isolation: isolate;
     }
+    .hero-note {
+      font-family: var(--hand); font-weight: 700; font-size: clamp(19px, 2.6vw, 24px);
+      color: var(--lav-d); transform: rotate(-2deg); margin-top: 8px;
+    }
+    .hero-note b { color: var(--pink-d); font-weight: 700; }
     .hero-name::before {
       content: ''; position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%);
       width: 130%; height: 200%; z-index: -1; pointer-events: none;
@@ -146,14 +152,27 @@
       <img src="d32ce04ad4746acd17398629a5fb081f-modified.png" alt="Siesta">
     </div>
     <span class="chip"><span class="dot"></span> Available · self-taught dev</span>
-    <h1 class="hero-name grad-text">Siesta</h1>
+    <div class="hero-name-wrap">
+      <h1 class="hero-name grad-text">Siesta</h1>
+      <svg class="underline-doodle now" viewBox="0 0 300 18" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M5 12 C 65 3, 115 17, 162 9 S 252 2, 295 12"/>
+      </svg>
+    </div>
     <p class="hero-sub">A 17-year-old developer building embedded systems, automation &amp; security tools — with a soft spot for hardware.</p>
+    <p class="hero-note">psst — <b>scroll down</b> to see what I've been building ✦</p>
     <div class="hero-actions">
       <a href="#work" class="btn btn-primary">View my work</a>
       <a href="https://github.com/Siesta0217" class="btn btn-ghost" target="_blank" rel="noopener">GitHub ↗</a>
     </div>
-    <p class="scroll-cue">scroll<span>↓</span></p>
   </header>
+
+  <!-- ── KEYWORD MARQUEE ── -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee__track">
+      <span>Python</span><b>✦</b><span>C++</span><b>✦</b><span>Embedded</span><b>✦</b><span>Cybersecurity</span><b>✦</b><span>Hardware</span><b>✦</b><span>Automation</span><b>✦</b><span>Reverse Engineering</span><b>✦</b>
+      <span>Python</span><b>✦</b><span>C++</span><b>✦</b><span>Embedded</span><b>✦</b><span>Cybersecurity</span><b>✦</b><span>Hardware</span><b>✦</b><span>Automation</span><b>✦</b><span>Reverse Engineering</span><b>✦</b>
+    </div>
+  </div>
 
   <!-- ── ABOUT ── -->
   <section class="section fade" id="about">
