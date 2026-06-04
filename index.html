@@ -1,10 +1,17 @@
 <!doctype html>
-<html lang="zh-TW">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Siesta — Developer</title>
   <meta name="description" content="Siesta — 17 y/o self-taught developer. Embedded systems, automation & security, with a love for hardware.">
+  <meta name="theme-color" content="#7c83ff">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://siesta0217.github.io/">
+  <meta property="og:title" content="Siesta — Developer">
+  <meta property="og:description" content="17-year-old self-taught developer — embedded systems, automation & security.">
+  <meta property="og:image" content="https://siesta0217.github.io/d32ce04ad4746acd17398629a5fb081f-modified.png">
+  <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" type="image/png" href="d32ce04ad4746acd17398629a5fb081f-modified.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -73,9 +80,6 @@
     }
     .hero-sub { font-size: clamp(17px, 2.4vw, 22px); color: var(--ink-soft); max-width: 540px; font-weight: 600; }
     .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; margin-top: 6px; }
-    .scroll-cue { margin-top: 26px; font-family: var(--display); font-weight: 600; font-size: 13px; color: var(--ink-faint); letter-spacing: .08em; }
-    .scroll-cue span { display: block; font-size: 18px; margin-top: 4px; animation: nudge 1.8s ease-in-out infinite; }
-    @keyframes nudge { 0%,100%{transform:translateY(0);opacity:.5} 50%{transform:translateY(5px);opacity:1} }
 
     /* ── About ── */
     .about-card { padding: 36px 38px; }
@@ -226,7 +230,7 @@
     <div class="work-grid">
 
       <a href="T-Display-S3.html" class="work">
-        <div class="work-thumb"><img src="t-display-s3-touch-cutout.png" alt="T-Display S3 Touch"></div>
+        <div class="work-thumb"><img src="t-display-s3-touch-cutout.png" alt="T-Display S3 Touch" loading="lazy" decoding="async"></div>
         <div class="work-body">
           <span class="work-name">T-Display-S3 Clock <span class="arr">↗</span></span>
           <span class="work-desc">A custom smart clock on the LilyGO T-Display-S3-Touch — C++ firmware with a UI rendered straight to the capacitive screen.</span>
@@ -235,7 +239,7 @@
       </a>
 
       <a href="Valencia.html" class="work">
-        <div class="work-thumb"><img src="d32ce04ad4746acd17398629a5fb081f-modified.png" alt="Valencia AI Maid"></div>
+        <div class="work-thumb"><img src="d32ce04ad4746acd17398629a5fb081f-modified.png" alt="Valencia AI Maid" loading="lazy" decoding="async"></div>
         <div class="work-body">
           <span class="work-name">Valencia — AI Maid <span class="arr">↗</span></span>
           <span class="work-desc">A custom AI maid companion built on OpenClaw AI — personality, memory and a distinct character that makes every chat feel alive.</span>
@@ -244,7 +248,7 @@
       </a>
 
       <a href="Valencia-Mod.html" class="work">
-        <div class="work-thumb"><img src="datapack.png" alt="Valencia Fabric Mod"></div>
+        <div class="work-thumb"><img src="datapack.png" alt="Valencia Fabric Mod" loading="lazy" decoding="async"></div>
         <div class="work-body">
           <span class="work-name">Valencia Client <span class="arr">↗</span></span>
           <span class="work-desc">A Fabric client mod for Lunar 1.21 — combat, movement &amp; render modules driven by a draggable in-game ClickGUI. Java 21, from scratch.</span>
