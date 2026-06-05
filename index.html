@@ -81,6 +81,18 @@
     .hero-sub { font-size: clamp(17px, 2.4vw, 22px); color: var(--ink-soft); max-width: 540px; font-weight: 600; }
     .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; margin-top: 6px; }
 
+    /* ── Tagline ── */
+    .tagline { max-width: 800px; margin: 0 auto; padding: 54px 24px 40px; text-align: center; position: relative; z-index: 1; }
+    .tagline-mark { display: block; color: var(--rose-d); font-size: 16px; letter-spacing: .5em; margin-bottom: 16px; }
+    .tagline p {
+      font-family: var(--head); font-optical-sizing: auto; font-style: italic; font-weight: 500;
+      font-size: clamp(22px, 3.4vw, 34px); line-height: 1.45; letter-spacing: -.01em; color: var(--ink-strong);
+    }
+    .tagline p::after {
+      content: ''; display: block; width: 64px; height: 3px; margin: 22px auto 0; border-radius: 999px;
+      background: linear-gradient(90deg, var(--lav), var(--rose)); opacity: .85;
+    }
+
     /* ── About ── */
     .about-card { padding: 36px 38px; }
     .about-body { font-size: clamp(19px, 2.4vw, 24px); line-height: 1.6; color: var(--ink); max-width: 660px; font-weight: 600; }
@@ -178,6 +190,12 @@
       <a href="https://github.com/Siesta0217" class="btn btn-ghost" target="_blank" rel="noopener">GitHub ↗</a>
     </div>
   </header>
+
+  <!-- ── TAGLINE ── -->
+  <section class="tagline" aria-label="Tagline">
+    <span class="tagline-mark">✦</span>
+    <p data-i18n="tagline">I build things from scratch — just to understand how they work.</p>
+  </section>
 
   <!-- ── ABOUT ── -->
   <section class="section fade" id="about">

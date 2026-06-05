@@ -491,7 +491,7 @@ body::after {
 .work-body, .feature > *, .spec > *, .link > *, .mod > * { position: relative; z-index: 3; }
 
 /* ============================================================
-   CHARACTER  ·  marquee · handwriting · stickers · underline
+   CHARACTER  ·  handwriting · stickers · underline
    ============================================================ */
 /* handwritten accent */
 .hand { font-family: var(--hand); font-weight: 700; color: var(--pink-d); line-height: 1; }
