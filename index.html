@@ -15,7 +15,7 @@
   <link rel="icon" type="image/png" href="d32ce04ad4746acd17398629a5fb081f-modified.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Quicksand:wght@500;600;700&family=Nunito:wght@400;600;700;800&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Marck+Script&family=Quicksand:wght@500;600;700&family=Nunito:wght@400;600;700;800&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="theme.css">
   <style>
     /* ── Hero ── */
@@ -81,16 +81,22 @@
     .hero-sub { font-size: clamp(17px, 2.4vw, 22px); color: var(--ink-soft); max-width: 540px; font-weight: 600; }
     .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; margin-top: 6px; }
 
-    /* ── Tagline ── */
-    .tagline { max-width: 800px; margin: 0 auto; padding: 54px 24px 40px; text-align: center; position: relative; z-index: 1; }
-    .tagline-mark { display: block; color: var(--rose-d); font-size: 16px; letter-spacing: .5em; margin-bottom: 16px; }
-    .tagline p {
-      font-family: var(--head); font-optical-sizing: auto; font-style: italic; font-weight: 500;
-      font-size: clamp(22px, 3.4vw, 34px); line-height: 1.45; letter-spacing: -.01em; color: var(--ink-strong);
+    /* ── Tagline (romantic Russian script + translation) ── */
+    .tagline { max-width: 840px; margin: 0 auto; padding: 56px 24px 44px; text-align: center; position: relative; z-index: 1; }
+    .tagline-script {
+      font-family: 'Marck Script', var(--hand), cursive; font-weight: 400;
+      font-size: clamp(30px, 5.4vw, 56px); line-height: 1.32; letter-spacing: .01em;
+      background: linear-gradient(115deg, var(--lav-d), var(--rose-d) 68%, var(--rose));
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+      padding: 0 6px 4px;
     }
-    .tagline p::after {
-      content: ''; display: block; width: 64px; height: 3px; margin: 22px auto 0; border-radius: 999px;
-      background: linear-gradient(90deg, var(--lav), var(--rose)); opacity: .85;
+    .tagline-sub {
+      font-family: var(--head); font-optical-sizing: auto; font-style: italic; font-weight: 500;
+      font-size: clamp(15px, 2vw, 19px); color: var(--ink-soft); margin-top: 14px;
+    }
+    .tagline-sub::after {
+      content: ''; display: block; width: 56px; height: 3px; margin: 20px auto 0; border-radius: 999px;
+      background: linear-gradient(90deg, var(--lav), var(--rose)); opacity: .8;
     }
 
     /* ── About ── */
@@ -193,8 +199,8 @@
 
   <!-- ── TAGLINE ── -->
   <section class="tagline" aria-label="Tagline">
-    <span class="tagline-mark">✦</span>
-    <p data-i18n="tagline">Somewhere between a dream and the dawn — making something out of nothing but light.</p>
+    <p class="tagline-script" lang="ru" translate="no">Между мечтой и рассветом я творю красоту из тишины.</p>
+    <p class="tagline-sub" data-i18n="tagline">Between a dream and the dawn, I make beauty out of silence.</p>
   </section>
 
   <!-- ── ABOUT ── -->
