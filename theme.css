@@ -152,6 +152,24 @@ body::after {
 }
 .nav-back:hover { color: var(--pink-d); transform: translateY(-2px); box-shadow: var(--shadow-sm); }
 
+/* language toggle */
+.nav-right { display: flex; align-items: center; gap: 12px; }
+.lang-toggle {
+  display: inline-flex; padding: 3px; border-radius: 999px;
+  background: rgba(255,255,255,.45); border: 1px solid var(--card-line);
+  box-shadow: var(--shadow-sm);
+}
+.lang-toggle button {
+  font-family: var(--display); font-weight: 700; font-size: 12px; line-height: 1;
+  color: var(--ink-soft); background: transparent; border: none; cursor: pointer;
+  padding: 6px 11px; border-radius: 999px; transition: color .2s, background .2s;
+}
+.lang-toggle button:hover { color: var(--ink-strong); }
+.lang-toggle button[aria-pressed="true"] {
+  color: #fff; background: var(--grad);
+  box-shadow: 0 6px 14px -6px var(--glow-pink);
+}
+
 /* ============================================================
    LAYOUT
    ============================================================ */

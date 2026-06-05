@@ -143,11 +143,17 @@
     <div class="nav-inner">
       <a href="#" class="nav-logo"><span class="heart"></span> Siesta</a>
       <ul class="nav-links">
-        <li><a href="#about">About</a></li>
-        <li><a href="#skills">Skills</a></li>
-        <li><a href="#work">Work</a></li>
+        <li><a href="#about" data-i18n="nav_about">About</a></li>
+        <li><a href="#skills" data-i18n="nav_skills">Skills</a></li>
+        <li><a href="#work" data-i18n="nav_work">Work</a></li>
       </ul>
-      <a href="#contact" class="nav-cta">Say hi ✦</a>
+      <div class="nav-right">
+        <div class="lang-toggle" role="group" aria-label="Language">
+          <button type="button" data-lang="en">EN</button>
+          <button type="button" data-lang="zh">繁</button>
+        </div>
+        <a href="#contact" class="nav-cta" data-i18n="nav_cta">Say hi ✦</a>
+      </div>
     </div>
   </nav>
 
@@ -158,17 +164,17 @@
       <span class="orbit"></span>
       <img src="d32ce04ad4746acd17398629a5fb081f-modified.png" alt="Siesta">
     </div>
-    <span class="chip"><span class="dot"></span> Available · self-taught dev</span>
+    <span class="chip"><span class="dot"></span> <span data-i18n="chip">Available · self-taught dev</span></span>
     <div class="hero-name-wrap">
       <h1 class="hero-name grad-text">Siesta</h1>
       <svg class="underline-doodle now" viewBox="0 0 300 18" preserveAspectRatio="none" aria-hidden="true">
         <path d="M5 12 C 65 3, 115 17, 162 9 S 252 2, 295 12"/>
       </svg>
     </div>
-    <p class="hero-sub">A 17-year-old developer building embedded systems, automation &amp; security tools — with a soft spot for hardware.</p>
-    <p class="hero-note">psst — <b>scroll down</b> to see what I've been building ✦</p>
+    <p class="hero-sub" data-i18n="hero_sub">A 17-year-old developer building embedded systems, automation &amp; security tools — with a soft spot for hardware.</p>
+    <p class="hero-note" data-i18n="hero_note">psst — <b>scroll down</b> to see what I've been building ✦</p>
     <div class="hero-actions">
-      <a href="#work" class="btn btn-primary">View my work</a>
+      <a href="#work" class="btn btn-primary" data-i18n="btn_work">View my work</a>
       <a href="https://github.com/Siesta0217" class="btn btn-ghost" target="_blank" rel="noopener">GitHub ↗</a>
     </div>
   </header>
@@ -183,41 +189,41 @@
 
   <!-- ── ABOUT ── -->
   <section class="section fade" id="about">
-    <p class="eyebrow">About</p>
-    <h2 class="section-title">A little about me</h2>
+    <p class="eyebrow" data-i18n="eb_about">About</p>
+    <h2 class="section-title" data-i18n="about_title">A little about me</h2>
     <div class="glass about-card">
-      <p class="about-body">
+      <p class="about-body" data-i18n="about_body">
         I'm a 17-year-old self-taught developer who loves making things from scratch.
         These days I'm focused on <b>Python</b>, <b>C++</b>, <b>JavaScript</b> and
         <i>cybersecurity</i> — and I'm happiest when there's <i>hardware</i> involved.
       </p>
       <div class="stat-row">
-        <div><div class="stat-num"><span class="count" data-target="17">0</span></div><div class="stat-label">Years old</div></div>
-        <div><div class="stat-num"><span class="count" data-target="4">0</span></div><div class="stat-label">Languages</div></div>
-        <div><div class="stat-num"><span class="count" data-target="3">0</span> <small>live</small></div><div class="stat-label">Projects</div></div>
+        <div><div class="stat-num"><span class="count" data-target="17">0</span></div><div class="stat-label" data-i18n="st_years">Years old</div></div>
+        <div><div class="stat-num"><span class="count" data-target="4">0</span></div><div class="stat-label" data-i18n="st_langs">Languages</div></div>
+        <div><div class="stat-num"><span class="count" data-target="3">0</span> <small data-i18n="st_live">live</small></div><div class="stat-label" data-i18n="st_projects">Projects</div></div>
       </div>
     </div>
   </section>
 
   <!-- ── SKILLS ── -->
   <section class="section fade" id="skills">
-    <p class="eyebrow">Skills</p>
-    <h2 class="section-title">What I'm working with</h2>
+    <p class="eyebrow" data-i18n="eb_skills">Skills</p>
+    <h2 class="section-title" data-i18n="skills_title">What I'm working with</h2>
     <div class="glass skills-card">
       <div class="bar">
-        <div class="bar__top"><span class="bar__name">Python</span><span class="bar__tag">Automation &amp; scripting</span></div>
+        <div class="bar__top"><span class="bar__name">Python</span><span class="bar__tag" data-i18n="sk_py">Automation &amp; scripting</span></div>
         <span class="bar__track"><span class="bar__fill" data-w="92"></span></span>
       </div>
       <div class="bar">
-        <div class="bar__top"><span class="bar__name">JavaScript / Node</span><span class="bar__tag">Web &amp; bots</span></div>
+        <div class="bar__top"><span class="bar__name">JavaScript / Node</span><span class="bar__tag" data-i18n="sk_js">Web &amp; bots</span></div>
         <span class="bar__track"><span class="bar__fill b2" data-w="82"></span></span>
       </div>
       <div class="bar">
-        <div class="bar__top"><span class="bar__name">C / C++</span><span class="bar__tag">Embedded systems</span></div>
+        <div class="bar__top"><span class="bar__name">C / C++</span><span class="bar__tag" data-i18n="sk_c">Embedded systems</span></div>
         <span class="bar__track"><span class="bar__fill b3" data-w="72"></span></span>
       </div>
       <div class="bar">
-        <div class="bar__top"><span class="bar__name">Cybersecurity</span><span class="bar__tag">Fundamentals · learning</span></div>
+        <div class="bar__top"><span class="bar__name">Cybersecurity</span><span class="bar__tag" data-i18n="sk_sec">Fundamentals · learning</span></div>
         <span class="bar__track"><span class="bar__fill b4" data-w="55"></span></span>
       </div>
     </div>
@@ -225,15 +231,15 @@
 
   <!-- ── WORK ── -->
   <section class="section fade" id="work">
-    <p class="eyebrow">Work</p>
-    <h2 class="section-title">Things I've built</h2>
+    <p class="eyebrow" data-i18n="eb_work">Work</p>
+    <h2 class="section-title" data-i18n="work_title">Things I've built</h2>
     <div class="work-grid">
 
       <a href="T-Display-S3.html" class="work">
         <div class="work-thumb"><img src="t-display-s3-touch-cutout.png" alt="T-Display S3 Touch" loading="lazy" decoding="async"></div>
         <div class="work-body">
           <span class="work-name">T-Display-S3 Clock <span class="arr">↗</span></span>
-          <span class="work-desc">A custom smart clock on the LilyGO T-Display-S3-Touch — C++ firmware with a UI rendered straight to the capacitive screen.</span>
+          <span class="work-desc" data-i18n="w1_desc">A custom smart clock on the LilyGO T-Display-S3-Touch — C++ firmware with a UI rendered straight to the capacitive screen.</span>
           <span class="tags"><span class="tag">C++</span><span class="tag">ESP32</span><span class="tag">Embedded</span></span>
         </div>
       </a>
@@ -242,7 +248,7 @@
         <div class="work-thumb"><img src="d32ce04ad4746acd17398629a5fb081f-modified.png" alt="Valencia AI Maid" loading="lazy" decoding="async"></div>
         <div class="work-body">
           <span class="work-name">Valencia — AI Maid <span class="arr">↗</span></span>
-          <span class="work-desc">A custom AI maid companion built on OpenClaw AI — personality, memory and a distinct character that makes every chat feel alive.</span>
+          <span class="work-desc" data-i18n="w2_desc">A custom AI maid companion built on OpenClaw AI — personality, memory and a distinct character that makes every chat feel alive.</span>
           <span class="tags"><span class="tag">OpenClaw</span><span class="tag">Python</span><span class="tag">NLP</span></span>
         </div>
       </a>
@@ -251,7 +257,7 @@
         <div class="work-thumb"><img src="datapack.png" alt="Valencia Fabric Mod" loading="lazy" decoding="async"></div>
         <div class="work-body">
           <span class="work-name">Valencia Client <span class="arr">↗</span></span>
-          <span class="work-desc">A Fabric client mod for Lunar 1.21 — combat, movement &amp; render modules driven by a draggable in-game ClickGUI. Java 21, from scratch.</span>
+          <span class="work-desc" data-i18n="w3_desc">A Fabric client mod for Lunar 1.21 — combat, movement &amp; render modules driven by a draggable in-game ClickGUI. Java 21, from scratch.</span>
           <span class="tags"><span class="tag">Java</span><span class="tag">Fabric</span><span class="tag">Minecraft</span></span>
         </div>
       </a>
@@ -261,8 +267,8 @@
 
   <!-- ── CONTACT ── -->
   <section class="section fade" id="contact">
-    <p class="eyebrow">Contact</p>
-    <h2 class="section-title">Let's talk ✦</h2>
+    <p class="eyebrow" data-i18n="eb_contact">Contact</p>
+    <h2 class="section-title" data-i18n="contact_title">Let's talk ✦</h2>
     <div class="link-grid">
       <a class="link d1" href="https://discord.com/users/siesta0217" target="_blank" rel="noopener">
         <span class="dot"></span><span><span class="lbl">Discord</span><br><span class="val">siesta0217</span></span>
@@ -281,9 +287,10 @@
 
   <footer class="footer">
     <span>Siesta · 2025</span>
-    <span>Built from scratch</span>
+    <span data-i18n="foot_built">Built from scratch</span>
   </footer>
 
+  <script src="i18n.js"></script>
   <script src="hud.js"></script>
 </body>
 </html>

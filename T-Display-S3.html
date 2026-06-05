@@ -28,22 +28,28 @@
   <nav class="nav">
     <div class="nav-inner">
       <a href="index.html" class="nav-logo"><span class="heart"></span> Siesta</a>
-      <a href="index.html" class="nav-back">← Back to portfolio</a>
+      <div class="nav-right">
+        <div class="lang-toggle" role="group" aria-label="Language">
+          <button type="button" data-lang="en">EN</button>
+          <button type="button" data-lang="zh">繁</button>
+        </div>
+        <a href="index.html" class="nav-back" data-i18n="nav_back">← Back to portfolio</a>
+      </div>
     </div>
   </nav>
 
   <!-- ── HERO ── -->
   <header class="proj-hero">
     <div class="proj-content">
-      <p class="breadcrumb"><a href="index.html">Work</a><span class="sep">/</span>T-Display-S3</p>
-      <span class="chip"><span class="dot"></span> ESP32-S3 · Active</span>
+      <p class="breadcrumb"><a href="index.html" data-i18n="nav_work">Work</a><span class="sep">/</span>T-Display-S3</p>
+      <span class="chip"><span class="dot"></span> <span data-i18n="td_chip">ESP32-S3 · Active</span></span>
       <h1 class="proj-title grad-text">T-Display-S3</h1>
-      <p class="proj-type">Smart Clock · Embedded</p>
-      <p class="proj-sub">A custom smart clock built on the LilyGO T-Display-S3-Touch board. C++ firmware with a UI rendered directly to the capacitive touch screen — built from the firmware up.</p>
+      <p class="proj-type" data-i18n="td_type">Smart Clock · Embedded</p>
+      <p class="proj-sub" data-i18n="td_sub">A custom smart clock built on the LilyGO T-Display-S3-Touch board. C++ firmware with a UI rendered directly to the capacitive touch screen — built from the firmware up.</p>
       <div class="tags"><span class="tag">C++</span><span class="tag">ESP32</span><span class="tag">Embedded</span><span class="tag">Hardware</span></div>
       <div class="proj-actions">
-        <a href="#overview" class="btn btn-primary">Learn more ↓</a>
-        <a href="https://github.com/Siesta0217" class="btn btn-ghost" target="_blank" rel="noopener">GitHub ↗</a>
+        <a href="#overview" class="btn btn-primary" data-i18n="btn_learn">Learn more ↓</a>
+        <a href="https://github.com/Siesta0217" class="btn btn-ghost" target="_blank" rel="noopener" data-i18n="btn_github">GitHub ↗</a>
       </div>
     </div>
     <div class="proj-visual">
@@ -53,10 +59,10 @@
 
   <!-- ── OVERVIEW ── -->
   <section class="section fade" id="overview">
-    <p class="eyebrow">Overview</p>
-    <h2 class="section-title">What it is</h2>
+    <p class="eyebrow" data-i18n="eb_overview">Overview</p>
+    <h2 class="section-title" data-i18n="overview_title">What it is</h2>
     <div class="glass" style="padding:34px 38px">
-      <p class="overview-body">
+      <p class="overview-body" data-i18n="td_overview">
         A self-built smart clock running on the <strong>LilyGO T-Display-S3-Touch</strong> — an
         <em>ESP32-S3</em> dev board with a built-in capacitive touchscreen. Firmware is written in
         <em>C++</em>, with a custom UI rendered directly to the display. Designed from scratch, no
@@ -72,8 +78,8 @@
 
   <!-- ── HARDWARE ── -->
   <section class="section fade" id="hardware">
-    <p class="eyebrow">Hardware</p>
-    <h2 class="section-title">Under the hood</h2>
+    <p class="eyebrow" data-i18n="eb_hardware">Hardware</p>
+    <h2 class="section-title" data-i18n="hardware_title">Under the hood</h2>
     <div class="spec-grid">
       <div class="spec"><p class="spec-label">MCU</p><p class="spec-value">ESP32-S3</p><p class="spec-meta">Dual-core · 240MHz</p></div>
       <div class="spec"><p class="spec-label">Display</p><p class="spec-value">1.9" ST7789</p><p class="spec-meta">170 × 320 IPS</p></div>
@@ -86,8 +92,8 @@
 
   <!-- ── FEATURES ── -->
   <section class="section fade" id="features">
-    <p class="eyebrow">Features</p>
-    <h2 class="section-title">What it does</h2>
+    <p class="eyebrow" data-i18n="eb_features">Features</p>
+    <h2 class="section-title" data-i18n="features_title">What it does</h2>
     <div class="card-grid">
       <div class="feature"><div class="ico"></div><h3>Live clock</h3><p>NTP-synced timekeeping.</p></div>
       <div class="feature"><div class="ico i2"></div><h3>Touch UI</h3><p>Custom-rendered on the display.</p></div>
@@ -100,8 +106,8 @@
 
   <!-- ── TECH ── -->
   <section class="section fade" id="tech">
-    <p class="eyebrow">Tech stack</p>
-    <h2 class="section-title">Built with</h2>
+    <p class="eyebrow" data-i18n="eb_tech">Tech stack</p>
+    <h2 class="section-title" data-i18n="tech_title">Built with</h2>
     <div class="card-grid">
       <div class="feature"><div class="ico i3"></div><h3>C++</h3><p>Firmware language.</p></div>
       <div class="feature"><div class="ico i4"></div><h3>Arduino / IDF</h3><p>Build environment.</p></div>
@@ -112,8 +118,8 @@
 
   <!-- ── DEV LOG ── -->
   <section class="section fade" id="log">
-    <p class="eyebrow">Dev log</p>
-    <h2 class="section-title">How it came together</h2>
+    <p class="eyebrow" data-i18n="eb_devlog">Dev log</p>
+    <h2 class="section-title" data-i18n="devlog_title">How it came together</h2>
     <div class="log-list">
       <div class="log-entry"><span class="log-date">Init</span><span class="log-msg"><span class="log-tag green">Init</span>Board received. First sketch flashed, "Hello World" on display.</span></div>
       <div class="log-entry"><span class="log-date">Phase 1</span><span class="log-msg"><span class="log-tag blue">Build</span>Driver setup, capacitive touch input working, UI render loop established.</span></div>
@@ -124,9 +130,10 @@
 
   <footer class="footer">
     <span>Siesta · T-Display-S3</span>
-    <span>Built from scratch</span>
+    <span data-i18n="foot_built">Built from scratch</span>
   </footer>
 
+  <script src="i18n.js"></script>
   <script src="hud.js"></script>
 </body>
 </html>

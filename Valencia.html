@@ -36,23 +36,29 @@
   <nav class="nav">
     <div class="nav-inner">
       <a href="index.html" class="nav-logo"><span class="heart"></span> Siesta</a>
-      <a href="index.html" class="nav-back">← Back to portfolio</a>
+      <div class="nav-right">
+        <div class="lang-toggle" role="group" aria-label="Language">
+          <button type="button" data-lang="en">EN</button>
+          <button type="button" data-lang="zh">繁</button>
+        </div>
+        <a href="index.html" class="nav-back" data-i18n="nav_back">← Back to portfolio</a>
+      </div>
     </div>
   </nav>
 
   <!-- ── HERO ── -->
   <header class="proj-hero">
     <div class="proj-content">
-      <p class="breadcrumb"><a href="index.html">Work</a><span class="sep">/</span>Valencia — AI Maid</p>
-      <span class="chip"><span class="dot"></span> AI Companion · always online</span>
+      <p class="breadcrumb"><a href="index.html" data-i18n="nav_work">Work</a><span class="sep">/</span>Valencia — AI Maid</p>
+      <span class="chip"><span class="dot"></span> <span data-i18n="va_chip">AI Companion · always online</span></span>
       <h1 class="proj-title grad-text">Valencia</h1>
-      <p class="proj-type">AI Maid Companion</p>
-      <p class="proj-sub">A custom AI maid companion built on OpenClaw AI — with her own personality, long-term memory and a distinct character that makes every conversation feel alive.</p>
+      <p class="proj-type" data-i18n="va_type">AI Maid Companion</p>
+      <p class="proj-sub" data-i18n="va_sub">A custom AI maid companion built on OpenClaw AI — with her own personality, long-term memory and a distinct character that makes every conversation feel alive.</p>
       <div class="tags"><span class="tag">OpenClaw</span><span class="tag">Python</span><span class="tag">NLP</span><span class="tag">Discord</span></div>
       <div class="proj-actions">
         <!-- TODO: confirm real repo URL -->
-        <a href="https://github.com/Siesta0217" class="btn btn-primary" target="_blank" rel="noopener">View on GitHub ↗</a>
-        <a href="#traits" class="btn btn-ghost">Traits ↓</a>
+        <a href="https://github.com/Siesta0217" class="btn btn-primary" target="_blank" rel="noopener" data-i18n="btn_github">View on GitHub ↗</a>
+        <a href="#traits" class="btn btn-ghost" data-i18n="btn_traits">Traits ↓</a>
       </div>
     </div>
     <div class="proj-visual">
@@ -62,10 +68,10 @@
 
   <!-- ── OVERVIEW ── -->
   <section class="section fade" id="overview">
-    <p class="eyebrow">Overview</p>
-    <h2 class="section-title">Who she is</h2>
+    <p class="eyebrow" data-i18n="eb_overview">Overview</p>
+    <h2 class="section-title" data-i18n="va_ov_title">Who she is</h2>
     <div class="glass" style="padding:34px 38px">
-      <p class="overview-body">
+      <p class="overview-body" data-i18n="va_overview">
         Valencia is a custom <em>AI maid companion</em> built on <strong>OpenClaw AI</strong>. She lives
         in <em>Discord</em>, holds a consistent maid persona, and keeps <strong>long-term memory</strong> of
         past conversations so she actually remembers you. The goal isn't a generic assistant — it's a
@@ -82,8 +88,8 @@
 
   <!-- ── TRAITS ── -->
   <section class="section fade" id="traits">
-    <p class="eyebrow">Traits</p>
-    <h2 class="section-title">What makes her her</h2>
+    <p class="eyebrow" data-i18n="eb_traits">Traits</p>
+    <h2 class="section-title" data-i18n="traits_title">What makes her her</h2>
     <!-- TODO: confirm each trait value + meta -->
     <div class="spec-grid">
       <div class="spec"><p class="spec-label">Personality</p><p class="spec-value">Maid Persona</p><p class="spec-meta">Warm, playful &amp; loyal</p></div>
@@ -97,8 +103,8 @@
 
   <!-- ── ABILITIES ── -->
   <section class="section fade" id="abilities">
-    <p class="eyebrow">Abilities</p>
-    <h2 class="section-title">What she can do</h2>
+    <p class="eyebrow" data-i18n="eb_abilities">Abilities</p>
+    <h2 class="section-title" data-i18n="abilities_title">What she can do</h2>
     <!-- TODO: confirm ability list -->
     <div class="card-grid">
       <div class="feature"><div class="ico"></div><h3>Natural chat</h3><p>Conversational, in-character replies.</p></div>
@@ -112,8 +118,8 @@
 
   <!-- ── STACK ── -->
   <section class="section fade" id="stack">
-    <p class="eyebrow">Stack</p>
-    <h2 class="section-title">Built with</h2>
+    <p class="eyebrow" data-i18n="eb_stack">Stack</p>
+    <h2 class="section-title" data-i18n="stack_title">Built with</h2>
     <!-- TODO: confirm stack -->
     <div class="card-grid">
       <div class="feature"><div class="ico i3"></div><h3>OpenClaw AI</h3><p>Reasoning engine.</p></div>
@@ -125,8 +131,8 @@
 
   <!-- ── DEV LOG ── -->
   <section class="section fade" id="log">
-    <p class="eyebrow">Dev log</p>
-    <h2 class="section-title">How she grew up</h2>
+    <p class="eyebrow" data-i18n="eb_devlog">Dev log</p>
+    <h2 class="section-title" data-i18n="va_log_title">How she grew up</h2>
     <!-- TODO: replace with real milestones / dates -->
     <div class="log-list">
       <div class="log-entry"><span class="log-date">Init</span><span class="log-msg"><span class="log-tag green">Init</span>Persona spun up on OpenClaw AI. First replies in Discord.</span></div>
@@ -141,6 +147,7 @@
     <span>Built on OpenClaw</span>
   </footer>
 
+  <script src="i18n.js"></script>
   <script src="hud.js"></script>
 </body>
 </html>

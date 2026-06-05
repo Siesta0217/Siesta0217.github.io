@@ -28,22 +28,28 @@
   <nav class="nav">
     <div class="nav-inner">
       <a href="index.html" class="nav-logo"><span class="heart"></span> Siesta</a>
-      <a href="index.html" class="nav-back">← Back to portfolio</a>
+      <div class="nav-right">
+        <div class="lang-toggle" role="group" aria-label="Language">
+          <button type="button" data-lang="en">EN</button>
+          <button type="button" data-lang="zh">繁</button>
+        </div>
+        <a href="index.html" class="nav-back" data-i18n="nav_back">← Back to portfolio</a>
+      </div>
     </div>
   </nav>
 
   <!-- ── HERO ── -->
   <header class="proj-hero">
     <div class="proj-content">
-      <p class="breadcrumb"><a href="index.html">Work</a><span class="sep">/</span>Valencia Client</p>
-      <span class="chip"><span class="dot"></span> Fabric Mod · Lunar 1.21</span>
+      <p class="breadcrumb"><a href="index.html" data-i18n="nav_work">Work</a><span class="sep">/</span>Valencia Client</p>
+      <span class="chip"><span class="dot"></span> <span data-i18n="vm_chip">Fabric Mod · Lunar 1.21</span></span>
       <h1 class="proj-title grad-text">Valencia</h1>
-      <p class="proj-type">Minecraft Client Mod</p>
-      <p class="proj-sub">A custom Fabric client mod for Lunar Client 1.21 — combat, movement and utility modules, all driven by a draggable in-game ClickGUI. Written from scratch in Java.</p>
+      <p class="proj-type" data-i18n="vm_type">Minecraft Client Mod</p>
+      <p class="proj-sub" data-i18n="vm_sub">A custom Fabric client mod for Lunar Client 1.21 — combat, movement and utility modules, all driven by a draggable in-game ClickGUI. Written from scratch in Java.</p>
       <div class="tags"><span class="tag">Java 21</span><span class="tag">Fabric</span><span class="tag">Lunar 1.21</span><span class="tag">Gradle</span></div>
       <div class="proj-actions">
-        <a href="https://github.com/Siesta0217/valencia" class="btn btn-primary" target="_blank" rel="noopener">View on GitHub ↗</a>
-        <a href="#modules" class="btn btn-ghost">Modules ↓</a>
+        <a href="https://github.com/Siesta0217/valencia" class="btn btn-primary" target="_blank" rel="noopener" data-i18n="btn_github">View on GitHub ↗</a>
+        <a href="#modules" class="btn btn-ghost" data-i18n="btn_modules">Modules ↓</a>
       </div>
     </div>
     <div class="proj-visual">
@@ -53,10 +59,10 @@
 
   <!-- ── OVERVIEW ── -->
   <section class="section fade" id="overview">
-    <p class="eyebrow">Overview</p>
-    <h2 class="section-title">What it is</h2>
+    <p class="eyebrow" data-i18n="eb_overview">Overview</p>
+    <h2 class="section-title" data-i18n="overview_title">What it is</h2>
     <div class="glass" style="padding:34px 38px">
-      <p class="overview-body">
+      <p class="overview-body" data-i18n="vm_overview">
         Valencia is a <em>Fabric client mod</em> for <strong>Lunar Client 1.21</strong>, built from
         scratch with no Fabric API dependency. Features a draggable <em>ClickGUI</em>, persistent JSON
         config, in-game keybind rebinding, and a growing set of modules across Combat, Movement and
@@ -72,8 +78,8 @@
 
   <!-- ── MODULES ── -->
   <section class="section fade" id="modules">
-    <p class="eyebrow">Modules</p>
-    <h2 class="section-title">What's inside</h2>
+    <p class="eyebrow" data-i18n="eb_modules">Modules</p>
+    <h2 class="section-title" data-i18n="modules_title">What's inside</h2>
     <div class="mod-list">
 
       <div class="mod">
@@ -122,8 +128,8 @@
 
   <!-- ── HIGHLIGHTS ── -->
   <section class="section fade" id="features">
-    <p class="eyebrow">Highlights</p>
-    <h2 class="section-title">The good parts</h2>
+    <p class="eyebrow" data-i18n="eb_highlights">Highlights</p>
+    <h2 class="section-title" data-i18n="highlights_title">The good parts</h2>
     <div class="spec-grid">
       <div class="spec"><p class="spec-label">ClickGUI</p><p class="spec-value">Draggable Panel</p><p class="spec-meta">Per-module settings expand inline</p></div>
       <div class="spec"><p class="spec-label">Config</p><p class="spec-value">Persistent JSON</p><p class="spec-meta">valencia.json across sessions</p></div>
@@ -136,8 +142,8 @@
 
   <!-- ── INSTALL ── -->
   <section class="section fade" id="install">
-    <p class="eyebrow">Install</p>
-    <h2 class="section-title">Get it running</h2>
+    <p class="eyebrow" data-i18n="eb_install">Install</p>
+    <h2 class="section-title" data-i18n="install_title">Get it running</h2>
     <div class="code-block"><span class="c-comment"># 1. Install Fabric Loader 0.19.2+  (no Fabric API needed)</span>
 <span class="c-comment"># 2. Drop the JAR into mods/</span>
 
@@ -152,8 +158,8 @@
 
   <!-- ── CHANGELOG ── -->
   <section class="section fade" id="log">
-    <p class="eyebrow">Changelog</p>
-    <h2 class="section-title">Version history</h2>
+    <p class="eyebrow" data-i18n="eb_changelog">Changelog</p>
+    <h2 class="section-title" data-i18n="changelog_title">Version history</h2>
     <div class="log-list">
       <div class="log-entry"><span class="log-date">α-0.1</span><span class="log-msg"><span class="log-tag green">Init</span>Core modules: NoFall, XRay, MaceAura, KillAura, NoSlow, BHop. ClickGUI with sliders &amp; rebinding. Persistent JSON config.</span></div>
       <div class="log-entry"><span class="log-date">α-0.2</span><span class="log-msg"><span class="log-tag blue">Add</span>New modules: AutoSprint, Velocity, FastPlace, CritHit. Waifu image support for ClickGUI.</span></div>
@@ -167,6 +173,7 @@
     <span>Fabric · Lunar 1.21</span>
   </footer>
 
+  <script src="i18n.js"></script>
   <script src="hud.js"></script>
 </body>
 </html>
