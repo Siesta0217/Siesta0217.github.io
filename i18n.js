@@ -42,10 +42,6 @@
     eb_contact: '聯絡',
     contact_title: '來聊聊吧 ✦',
 
-    /* ── vibe marquee ── */
-    mq1: '自學', mq2: '不停打造', mq3: '嵌入式系統', mq4: '資訊安全',
-    mq5: 'Minecraft 模組', mq6: '玩硬體', mq7: '玩 AI', mq8: '從零開始',
-
     /* ── footer ── */
     foot_built: '從零打造',
 
