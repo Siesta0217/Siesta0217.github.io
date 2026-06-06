@@ -85,6 +85,31 @@
     const iv = setInterval(() => { v = Math.min(v + 1, t); el.textContent = v; if (v >= t) clearInterval(iv); }, step);
   };
 
+  /* ── Romantic typewriter (types a line, deletes it, types the next) ── */
+  const typer = document.getElementById('typer');
+  if (typer) {
+    const PHRASES = [
+      'Каждый взгляд на тебя — это тайна, которую я храню в сердце.',
+      'Может, когда-нибудь ты это почувствуешь.',
+      'Между мечтой и рассветом я думаю только о тебе.',
+      'Ты — мой самый тихий и тёплый сон.',
+    ];
+    if (reduce) {
+      typer.textContent = PHRASES[0];
+    } else {
+      let pi = 0, ci = 0, del = false;
+      const tick = () => {
+        const full = PHRASES[pi];
+        ci += del ? -1 : 1;
+        typer.textContent = full.slice(0, ci);
+        if (!del && ci >= full.length) { del = true; setTimeout(tick, 2400); }
+        else if (del && ci <= 0) { del = false; pi = (pi + 1) % PHRASES.length; setTimeout(tick, 550); }
+        else setTimeout(tick, del ? 26 : 50 + Math.random() * 55);
+      };
+      setTimeout(tick, 700);
+    }
+  }
+
   /* ── Reveal + bar fill + counters ── */
   const io = new IntersectionObserver(es => es.forEach(e => {
     if (!e.isIntersecting) return;
