@@ -88,22 +88,47 @@
   /* ── Romantic typewriter (types a line, deletes it, types the next) ── */
   const typer = document.getElementById('typer');
   if (typer) {
+    const sub = document.getElementById('typer-sub');
     const PHRASES = [
       'Каждый взгляд на тебя — это тайна, которую я храню в сердце.',
       'Может, когда-нибудь ты это почувствуешь.',
       'Между мечтой и рассветом я думаю только о тебе.',
       'Ты — мой самый тихий и тёплый сон.',
     ];
+    const TR = {
+      en: [
+        'Every glance at you is a secret I keep in my heart.',
+        'Maybe someday you’ll feel it.',
+        'Between a dream and the dawn, I think only of you.',
+        'You are my quietest, warmest dream.',
+      ],
+      zh: [
+        '每一次望向你，都是我藏在心底的祕密。',
+        '也許有一天，你會感覺到。',
+        '在夢與黎明之間，我只想著你。',
+        '你是我最安靜、最溫暖的夢。',
+      ],
+    };
+    let pi = 0;
+    let lang = (document.documentElement.lang || '').toLowerCase().startsWith('zh') ? 'zh' : 'en';
+    const renderSub = () => {
+      if (!sub) return;
+      sub.style.opacity = '0';
+      setTimeout(() => { sub.textContent = (TR[lang] || TR.en)[pi]; sub.style.opacity = ''; }, 160);
+    };
+    addEventListener('i18n', e => { lang = e.detail === 'zh' ? 'zh' : 'en'; renderSub(); });
+    renderSub();
+
     if (reduce) {
       typer.textContent = PHRASES[0];
     } else {
-      let pi = 0, ci = 0, del = false;
+      let ci = 0, del = false;
       const tick = () => {
         const full = PHRASES[pi];
         ci += del ? -1 : 1;
         typer.textContent = full.slice(0, ci);
         if (!del && ci >= full.length) { del = true; setTimeout(tick, 2400); }
-        else if (del && ci <= 0) { del = false; pi = (pi + 1) % PHRASES.length; setTimeout(tick, 550); }
+        else if (del && ci <= 0) { del = false; pi = (pi + 1) % PHRASES.length; renderSub(); setTimeout(tick, 550); }
         else setTimeout(tick, del ? 26 : 50 + Math.random() * 55);
       };
       setTimeout(tick, 700);

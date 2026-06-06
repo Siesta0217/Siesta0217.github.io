@@ -126,6 +126,7 @@
     document.querySelectorAll('[data-lang]').forEach(b =>
       b.setAttribute('aria-pressed', String(b.dataset.lang === lang)));
     try { localStorage.setItem(KEY, lang); } catch (e) {}
+    dispatchEvent(new CustomEvent('i18n', { detail: lang }));
   };
 
   const detect = () => {

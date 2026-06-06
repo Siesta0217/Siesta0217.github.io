@@ -93,6 +93,11 @@
       animation: caret 1s steps(1) infinite;
     }
     @keyframes caret { 50% { opacity: 0; } }
+    .tagline-sub {
+      font-family: var(--head); font-optical-sizing: auto; font-style: italic; font-weight: 500;
+      font-size: clamp(15px, 2vw, 19px); color: var(--ink-soft); margin-top: 16px;
+      min-height: 1.5em; transition: opacity .3s ease;
+    }
 
     /* ── About ── */
     .about-card { padding: 36px 38px; }
@@ -192,9 +197,10 @@
     </div>
   </header>
 
-  <!-- ── TAGLINE (typed romantic cursive) ── -->
+  <!-- ── TAGLINE (typed romantic cursive + synced translation) ── -->
   <section class="tagline" aria-label="Tagline">
     <p class="tagline-script" id="typer" lang="ru" translate="no" aria-live="off"></p>
+    <p class="tagline-sub" id="typer-sub"></p>
   </section>
 
   <!-- ── ABOUT ── -->
