@@ -45,6 +45,16 @@
 
   --grad: linear-gradient(125deg, var(--pink), var(--lav) 46%, var(--rose));
 
+  /* ── Liquid glass (iOS-style) ──
+     translucent gradient body + specular inner edges; pair with the
+     shared gradient rim (::before) below */
+  --liquid: linear-gradient(180deg, rgba(255,255,255,.5) 0%, rgba(255,255,255,.24) 52%, rgba(255,255,255,.38) 100%);
+  --edge:
+    inset 0 1.2px 1.2px rgba(255,255,255,.95),
+    inset 0 -1.2px 1.2px rgba(255,255,255,.45),
+    inset 1.2px 0 1.2px rgba(255,255,255,.3),
+    inset -1.2px 0 1.2px rgba(255,255,255,.3);
+
   --display: 'Quicksand', system-ui, sans-serif;   /* UI / labels */
   --head:    'Fraunces', 'Quicksand', Georgia, serif; /* editorial headings */
   --hand:    'Caveat', 'Quicksand', cursive;          /* handwritten accents */
@@ -119,11 +129,11 @@ body::after {
   position: fixed; top: 16px; left: 50%; transform: translateX(-50%);
   width: calc(100% - 32px); max-width: var(--max); z-index: 100;
   border-radius: 999px;
-  background: var(--card-strong);
-  backdrop-filter: blur(18px) saturate(150%);
-  -webkit-backdrop-filter: blur(18px) saturate(150%);
-  border: 1px solid var(--card-line);
-  box-shadow: var(--shadow-sm), inset 0 1px 0 rgba(255,255,255,.7);
+  background: var(--liquid);
+  backdrop-filter: blur(28px) saturate(190%);
+  -webkit-backdrop-filter: blur(28px) saturate(190%);
+  border: none;
+  box-shadow: var(--shadow-sm), var(--edge);
 }
 .nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 11px 14px 11px 22px; }
 .nav-logo { display: inline-flex; align-items: center; gap: 9px; font-family: var(--head); font-weight: 600; font-size: 22px; color: var(--ink-strong); letter-spacing: -.01em; }
@@ -156,8 +166,8 @@ body::after {
 .nav-right { display: flex; align-items: center; gap: 12px; }
 .lang-toggle {
   display: inline-flex; padding: 3px; border-radius: 999px;
-  background: rgba(255,255,255,.45); border: 1px solid var(--card-line);
-  box-shadow: var(--shadow-sm);
+  background: rgba(255,255,255,.35); border: none;
+  box-shadow: inset 0 1px 1px rgba(255,255,255,.8), inset 0 -1px 1px rgba(255,255,255,.3), inset 0 0 6px rgba(120,110,190,.08);
 }
 .lang-toggle button {
   font-family: var(--display); font-weight: 700; font-size: 12px; line-height: 1;
@@ -205,23 +215,37 @@ body::after {
    ============================================================ */
 .glass {
   position: relative;
-  background: linear-gradient(180deg, rgba(255,255,255,.62), rgba(255,255,255,.44));
-  backdrop-filter: blur(24px) saturate(155%);
-  -webkit-backdrop-filter: blur(24px) saturate(155%);
-  border: 1px solid var(--card-line);
-  border-radius: 28px;
-  box-shadow:
-    var(--shadow),
-    inset 0 1px 0 rgba(255,255,255,.85),
-    inset 0 -1px 0 rgba(120,110,180,.06);
+  background: var(--liquid);
+  backdrop-filter: blur(30px) saturate(190%);
+  -webkit-backdrop-filter: blur(30px) saturate(190%);
+  border: none;
+  border-radius: 32px;
+  box-shadow: var(--shadow), var(--edge);
 }
-/* faint top sheen for a premium glass feel (kept behind content) */
-.glass::before {
+/* lensing sheen across the top (kept behind content) */
+.glass::after {
   content: ''; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; z-index: 0;
-  background: radial-gradient(120% 80% at 50% -20%, rgba(255,255,255,.5), transparent 60%);
-  opacity: .7;
+  background: radial-gradient(130% 90% at 50% -30%, rgba(255,255,255,.55), transparent 55%);
+  opacity: .8;
 }
 .glass > * { position: relative; z-index: 1; }
+
+/* shared refractive rim — a 1px gradient ring that reads like light
+   bending through the glass edge */
+.glass::before, .work::before, .feature::before, .spec::before,
+.link::before, .mod::before, .log-entry::before, .nav::before {
+  content: ''; position: absolute; inset: 0; border-radius: inherit;
+  padding: 1.2px; pointer-events: none; z-index: 4;
+  background: linear-gradient(160deg,
+    rgba(255,255,255,.95), rgba(255,255,255,.2) 28%,
+    rgba(170,160,255,.28) 50%, rgba(255,200,230,.32) 72%,
+    rgba(255,255,255,.75));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+          mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+          mask-composite: exclude;
+}
+.log-entry { position: relative; }
 
 /* ============================================================
    BUTTONS  ·  pills
@@ -239,10 +263,17 @@ body::after {
   transform: translateX(-130%); transition: transform .6s ease;
 }
 .btn:hover::after { transform: translateX(130%); }
-.btn-primary { color: #fff; background: var(--grad); background-size: 160% 160%; box-shadow: 0 14px 30px -12px var(--glow-pink); }
-.btn-primary:hover { transform: translateY(-3px); box-shadow: 0 22px 46px -12px var(--glow-pink), 0 0 26px -4px var(--glow-lav); background-position: 100% 50%; }
-.btn-ghost { color: var(--ink-strong); background: var(--card-strong); border: 1px solid var(--card-line); box-shadow: var(--shadow-sm); }
-.btn-ghost:hover { transform: translateY(-3px); color: var(--lav-d); box-shadow: var(--shadow); }
+.btn-primary {
+  color: #fff; background: var(--grad); background-size: 160% 160%;
+  box-shadow: 0 14px 30px -12px var(--glow-pink), inset 0 1.2px 1px rgba(255,255,255,.55), inset 0 -1px 1px rgba(0,0,0,.06);
+}
+.btn-primary:hover { transform: translateY(-3px); box-shadow: 0 22px 46px -12px var(--glow-pink), 0 0 26px -4px var(--glow-lav), inset 0 1.2px 1px rgba(255,255,255,.55); background-position: 100% 50%; }
+.btn-ghost {
+  color: var(--ink-strong); background: var(--liquid); border: none;
+  backdrop-filter: blur(16px) saturate(160%); -webkit-backdrop-filter: blur(16px) saturate(160%);
+  box-shadow: var(--shadow-sm), var(--edge);
+}
+.btn-ghost:hover { transform: translateY(-3px); color: var(--lav-d); box-shadow: var(--shadow), var(--edge); }
 
 /* ============================================================
    CHIP
@@ -251,8 +282,9 @@ body::after {
   display: inline-flex; align-items: center; gap: 9px;
   font-family: var(--display); font-weight: 600; font-size: 14px; color: var(--ink);
   padding: 8px 16px; border-radius: 999px;
-  background: rgba(255,255,255,.55); border: 1px solid var(--card-line);
-  box-shadow: var(--shadow-sm);
+  background: var(--liquid); border: none;
+  backdrop-filter: blur(14px) saturate(160%); -webkit-backdrop-filter: blur(14px) saturate(160%);
+  box-shadow: var(--shadow-sm), var(--edge);
 }
 .chip .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--mint); box-shadow: 0 0 0 0 rgba(111,227,192,.6); animation: ping 2s ease-out infinite; }
 @keyframes ping { 0%{box-shadow:0 0 0 0 rgba(111,227,192,.55)} 70%,100%{box-shadow:0 0 0 9px rgba(111,227,192,0)} }
@@ -298,11 +330,11 @@ body::after {
    ============================================================ */
 .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; }
 .feature {
-  background: var(--card); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-  border: 1px solid var(--card-line); border-radius: 22px; padding: 22px;
-  box-shadow: var(--shadow-sm); transition: transform .25s, box-shadow .25s; position: relative;
+  background: var(--liquid); backdrop-filter: blur(22px) saturate(170%); -webkit-backdrop-filter: blur(22px) saturate(170%);
+  border: none; border-radius: 24px; padding: 22px;
+  box-shadow: var(--shadow-sm), var(--edge); transition: transform .25s, box-shadow .25s; position: relative;
 }
-.feature:hover { transform: translateY(-6px); box-shadow: var(--shadow), 0 0 34px -8px var(--glow-lav); }
+.feature:hover { transform: translateY(-6px); box-shadow: var(--shadow), 0 0 34px -8px var(--glow-lav), var(--edge); }
 .feature .ico {
   width: 34px; height: 34px; border-radius: 12px; margin-bottom: 14px;
   background: var(--grad); box-shadow: 0 8px 18px -8px var(--glow-pink);
@@ -318,11 +350,11 @@ body::after {
    ============================================================ */
 .spec-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 16px; }
 .spec {
-  background: var(--card); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-  border: 1px solid var(--card-line); border-radius: 20px; padding: 20px 22px;
-  box-shadow: var(--shadow-sm); transition: transform .25s, box-shadow .25s;
+  background: var(--liquid); backdrop-filter: blur(22px) saturate(170%); -webkit-backdrop-filter: blur(22px) saturate(170%);
+  border: none; border-radius: 22px; padding: 20px 22px;
+  box-shadow: var(--shadow-sm), var(--edge); transition: transform .25s, box-shadow .25s;
 }
-.spec:hover { transform: translateY(-5px); box-shadow: var(--shadow), 0 0 30px -8px var(--glow-pink); }
+.spec:hover { transform: translateY(-5px); box-shadow: var(--shadow), 0 0 30px -8px var(--glow-pink), var(--edge); }
 .spec-label { font-family: var(--display); font-weight: 700; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--pink-d); margin-bottom: 9px; }
 .spec-value { font-family: var(--head); font-weight: 600; font-size: 23px; color: var(--ink-strong); line-height: 1.18; letter-spacing: -.01em; }
 .spec-meta { font-size: 14px; color: var(--ink-soft); margin-top: 4px; }
@@ -345,11 +377,11 @@ body::after {
 .log-list { display: flex; flex-direction: column; gap: 12px; }
 .log-entry {
   display: grid; grid-template-columns: 110px 1fr; gap: 18px; align-items: baseline;
-  background: var(--card); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
-  border: 1px solid var(--card-line); border-radius: 18px; padding: 16px 20px;
-  box-shadow: var(--shadow-sm); transition: transform .2s, box-shadow .2s;
+  background: var(--liquid); backdrop-filter: blur(20px) saturate(160%); -webkit-backdrop-filter: blur(20px) saturate(160%);
+  border: none; border-radius: 20px; padding: 16px 20px;
+  box-shadow: var(--shadow-sm), var(--edge); transition: transform .2s, box-shadow .2s;
 }
-.log-entry:hover { transform: translateX(4px); box-shadow: var(--shadow); }
+.log-entry:hover { transform: translateX(4px); box-shadow: var(--shadow), var(--edge); }
 .log-date { font-family: var(--display); font-weight: 700; font-size: 14px; color: var(--lav-d); }
 .log-msg { font-size: 15.5px; color: var(--ink); line-height: 1.5; }
 .log-tag {
@@ -454,11 +486,11 @@ body::after {
 .mod-list { display: flex; flex-direction: column; gap: 12px; }
 .mod {
   display: grid; grid-template-columns: 1fr auto; gap: 16px; align-items: center;
-  background: var(--card); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
-  border: 1px solid var(--card-line); border-radius: 20px; padding: 18px 22px;
-  box-shadow: var(--shadow-sm); transition: transform .22s, box-shadow .22s;
+  background: var(--liquid); backdrop-filter: blur(20px) saturate(160%); -webkit-backdrop-filter: blur(20px) saturate(160%);
+  border: none; border-radius: 22px; padding: 18px 22px;
+  box-shadow: var(--shadow-sm), var(--edge); transition: transform .22s, box-shadow .22s;
 }
-.mod:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+.mod:hover { transform: translateY(-4px); box-shadow: var(--shadow), var(--edge); }
 .mod-head { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 6px; }
 .mod-name { font-family: var(--head); font-weight: 600; font-size: 21px; color: var(--ink-strong); letter-spacing: -.01em; }
 .mod-cat { font-family: var(--display); font-weight: 700; font-size: 11px; letter-spacing: .05em; text-transform: uppercase; padding: 4px 11px; border-radius: 999px; }
