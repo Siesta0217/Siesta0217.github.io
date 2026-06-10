@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Valencia Client — Fabric Mod · Siesta</title>
+  <meta name="description" content="Valencia — a custom Fabric client mod for Lunar 1.21 with a draggable ClickGUI. Java 21, built from scratch.">
+  <meta name="theme-color" content="#7c83ff">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://siesta0217.github.io/Valencia-Mod.html">
+  <meta property="og:title" content="Valencia Client — Fabric Mod">
+  <meta property="og:description" content="A custom Fabric client mod for Lunar 1.21 with a draggable in-game ClickGUI. Java 21, built from scratch.">
+  <meta property="og:image" content="https://siesta0217.github.io/datapack.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/png" href="d32ce04ad4746acd17398629a5fb081f-modified.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Quicksand:wght@500;600;700&family=Nunito:wght@400;600;700;800&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="theme.css?v=2">
+</head>
+<body>
+
+  <div id="progress"></div>
+  <div class="orbs"><span class="orb a"></span><span class="orb b"></span><span class="orb c"></span></div>
+  <canvas id="sparkles"></canvas>
+
+  <!-- ── NAV ── -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo"><span class="heart"></span> Siesta</a>
+      <div class="nav-right">
+        <div class="lang-toggle" role="group" aria-label="Language">
+          <button type="button" data-lang="en">EN</button>
+          <button type="button" data-lang="zh">繁</button>
+        </div>
+        <a href="index.html" class="nav-back" data-i18n="nav_back">← Back to portfolio</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ── HERO ── -->
+  <header class="proj-hero">
+    <div class="proj-content">
+      <p class="breadcrumb"><a href="index.html" data-i18n="nav_work">Work</a><span class="sep">/</span>Valencia Client</p>
+      <span class="chip"><span class="dot"></span> <span data-i18n="vm_chip">Fabric Mod · Lunar 1.21</span></span>
+      <h1 class="proj-title grad-text">Valencia</h1>
+      <p class="proj-type" data-i18n="vm_type">Minecraft Client Mod</p>
+      <p class="proj-sub" data-i18n="vm_sub">A custom Fabric client mod for Lunar Client 1.21 — combat, movement and utility modules, all driven by a draggable in-game ClickGUI. Written from scratch in Java.</p>
+      <div class="tags"><span class="tag">Java 21</span><span class="tag">Fabric</span><span class="tag">Lunar 1.21</span><span class="tag">Gradle</span></div>
+      <div class="proj-actions">
+        <a href="https://github.com/Siesta0217/valencia" class="btn btn-primary" target="_blank" rel="noopener" data-i18n="btn_github">View on GitHub ↗</a>
+        <a href="#modules" class="btn btn-ghost" data-i18n="btn_modules">Modules ↓</a>
+      </div>
+    </div>
+    <div class="proj-visual">
+      <div class="logo-slot" aria-label="Valencia Client"><span class="gem"></span><span class="lbl">Valencia<br>Client</span></div>
+    </div>
+  </header>
+
+  <!-- ── OVERVIEW ── -->
+  <section class="section fade" id="overview">
+    <p class="eyebrow" data-i18n="eb_overview">Overview</p>
+    <h2 class="section-title" data-i18n="overview_title">What it is</h2>
+    <div class="glass" style="padding:34px 38px">
+      <p class="overview-body" data-i18n="vm_overview">
+        Valencia is a <em>Fabric client mod</em> for <strong>Lunar Client 1.21</strong>, built from
+        scratch with no Fabric API dependency. Features a draggable <em>ClickGUI</em>, persistent JSON
+        config, in-game keybind rebinding, and a growing set of modules across Combat, Movement and
+        Render categories. Uses pure <code>GuiGraphics</code> rendering — Sodium / Iris compatible.
+      </p>
+      <div class="stat-row">
+        <div><div class="stat-num">12<small>+</small></div><div class="stat-label">Modules</div></div>
+        <div><div class="stat-num"><small>α</small>0.4</div><div class="stat-label">Current build</div></div>
+        <div><div class="stat-num">1.21</div><div class="stat-label">MC target</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── MODULES ── -->
+  <section class="section fade" id="modules">
+    <p class="eyebrow" data-i18n="eb_modules">Modules</p>
+    <h2 class="section-title" data-i18n="modules_title">What's inside</h2>
+    <div class="mod-list">
+
+      <div class="mod">
+        <div><div class="mod-head"><span class="mod-name">MaceAura</span><span class="mod-cat cat-combat">Combat</span></div><p class="mod-desc">Mace-specific silent aim + auto attack. Detect 6f, attack 3.5f.</p></div>
+        <div class="mod-key">Z</div>
+      </div>
+      <div class="mod">
+        <div><div class="mod-head"><span class="mod-name">KillAura</span><span class="mod-cat cat-combat">Combat</span></div><p class="mod-desc">Any-weapon aura, switch/single mode, target filters, tunable range &amp; delay.</p></div>
+        <div class="mod-key">K</div>
+      </div>
+      <div class="mod">
+        <div><div class="mod-head"><span class="mod-name">CritHit</span><span class="mod-cat cat-combat">Combat</span></div><p class="mod-desc">Forces critical hits on every attack.</p></div>
+        <div class="mod-key">R</div>
+      </div>
+      <div class="mod">
+        <div><div class="mod-head"><span class="mod-name">Velocity</span><span class="mod-cat cat-combat">Combat</span></div><p class="mod-desc">Cancels all knockback for the local player.</p></div>
+        <div class="mod-key">C</div>
+      </div>
+      <div class="mod">
+        <div><div class="mod-head"><span class="mod-name">NoFall</span><span class="mod-cat cat-move">Movement</span></div><p class="mod-desc">onGround spoofing, no fall damage. Default on.</p></div>
+        <div class="mod-key">N</div>
+      </div>
+      <div class="mod">
+        <div><div class="mod-head"><span class="mod-name">BHop</span><span class="mod-cat cat-move">Movement</span></div><p class="mod-desc">Auto-jump + air steering, full WASD + diagonals, 0.5×–2.5× speed.</p></div>
+        <div class="mod-key">B</div>
+      </div>
+      <div class="mod">
+        <div><div class="mod-head"><span class="mod-name">NoSlow</span><span class="mod-cat cat-move">Movement</span></div><p class="mod-desc">Removes slowdown while using items.</p></div>
+        <div class="mod-key">G</div>
+      </div>
+      <div class="mod">
+        <div><div class="mod-head"><span class="mod-name">FastPlace</span><span class="mod-cat cat-move">Movement</span></div><p class="mod-desc">Removes right-click delay — instant block/item use spam.</p></div>
+        <div class="mod-key">F</div>
+      </div>
+      <div class="mod">
+        <div><div class="mod-head"><span class="mod-name">XRay</span><span class="mod-cat cat-render">Render</span></div><p class="mod-desc">Hides non-ore blocks, gamma 16.0. O(1) lookup cache for speed.</p></div>
+        <div class="mod-key">X</div>
+      </div>
+      <div class="mod">
+        <div><div class="mod-head"><span class="mod-name">ClickGUI</span><span class="mod-cat cat-misc">UI</span></div><p class="mod-desc">Draggable panel, per-module sliders, toggles, inline keybind rebinding.</p></div>
+        <div class="mod-key">R-Ctrl</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── HIGHLIGHTS ── -->
+  <section class="section fade" id="features">
+    <p class="eyebrow" data-i18n="eb_highlights">Highlights</p>
+    <h2 class="section-title" data-i18n="highlights_title">The good parts</h2>
+    <div class="spec-grid">
+      <div class="spec"><p class="spec-label">ClickGUI</p><p class="spec-value">Draggable Panel</p><p class="spec-meta">Per-module settings expand inline</p></div>
+      <div class="spec"><p class="spec-label">Config</p><p class="spec-value">Persistent JSON</p><p class="spec-meta">valencia.json across sessions</p></div>
+      <div class="spec"><p class="spec-label">Rebinding</p><p class="spec-value">In-Game</p><p class="spec-meta">.nf bind &lt;mod&gt; &lt;key&gt;</p></div>
+      <div class="spec"><p class="spec-label">Rendering</p><p class="spec-value">Pure GuiGraphics</p><p class="spec-meta">Sodium / Iris compatible</p></div>
+      <div class="spec"><p class="spec-label">Waifu Image</p><p class="spec-value">PNG · JPG · GIF · BMP</p><p class="spec-meta">Custom skin for ClickGUI</p></div>
+      <div class="spec"><p class="spec-label">Performance</p><p class="spec-value">XRay O(1) Cache</p><p class="spec-meta">Cached reflection, no per-frame lookup</p></div>
+    </div>
+  </section>
+
+  <!-- ── INSTALL ── -->
+  <section class="section fade" id="install">
+    <p class="eyebrow" data-i18n="eb_install">Install</p>
+    <h2 class="section-title" data-i18n="install_title">Get it running</h2>
+    <div class="code-block"><span class="c-comment"># 1. Install Fabric Loader 0.19.2+  (no Fabric API needed)</span>
+<span class="c-comment"># 2. Drop the JAR into mods/</span>
+
+<span class="c-key">Lunar Client</span>  → .lunarclient/profiles/lunar/<span class="c-val">1.21</span>/mods/fabric-1.21.11/
+<span class="c-key">Vanilla Fabric</span> → .minecraft/mods/
+
+<span class="c-comment"># Requirements</span>
+<span class="c-key">Minecraft</span>     <span class="c-val">1.21.11</span>
+<span class="c-key">Fabric Loader</span> <span class="c-val">0.19.2+</span>
+<span class="c-key">Java</span>          <span class="c-val">21+</span></div>
+  </section>
+
+  <!-- ── CHANGELOG ── -->
+  <section class="section fade" id="log">
+    <p class="eyebrow" data-i18n="eb_changelog">Changelog</p>
+    <h2 class="section-title" data-i18n="changelog_title">Version history</h2>
+    <div class="log-list">
+      <div class="log-entry"><span class="log-date">α-0.1</span><span class="log-msg"><span class="log-tag green">Init</span>Core modules: NoFall, XRay, MaceAura, KillAura, NoSlow, BHop. ClickGUI with sliders &amp; rebinding. Persistent JSON config.</span></div>
+      <div class="log-entry"><span class="log-date">α-0.2</span><span class="log-msg"><span class="log-tag blue">Add</span>New modules: AutoSprint, Velocity, FastPlace, CritHit. Waifu image support for ClickGUI.</span></div>
+      <div class="log-entry"><span class="log-date">α-0.3</span><span class="log-msg"><span class="log-tag violet">Perf</span>XRay block lookup now O(1) via ConcurrentHashMap cache. Reflection cached at load time. AutoSprint removed.</span></div>
+      <div class="log-entry"><span class="log-date">α-0.4</span><span class="log-msg"><span class="log-tag violet">Perf</span>Waifu image accepts PNG, JPG/JPEG, BMP, GIF — non-PNG decoded via ImageIO and re-encoded.</span></div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <span>Siesta · Valencia Mod</span>
+    <span>Fabric · Lunar 1.21</span>
+  </footer>
+
+  <script src="i18n.js?v=2"></script>
+  <script src="hud.js?v=2"></script>
+</body>
+</html>
