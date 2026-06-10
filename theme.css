@@ -48,7 +48,7 @@
   /* ── Liquid glass (iOS-style) ──
      translucent gradient body + specular inner edges; pair with the
      shared gradient rim (::before) below */
-  --liquid: linear-gradient(180deg, rgba(255,255,255,.5) 0%, rgba(255,255,255,.24) 52%, rgba(255,255,255,.38) 100%);
+  --liquid: linear-gradient(180deg, rgba(255,255,255,.3) 0%, rgba(255,255,255,.1) 52%, rgba(255,255,255,.2) 100%);
   --edge:
     inset 0 1.2px 1.2px rgba(255,255,255,.95),
     inset 0 -1.2px 1.2px rgba(255,255,255,.45),
@@ -216,8 +216,8 @@ body::after {
 .glass {
   position: relative;
   background: var(--liquid);
-  backdrop-filter: blur(30px) saturate(190%);
-  -webkit-backdrop-filter: blur(30px) saturate(190%);
+  backdrop-filter: blur(22px) saturate(185%);
+  -webkit-backdrop-filter: blur(22px) saturate(185%);
   border: none;
   border-radius: 32px;
   box-shadow: var(--shadow), var(--edge);
@@ -225,8 +225,8 @@ body::after {
 /* lensing sheen across the top (kept behind content) */
 .glass::after {
   content: ''; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; z-index: 0;
-  background: radial-gradient(130% 90% at 50% -30%, rgba(255,255,255,.55), transparent 55%);
-  opacity: .8;
+  background: radial-gradient(130% 90% at 50% -30%, rgba(255,255,255,.4), transparent 52%);
+  opacity: .55;
 }
 .glass > * { position: relative; z-index: 1; }
 
